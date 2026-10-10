@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Button } from '@/components/ui/button'
 import heroImg from '../assets/hero.png'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '../assets/vite.svg'
@@ -21,16 +22,13 @@ export default function HomePage() {
             <code>HMR</code>
           </p>
         </div>
-        <button
+        <Button
           type="button"
-          className="mb-6 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-violet-500/40 transition hover:scale-105 hover:from-violet-500 hover:to-fuchsia-400 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-400"
+          className="mb-6"
           onClick={() => setCount((count) => count + 1)}
         >
-          Count is
-          <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-sm tabular-nums">
-            {count}
-          </span>
-        </button>
+          Count is {count}
+        </Button>
       </section>
 
       <div className="ticks"></div>
