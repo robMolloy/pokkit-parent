@@ -11,10 +11,10 @@
 
 .site-nav a,
 .page-link {
-  color: var(--text-h);
+  color: var(--starter-text-h);
   font-size: 16px;
   border-radius: 6px;
-  background: var(--social-bg);
+  background: var(--starter-social-bg);
   display: inline-flex;
   padding: 6px 12px;
   align-items: center;
@@ -22,7 +22,7 @@
   transition: box-shadow 0.3s;
 
   &:hover {
-    box-shadow: var(--shadow);
+    box-shadow: var(--starter-shadow);
   }
 }
 
