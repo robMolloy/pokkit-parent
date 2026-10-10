@@ -3,15 +3,15 @@
   gap: 8px;
   justify-content: center;
   padding: 16px 20px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--starter-border);
 }
 
 .site-nav a,
 .page-link {
-  color: var(--text-h);
+  color: var(--starter-text-h);
   font-size: 16px;
   border-radius: 6px;
-  background: var(--social-bg);
+  background: var(--starter-social-bg);
   display: inline-flex;
   padding: 6px 12px;
   align-items: center;
@@ -19,13 +19,13 @@
   transition: box-shadow 0.3s;
 
   &:hover {
-    box-shadow: var(--shadow);
+    box-shadow: var(--starter-shadow);
   }
 }
 
 .site-nav a.active {
-  color: var(--accent);
-  box-shadow: inset 0 0 0 2px var(--accent-border);
+  color: var(--starter-text-h);
+  box-shadow: inset 0 0 0 2px var(--starter-text-h);
 }
 
 .page-link {
