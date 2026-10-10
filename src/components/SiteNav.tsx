@@ -4,6 +4,7 @@ const links = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About' },
   { to: '/hello/vite', label: 'Hello' },
+  { to: '/designs/breathe-in-breathe-out', label: 'Breathe' },
 ]
 
 export function SiteNav() {
