@@ -1,3 +1,12 @@
+import { NavLink } from 'react-router'
+
+const designLinks = [
+  {
+    to: '/designs/breathe-in-breathe-out',
+    label: 'Breathe in, breathe out',
+  },
+]
+
 export default function DesignsPage() {
   return (
     <section id="center">
@@ -8,6 +17,13 @@ export default function DesignsPage() {
           <code>designs/index.tsx</code>, so it is served at <code>/designs</code>.
         </p>
       </div>
+      <nav className="designs-nav" aria-label="Designs">
+        {designLinks.map((link) => (
+          <NavLink key={link.to} to={link.to}>
+            {link.label}
+          </NavLink>
+        ))}
+      </nav>
     </section>
   )
 }
