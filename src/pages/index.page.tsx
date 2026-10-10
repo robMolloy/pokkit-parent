@@ -23,10 +23,13 @@ export default function HomePage() {
         </div>
         <button
           type="button"
-          className="counter"
+          className="mb-6 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-violet-500/40 transition hover:scale-105 hover:from-violet-500 hover:to-fuchsia-400 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-400"
           onClick={() => setCount((count) => count + 1)}
         >
-          Count is {count}
+          Count is
+          <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-sm tabular-nums">
+            {count}
+          </span>
         </button>
       </section>
 

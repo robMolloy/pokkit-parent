@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import Pages from 'vite-plugin-pages'
@@ -6,6 +7,7 @@ import Pages from 'vite-plugin-pages'
 export default defineConfig({
   plugins: [
     react(),
+    tailwindcss(),
     Pages({
       dirs: 'src/pages',
       extensions: ['page.tsx', 'tsx'],
