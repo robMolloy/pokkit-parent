@@ -3,12 +3,20 @@ import { fileURLToPath } from 'node:url'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+import Pages from 'vite-plugin-pages'
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url))
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    Pages({
+      dirs: 'src/pages',
+      extensions: ['page.tsx', 'tsx'],
+    }),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(rootDir, './src'),
