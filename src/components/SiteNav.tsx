@@ -12,7 +12,11 @@ export function SiteNav() {
   return (
     <nav className="site-nav" aria-label="Pages">
       {links.map((link) => (
-        <NavLink key={link.to} to={link.to} end={link.to === '/'}>
+        <NavLink
+          key={link.to}
+          to={link.to}
+          end={link.to === '/' || link.to === '/designs'}
+        >
           {link.label}
         </NavLink>
       ))}
