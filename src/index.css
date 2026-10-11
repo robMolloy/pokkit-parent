@@ -49,16 +49,16 @@
 }
 
 @theme {
-    --animate-squeeze-relax: squeeze-relax 8s ease-in-out infinite;
+    --animate-squeeze-relax: squeeze-relax 6s ease-in-out infinite;
 
     @keyframes squeeze-relax {
         0%,
         100% {
-            translate: 0 3.5rem;
+            translate: 0 18vh;
         }
 
         50% {
-            translate: 0 -3.5rem;
+            translate: 0 -18vh;
         }
     }
 }
