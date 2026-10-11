@@ -6,6 +6,7 @@ const links = [
   { to: '/designs', label: 'Designs' },
   { to: '/hello/vite', label: 'Hello' },
   { to: '/designs/breathe-in-breathe-out', label: 'Breathe' },
+  { to: '/designs/squeeze-relax', label: 'Squeeze' },
 ]
 
 export function SiteNav() {
