@@ -77,8 +77,8 @@ export function BreatheInBreatheOut({
     inhale === exhale ? null : breatheAnimations(inhale, exhale)
   const timing =
     inhale === exhale
-      ? `Each movement takes ${formatSeconds(inhale)}`
-      : `Breathing in takes ${formatSeconds(inhale)} and breathing out takes ${formatSeconds(exhale)}`
+      ? `Each movement takes ${formatSeconds(inhale)} and repeats.`
+      : `Breathing in takes ${formatSeconds(inhale)}, breathing out takes ${formatSeconds(exhale)}, and the cycle repeats.`
 
   const breatheStyle = {
     '--breathe-in': `${inhale}s`,
@@ -98,7 +98,7 @@ export function BreatheInBreatheOut({
       {animations ? <style>{animations.css}</style> : null}
       <p className="sr-only">
         Breathe in as the circle expands to the width of the screen, then
-        breathe out as it shrinks to a dot. {timing} and repeats.
+        breathe out as it shrinks to a dot. {timing}
       </p>
       <div className="breathe-circle" />
       <p className="breathe-cue" aria-hidden="true">
