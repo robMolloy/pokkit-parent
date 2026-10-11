@@ -5,6 +5,10 @@ const designLinks = [
     to: '/designs/breathe-in-breathe-out',
     label: 'Breathe in, breathe out',
   },
+  {
+    to: '/designs/breathe-in-breathe-out-tailwind',
+    label: 'Breathe in, breathe out (Tailwind)',
+  },
 ]
 
 export default function DesignsPage() {
