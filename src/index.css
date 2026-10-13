@@ -48,6 +48,21 @@
     --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+@theme {
+    --animate-squeeze-relax: squeeze-relax 6s ease-in-out infinite;
+
+    @keyframes squeeze-relax {
+        0%,
+        100% {
+            translate: 0 18vh;
+        }
+
+        50% {
+            translate: 0 -18vh;
+        }
+    }
+}
+
 :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);

@@ -5,6 +5,10 @@ const designLinks = [
     to: '/designs/breathe-in-breathe-out',
     label: 'Breathe in, breathe out',
   },
+  {
+    to: '/designs/squeeze-relax',
+    label: 'Squeeze, relax',
+  },
 ]
 
 export default function DesignsPage() {
