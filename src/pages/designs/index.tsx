@@ -8,6 +8,8 @@ const designLinks = [
   {
     to: '/designs/breathe-in-breathe-out-tailwind',
     label: 'Breathe in, breathe out (Tailwind)',
+    to: '/designs/squeeze-relax',
+    label: 'Squeeze, relax',
   },
 ]
 

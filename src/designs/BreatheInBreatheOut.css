@@ -1,6 +1,10 @@
 .breathe {
-  --breathe-dilate: 3s;
+  --breathe-in: 3s;
+  --breathe-out: 3s;
   --breathe-dot: 8px;
+  --breathe-circle: breathe-dilate;
+  --breathe-cue-in: breathe-cue-in;
+  --breathe-cue-out: breathe-cue-out;
   position: relative;
   flex: 1;
   min-height: calc(100svh - 4.5rem);
@@ -20,8 +24,8 @@
     var(--foreground) 64%
   );
   pointer-events: none;
-  animation-name: breathe-dilate;
-  animation-duration: calc(var(--breathe-dilate) * 2);
+  animation-name: var(--breathe-circle);
+  animation-duration: calc(var(--breathe-in) + var(--breathe-out));
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
@@ -65,17 +69,20 @@
   white-space: nowrap;
   text-transform: uppercase;
   backdrop-filter: blur(10px);
-  animation-name: breathe-cue;
-  animation-duration: calc(var(--breathe-dilate) * 2);
+  animation-duration: calc(var(--breathe-in) + var(--breathe-out));
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
 
-.breathe-cue-out {
-  animation-delay: calc(var(--breathe-dilate) * -1);
+.breathe-cue-in {
+  animation-name: var(--breathe-cue-in);
 }
 
-@keyframes breathe-cue {
+.breathe-cue-out {
+  animation-name: var(--breathe-cue-out);
+}
+
+@keyframes breathe-cue-in {
   0%,
   42% {
     opacity: 1;
@@ -88,6 +95,22 @@
 
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes breathe-cue-out {
+  0%,
+  42% {
+    opacity: 0;
+  }
+
+  50%,
+  92% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
 

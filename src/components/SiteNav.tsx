@@ -7,6 +7,7 @@ const links = [
   { to: '/hello/vite', label: 'Hello' },
   { to: '/designs/breathe-in-breathe-out', label: 'Breathe' },
   { to: '/designs/breathe-in-breathe-out-tailwind', label: 'Breathe TW' },
+  { to: '/designs/squeeze-relax', label: 'Squeeze' },
 ]
 
 export function SiteNav() {
