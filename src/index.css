@@ -79,6 +79,9 @@
 
         100% {
             opacity: 1;
+        }
+    }
+
     --animate-squeeze-relax: squeeze-relax 6s ease-in-out infinite;
 
     @keyframes squeeze-relax {
