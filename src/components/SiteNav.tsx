@@ -4,6 +4,7 @@ const links = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About' },
   { to: '/designs', label: 'Designs' },
+  { to: '/docs', label: 'Docs' },
   { to: '/hello/vite', label: 'Hello' },
   { to: '/designs/breathe-in-breathe-out', label: 'Breathe' },
   { to: '/designs/breathe-in-breathe-out-tailwind', label: 'Breathe TW' },
@@ -17,7 +18,7 @@ export function SiteNav() {
         <NavLink
           key={link.to}
           to={link.to}
-          end={link.to === '/' || link.to === '/designs'}
+          end={link.to === '/' || link.to === '/designs' || link.to === '/docs'}
         >
           {link.label}
         </NavLink>
