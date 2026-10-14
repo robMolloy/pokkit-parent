@@ -49,6 +49,39 @@
 }
 
 @theme {
+    --animate-breathe-tw-dilate: breathe-tw-dilate 6s ease-in-out infinite;
+    --animate-breathe-tw-cue: breathe-tw-cue 6s linear infinite;
+    --animate-breathe-tw-cue-out: breathe-tw-cue 6s linear -3s infinite;
+
+    @keyframes breathe-tw-dilate {
+        0%,
+        100% {
+            width: 8px;
+            height: 8px;
+        }
+
+        50% {
+            width: 100vw;
+            height: 100vw;
+        }
+    }
+
+    @keyframes breathe-tw-cue {
+        0%,
+        42% {
+            opacity: 1;
+        }
+
+        50%,
+        92% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
     --animate-squeeze-relax: squeeze-relax 6s ease-in-out infinite;
 
     @keyframes squeeze-relax {
