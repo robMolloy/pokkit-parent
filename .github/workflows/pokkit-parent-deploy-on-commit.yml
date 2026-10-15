@@ -1,13 +1,13 @@
-# Deploy a Firebase Hosting preview channel when a pull request is opened.
-name: Pokkit Parent Deploy on Pull Request
-on: pull_request
+# Deploy a Firebase Hosting preview channel when commits are pushed.
+name: Pokkit Parent Deploy on Commit
+on:
+  push:
+    branches-ignore:
+      - main
 permissions:
-  checks: write
   contents: read
-  pull-requests: write
 jobs:
   build_and_preview:
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,4 +23,5 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_POKKIT_PARENT }}
+          channelId: ${{ github.ref_name }}
           projectId: pokkit-parent
