@@ -1,0 +1,100 @@
+.markdown {
+  width: min(100%, 40rem);
+}
+
+.markdown :is(ul, ol) {
+  margin: 16px auto 0;
+  padding: 0;
+  list-style-position: inside;
+}
+
+.markdown li + li,
+.markdown :is(ul ul, ol ol, ul ol, ol ul) {
+  margin-top: 8px;
+}
+
+.markdown p + p,
+.markdown p + :is(ul, ol, pre, blockquote, table),
+.markdown :is(ul, ol, pre, blockquote, table) + p {
+  margin-top: 16px;
+}
+
+.markdown a {
+  color: var(--starter-text-h);
+  text-underline-offset: 3px;
+}
+
+.markdown pre {
+  margin: 16px 0 0;
+  padding: 16px 18px;
+  overflow-x: auto;
+  text-align: left;
+  border-radius: 8px;
+  background: var(--starter-code-bg);
+}
+
+.markdown pre code {
+  display: block;
+  padding: 0;
+  background: none;
+  white-space: pre;
+  font-size: 14px;
+  line-height: 150%;
+}
+
+.markdown blockquote {
+  margin: 16px 0 0;
+  padding-left: 16px;
+  border-left: 2px solid var(--starter-border);
+  text-align: left;
+}
+
+.markdown table {
+  width: 100%;
+  margin: 16px 0 0;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 16px;
+}
+
+.markdown :is(th, td) {
+  padding: 8px 12px;
+  border: 1px solid var(--starter-border);
+}
+
+.markdown th {
+  color: var(--starter-text-h);
+  font-weight: 500;
+}
+
+.markdown hr {
+  width: 100%;
+  margin: 24px 0;
+  border: 0;
+  border-top: 1px solid var(--starter-border);
+}
+
+.markdown :is(h3, h4) {
+  font-family: var(--starter-heading);
+  font-weight: 500;
+  color: var(--starter-text-h);
+}
+
+.markdown h3 {
+  font-size: 20px;
+  margin: 28px 0 0;
+}
+
+.markdown h4 {
+  font-size: 18px;
+  margin: 24px 0 0;
+}
+
+.markdown input[type='checkbox'] {
+  margin-right: 8px;
+}
+
+.markdown img {
+  max-width: 100%;
+  height: auto;
+}
