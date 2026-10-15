@@ -1,6 +1,9 @@
-# Deploy a Firebase Hosting preview channel when a pull request is opened.
-name: Pokkit Parent Deploy on Pull Request
-on: pull_request
+# Deploy a Firebase Hosting preview channel when new commits are pushed to a pull request.
+name: Pokkit Parent Deploy on Commit to Pull Request
+on:
+  pull_request:
+    types:
+      - synchronize
 permissions:
   checks: write
   contents: read
