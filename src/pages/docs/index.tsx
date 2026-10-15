@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router'
+
 export default function DocsPage() {
   return (
     <section id="center">
@@ -8,6 +10,9 @@ export default function DocsPage() {
           <code>docs/index.tsx</code>, so it is served at <code>/docs</code>.
         </p>
       </div>
+      <nav className="docs-nav" aria-label="Docs">
+        <NavLink to="/docs/pages-philosophy">Pages philosophy</NavLink>
+      </nav>
     </section>
   )
 }
