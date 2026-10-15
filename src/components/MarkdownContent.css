@@ -1,5 +1,6 @@
 .markdown {
-  width: min(100%, 40rem);
+  width: max-content;
+  max-width: min(100%, 52rem);
 }
 
 .markdown :is(ul, ol) {
