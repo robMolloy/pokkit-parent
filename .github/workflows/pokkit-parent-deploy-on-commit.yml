@@ -4,9 +4,6 @@ on:
   push:
     branches-ignore:
       - main
-concurrency:
-  group: pokkit-parent-preview-${{ github.ref }}
-  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
