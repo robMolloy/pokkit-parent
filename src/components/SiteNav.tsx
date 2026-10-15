@@ -4,6 +4,7 @@ const links = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About' },
   { to: '/designs', label: 'Designs' },
+  { to: '/docs', label: 'Docs' },
   { to: '/hello/vite', label: 'Hello' },
 ]
 
@@ -14,7 +15,7 @@ export function SiteNav() {
         <NavLink
           key={link.to}
           to={link.to}
-          end={link.to === '/' || link.to === '/designs'}
+          end={link.to === '/' || link.to === '/designs' || link.to === '/docs'}
         >
           {link.label}
         </NavLink>
