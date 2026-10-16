@@ -1,11 +1,14 @@
 # Deploy a Firebase Hosting preview channel when commits are pushed.
+# When that branch has an open pull request, post the preview URL on it.
 name: Pokkit Parent Deploy on Commit
 on:
   push:
     branches-ignore:
       - main
 permissions:
+  checks: write
   contents: read
+  pull-requests: write
 jobs:
   build_and_preview:
     runs-on: ubuntu-latest
@@ -19,9 +22,96 @@ jobs:
 
       - run: npm ci
       - run: npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - id: deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_POKKIT_PARENT }}
           channelId: ${{ github.ref_name }}
           projectId: pokkit-parent
+
+      - name: Post the preview link on the pull request
+        if: steps.deploy.outputs.details_url != ''
+        uses: actions/github-script@v9
+        env:
+          PREVIEW_URL: ${{ steps.deploy.outputs.details_url }}
+          PREVIEW_EXPIRES: ${{ steps.deploy.outputs.expire_time_formatted }}
+        with:
+          script: |
+            const url = process.env.PREVIEW_URL;
+            const expires = process.env.PREVIEW_EXPIRES;
+            const commit = context.sha.slice(0, 7);
+            const marker = "<!-- pokkit-parent-preview -->";
+            const branch = context.ref.replace("refs/heads/", "");
+            const { owner, repo } = context.repo;
+
+            const lines = [
+              marker,
+              `Visit the preview URL for this PR (updated for commit ${commit}):`,
+              "",
+              `[${url}](${url})`,
+              "",
+            ];
+            if (expires) {
+              lines.push(`<sub>(expires ${expires})</sub>`, "");
+            }
+            lines.push(
+              "<sub>🔥 via [Firebase Hosting GitHub Action](https://github.com/marketplace/actions/deploy-to-firebase-hosting) 🌎</sub>",
+            );
+            const body = lines.join("\n");
+
+            const { data: pulls } = await github.rest.pulls.list({
+              owner,
+              repo,
+              head: `${owner}:${branch}`,
+              state: "open",
+            });
+
+            if (pulls.length === 0) {
+              core.info(`No open pull request for ${branch}.`);
+            }
+
+            for (const pull of pulls) {
+              const { data: comments } = await github.rest.issues.listComments({
+                owner,
+                repo,
+                issue_number: pull.number,
+                per_page: 100,
+              });
+              const existing = [...comments].reverse().find((comment) =>
+                comment.user?.type === "Bot" &&
+                (comment.body?.includes(marker) ||
+                  comment.body?.includes("Visit the preview URL for this PR")),
+              );
+
+              if (existing) {
+                await github.rest.issues.updateComment({
+                  owner,
+                  repo,
+                  comment_id: existing.id,
+                  body,
+                });
+                continue;
+              }
+
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: pull.number,
+                body,
+              });
+            }
+
+            await github.rest.checks.create({
+              owner,
+              repo,
+              name: "Deploy Preview",
+              head_sha: context.sha,
+              status: "completed",
+              conclusion: "success",
+              details_url: url,
+              output: {
+                title: "Deploy preview succeeded",
+                summary: `[${url}](${url})`,
+              },
+            });
