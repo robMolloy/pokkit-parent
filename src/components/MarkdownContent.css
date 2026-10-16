@@ -1,101 +1,72 @@
+@reference "tailwindcss";
+
 .markdown {
-  width: max-content;
-  max-width: min(100%, 52rem);
+  @apply w-max max-w-[min(100%,52rem)];
 }
 
 .markdown :is(ul, ol) {
-  margin: 16px auto 0;
-  padding: 0;
-  list-style-position: inside;
+  @apply mx-auto mt-[16px] mb-0 list-inside p-0;
 }
 
 .markdown li + li,
 .markdown :is(ul ul, ol ol, ul ol, ol ul) {
-  margin-top: 8px;
+  @apply mt-[8px];
 }
 
 .markdown p + p,
 .markdown p + :is(ul, ol, pre, blockquote, table),
 .markdown :is(ul, ol, pre, blockquote, table) + p {
-  margin-top: 16px;
+  @apply mt-[16px];
 }
 
 .markdown a {
-  color: var(--starter-text-h);
-  text-underline-offset: 3px;
+  @apply text-(--starter-text-h) underline-offset-[3px];
 }
 
 .markdown pre {
-  margin: 16px 0 0;
-  padding: 16px 18px;
-  overflow-x: auto;
-  text-align: left;
-  border-radius: 8px;
-  background: var(--starter-code-bg);
+  @apply mx-0 mt-[16px] mb-0 overflow-x-auto rounded-[8px] bg-(--starter-code-bg) px-[18px] py-[16px] text-left;
 }
 
 .markdown pre code {
-  display: block;
-  padding: 0;
-  background: none;
-  white-space: pre;
-  font-size: 14px;
-  line-height: 150%;
+  @apply block bg-transparent bg-none p-0 text-[14px] leading-[150%] whitespace-pre;
 }
 
 .markdown blockquote {
-  margin: 16px 0 0;
-  padding-left: 16px;
-  border-left: 2px solid var(--starter-border);
-  text-align: left;
+  @apply mx-0 mt-[16px] mb-0 border-l-2 border-solid border-l-(--starter-border) pl-[16px] text-left;
 }
 
 .markdown table {
-  width: 100%;
-  margin: 16px 0 0;
-  border-collapse: collapse;
-  text-align: left;
-  font-size: 16px;
+  @apply mx-0 mt-[16px] mb-0 w-full border-collapse text-left text-[16px];
 }
 
 .markdown :is(th, td) {
-  padding: 8px 12px;
-  border: 1px solid var(--starter-border);
+  @apply border border-solid border-(--starter-border) px-[12px] py-[8px];
 }
 
 .markdown th {
-  color: var(--starter-text-h);
-  font-weight: 500;
+  @apply font-medium text-(--starter-text-h);
 }
 
 .markdown hr {
-  width: 100%;
-  margin: 24px 0;
-  border: 0;
-  border-top: 1px solid var(--starter-border);
+  @apply mx-0 my-[24px] w-full border-x-0 border-b-0 border-t border-solid border-t-(--starter-border);
 }
 
 .markdown :is(h3, h4) {
-  font-family: var(--starter-heading);
-  font-weight: 500;
-  color: var(--starter-text-h);
+  @apply font-medium text-(--starter-text-h) font-[family-name:var(--starter-heading)];
 }
 
 .markdown h3 {
-  font-size: 20px;
-  margin: 28px 0 0;
+  @apply mx-0 mt-[28px] mb-0 text-[20px];
 }
 
 .markdown h4 {
-  font-size: 18px;
-  margin: 24px 0 0;
+  @apply mx-0 mt-[24px] mb-0 text-[18px];
 }
 
-.markdown input[type='checkbox'] {
-  margin-right: 8px;
+.markdown input[type="checkbox"] {
+  @apply mr-[8px];
 }
 
 .markdown img {
-  max-width: 100%;
-  height: auto;
+  @apply h-auto max-w-full;
 }
