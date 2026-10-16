@@ -49,3 +49,13 @@
   width: 18px;
   height: 18px;
 }
+
+#next-steps a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#next-steps .icon {
+  margin-inline: auto;
+}
