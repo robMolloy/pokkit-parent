@@ -13,7 +13,7 @@ export default function DesignsPage() {
       <Nav aria-label="Designs">
         <VerticalNavList>
           <NavLink
-            to="/designs/final-circle-expand-contract"
+            to="/designs/circle-expand-contract"
             label="Circle expand and contract"
             description="The circle expands to the width of the screen, then contracts to a dot"
           />

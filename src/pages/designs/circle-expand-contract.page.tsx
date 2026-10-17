@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { FinalCircleExpandContract } from '@/designs/FinalCircleExpandContract.tsx'
+import { CircleExpandContract } from '@/designs/CircleExpandContract.tsx'
 
-export default function FinalCircleExpandContractPage() {
+export default function CircleExpandContractPage() {
   const [duration, setDuration] = useState(3)
 
   return (
@@ -18,7 +18,7 @@ export default function FinalCircleExpandContractPage() {
         />
         <span className="text-muted-foreground tabular-nums">{duration}s</span>
       </label>
-      <FinalCircleExpandContract duration={duration} />
+      <CircleExpandContract duration={duration} />
     </div>
   )
 }
