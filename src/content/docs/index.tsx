@@ -13,6 +13,11 @@ export default function DocsContent() {
             label="Pages philosophy"
             description="How page files map to content components"
           />
+          <NavLink
+            to="/docs/code-implementation"
+            label="Code implementation"
+            description="Prefer readable code over unnecessary abstraction"
+          />
         </VerticalNavList>
       </Nav>
     </section>
