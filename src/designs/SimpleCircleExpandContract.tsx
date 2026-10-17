@@ -2,26 +2,17 @@ import { useEffect, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { cn } from 'cn'
 
-const defaultDuration = 3
-
 type SimpleCircleExpandContractProps = {
   className?: string
   /** Seconds for one expand or one contract (full cycle is twice this). */
-  duration?: number
-}
-
-function durationSeconds(value: number | undefined) {
-  if (value == null || !Number.isFinite(value) || value <= 0) {
-    return defaultDuration
-  }
-  return value
+  duration: number
 }
 
 export function SimpleCircleExpandContract({
   className,
   duration,
 }: SimpleCircleExpandContractProps) {
-  const phase = durationSeconds(duration)
+  const phase = duration
   const [expanded, setExpanded] = useState(false)
   const transition = {
     transitionDuration: `${phase}s`,
