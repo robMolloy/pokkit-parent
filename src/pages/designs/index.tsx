@@ -32,6 +32,11 @@ export default function DesignsPage() {
             label="Circle up and down"
             description="A circle slowly rises, then falls—Tailwind layout with CSS keyframe motion"
           />
+          <NavLink
+            to="/designs/final-circle-expand-contract"
+            label="Final circle expand and contract"
+            description="Expand-and-contract motion with Tailwind layout and co-located CSS keyframes"
+          />
         </VerticalNavList>
       </Nav>
     </section>
