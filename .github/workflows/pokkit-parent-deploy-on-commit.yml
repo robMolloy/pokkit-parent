@@ -1,12 +1,18 @@
 # Deploy a Firebase Hosting preview channel for a pull request.
 name: Pokkit Parent Deploy on Commit
-on: pull_request
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
 permissions:
   checks: write
   contents: read
   pull-requests: write
 jobs:
   build_and_preview:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,8 +24,72 @@ jobs:
 
       - run: npm ci
       - run: npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - id: deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_POKKIT_PARENT }}
           projectId: pokkit-parent
+          disableComment: true
+
+      - name: Post the preview link on the pull request
+        if: steps.deploy.outputs.details_url != ''
+        uses: actions/github-script@v9
+        env:
+          PREVIEW_URL: ${{ steps.deploy.outputs.details_url }}
+          PREVIEW_EXPIRES: ${{ steps.deploy.outputs.expire_time_formatted }}
+        with:
+          script: |
+            const url = process.env.PREVIEW_URL;
+            const expires = process.env.PREVIEW_EXPIRES;
+            const pr = context.payload.pull_request;
+            const commit = pr.head.sha.slice(0, 7);
+            const marker = "<!-- pokkit-parent-preview -->";
+            const { owner, repo } = context.repo;
+            const issue_number = pr.number;
+
+            const lines = [
+              marker,
+              `Visit the preview URL for this PR (updated for commit ${commit}):`,
+              "",
+              `[${url}](${url})`,
+              "",
+            ];
+            if (expires) {
+              lines.push(`<sub>(expires ${expires})</sub>`, "");
+            }
+            lines.push(
+              "<sub>🔥 via [Firebase Hosting GitHub Action](https://github.com/marketplace/actions/deploy-to-firebase-hosting) 🌎</sub>",
+            );
+            const body = lines.join("\n");
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner,
+              repo,
+              issue_number,
+              per_page: 100,
+            });
+            const existing = [...comments].reverse().find((comment) =>
+              comment.user?.type === "Bot" &&
+              (comment.body?.includes(marker) ||
+                comment.body?.includes("Visit the preview URL for this PR")),
+            );
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: existing.id,
+                body,
+              });
+              core.info(`Updated preview comment ${existing.id} for commit ${commit}.`);
+              return;
+            }
+
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number,
+              body,
+            });
+            core.info(`Created preview comment for commit ${commit}.`);
