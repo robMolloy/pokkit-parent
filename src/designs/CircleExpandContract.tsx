@@ -1,12 +1,12 @@
 import type { CSSProperties } from 'react'
 import { cn } from 'cn'
-import './BreatheInBreatheOut.css'
+import './CircleExpandContract.css'
 
 const dotSize = '8px'
 const defaultDuration = 3
 const cueVisiblePortion = 0.84
 
-type BreatheInBreatheOutProps = {
+type CircleExpandContractProps = {
   className?: string
   inDuration?: number
   outDuration?: number
@@ -66,11 +66,11 @@ function breatheAnimations(inDuration: number, outDuration: number) {
   return { circle, cueIn, cueOut, css }
 }
 
-export function BreatheInBreatheOut({
+export function CircleExpandContract({
   className,
   inDuration,
   outDuration,
-}: BreatheInBreatheOutProps) {
+}: CircleExpandContractProps) {
   const inhale = durationSeconds(inDuration)
   const exhale = durationSeconds(outDuration)
   const animations =

@@ -3,13 +3,13 @@ import { cn } from 'cn'
 const cueClassName =
   'col-start-1 row-start-1 rounded-full border border-foreground/14 bg-background/88 px-[0.95rem] py-[0.45rem] text-[0.95rem] leading-none font-medium tracking-[0.16em] text-foreground uppercase whitespace-nowrap backdrop-blur-[10px]'
 
-type BreatheInBreatheOutTailwindProps = {
+type CircleExpandContractTailwindProps = {
   className?: string
 }
 
-export function BreatheInBreatheOutTailwind({
+export function CircleExpandContractTailwind({
   className,
-}: BreatheInBreatheOutTailwindProps) {
+}: CircleExpandContractTailwindProps) {
   return (
     <div className={cn('relative min-h-[calc(100svh-4.5rem)] flex-1', className)}>
       <p className="sr-only">
