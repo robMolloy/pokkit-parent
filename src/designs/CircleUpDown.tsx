@@ -1,9 +1,6 @@
 import type { CSSProperties } from 'react'
 import { cn } from 'cn'
 
-const cueClassName =
-  'col-start-1 row-start-1 rounded-full border border-foreground/14 bg-background/88 px-[0.95rem] py-[0.45rem] text-[0.95rem] leading-none font-medium tracking-[0.16em] text-foreground uppercase whitespace-nowrap backdrop-blur-[10px]'
-
 type CircleUpDownProps = {
   className?: string
   /** Seconds for one rise or one fall (full cycle is twice this). */
@@ -15,11 +12,6 @@ export function CircleUpDown({ className, duration }: CircleUpDownProps) {
   const cycle = phase * 2
   const motionTiming = {
     animationDuration: `${cycle}s`,
-  } satisfies CSSProperties
-  // Negative delay keeps the “Down” cue aligned with the second half of the loop.
-  const downCueTiming = {
-    ...motionTiming,
-    animationDelay: `${-phase}s`,
   } satisfies CSSProperties
 
   return (
@@ -36,29 +28,6 @@ export function CircleUpDown({ className, duration }: CircleUpDownProps) {
         )}
         style={motionTiming}
       />
-      <p
-        className="pointer-events-none fixed top-[calc(50%+clamp(40px,8vh,72px))] left-1/2 z-[1] m-0 grid -translate-x-1/2 place-items-center"
-        aria-hidden="true"
-      >
-        <span
-          className={cn(
-            cueClassName,
-            'motion-safe:animate-circle-up-down-tw-cue-up motion-reduce:animate-none',
-          )}
-          style={motionTiming}
-        >
-          Up
-        </span>
-        <span
-          className={cn(
-            cueClassName,
-            'motion-safe:animate-circle-up-down-tw-cue-down motion-reduce:hidden',
-          )}
-          style={downCueTiming}
-        >
-          Down
-        </span>
-      </p>
     </div>
   )
 }
