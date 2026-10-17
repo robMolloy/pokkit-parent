@@ -9,25 +9,25 @@ export function Nav({ children, ...props }: NavProps) {
   return <nav {...props}>{children}</nav>
 }
 
-export type NavListOrientation = 'vertical' | 'horizontal'
+type NavListProps = Omit<ComponentProps<'div'>, 'className'>
 
-type NavListProps = Omit<ComponentProps<'div'>, 'className'> & {
-  orientation?: NavListOrientation
-}
-
-export function NavList({
-  children,
-  orientation = 'vertical',
-  ...props
-}: NavListProps) {
+export function VerticalNavList({ children, ...props }: NavListProps) {
   return (
     <div
-      data-orientation={orientation}
-      className={cn(
-        'flex w-full gap-2',
-        orientation === 'vertical' && 'max-w-md flex-col',
-        orientation === 'horizontal' && 'flex-row flex-wrap',
-      )}
+      data-orientation="vertical"
+      className="flex w-full max-w-md flex-col gap-2"
+      {...props}
+    >
+      {children}
+    </div>
+  )
+}
+
+export function HorizontalNavList({ children, ...props }: NavListProps) {
+  return (
+    <div
+      data-orientation="horizontal"
+      className="flex w-full flex-row flex-wrap gap-2"
       {...props}
     >
       {children}

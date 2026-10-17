@@ -1,4 +1,4 @@
-import { Nav, NavLink, NavList } from '@/components/Nav'
+import { Nav, NavLink, VerticalNavList } from '@/components/Nav'
 import { MarkdownContent } from '@/components/MarkdownContent'
 import body from './index.md?raw'
 
@@ -15,7 +15,7 @@ export default function DocsContent() {
     <section id="center">
       <MarkdownContent>{body}</MarkdownContent>
       <Nav aria-label="Docs">
-        <NavList orientation="vertical">
+        <VerticalNavList>
           {docLinks.map((link) => (
             <NavLink
               key={link.to}
@@ -24,7 +24,7 @@ export default function DocsContent() {
               description={link.description}
             />
           ))}
-        </NavList>
+        </VerticalNavList>
       </Nav>
     </section>
   )
