@@ -23,11 +23,6 @@ export default function DesignsPage() {
             description="Same expand-and-contract motion built with Tailwind utilities"
           />
           <NavLink
-            to="/designs/circle-up-down"
-            label="Circle up and down"
-            description="A circle slowly rises, then falls"
-          />
-          <NavLink
             to="/designs/simple-circle-expand-contract"
             label="Simple circle expand and contract"
             description="Expand and contract with transitions and a duration prop—no keyframes"
