@@ -1,26 +1,65 @@
+import type { CSSProperties } from 'react'
 import { cn } from 'cn'
+import {
+  circleExpandContractAnimations,
+  circleExpandContractDurationSeconds,
+  circleExpandContractFormatSeconds,
+  circleExpandContractTwDefaultKeyframes,
+} from '@/designs/circleExpandContractAnimation.ts'
 
 const cueClassName =
   'col-start-1 row-start-1 rounded-full border border-foreground/14 bg-background/88 px-[0.95rem] py-[0.45rem] text-[0.95rem] leading-none font-medium tracking-[0.16em] text-foreground uppercase whitespace-nowrap backdrop-blur-[10px]'
 
 type CircleExpandContractTailwindProps = {
   className?: string
+  expandDuration?: number
+  contractDuration?: number
 }
 
 export function CircleExpandContractTailwind({
   className,
+  expandDuration,
+  contractDuration,
 }: CircleExpandContractTailwindProps) {
+  const expand = circleExpandContractDurationSeconds(expandDuration)
+  const contract = circleExpandContractDurationSeconds(contractDuration)
+  const cycle = expand + contract
+  const asymmetric = expand !== contract
+  const customAnimations = asymmetric
+    ? circleExpandContractAnimations(expand, contract, 'circle-expand-contract-tw')
+    : null
+  const keyframes = customAnimations ?? circleExpandContractTwDefaultKeyframes
+
+  const timing =
+    expand === contract
+      ? `Each movement takes ${circleExpandContractFormatSeconds(expand)} and repeats.`
+      : `Expanding takes ${circleExpandContractFormatSeconds(expand)}, contracting takes ${circleExpandContractFormatSeconds(contract)}, and the cycle repeats.`
+
+  const motionStyle = {
+    '--circle-tw-cycle-duration': `${cycle}s`,
+    '--circle-tw-cue-contract-delay': `${-expand}s`,
+    '--circle-tw-circle': keyframes.circle,
+    '--circle-tw-cue-expand': keyframes.cueExpand,
+    '--circle-tw-cue-contract': keyframes.cueContract,
+    '--circle-expand-contract-dot': '8px',
+  } as CSSProperties
+
   return (
-    <div className={cn('relative min-h-[calc(100svh-4.5rem)] flex-1', className)}>
+    <div
+      className={cn('relative min-h-[calc(100svh-4.5rem)] flex-1', className)}
+      style={motionStyle}
+    >
+      {customAnimations ? <style>{customAnimations.css}</style> : null}
       <p className="sr-only">
-        The circle expands to the width of the screen, then contracts to a dot.
-        Each movement takes three seconds and repeats.
+        The circle expands to the width of the screen, then contracts to a dot.{' '}
+        {timing}
       </p>
       <div
         className={cn(
           'pointer-events-none fixed top-1/2 left-1/2 size-[8px] -translate-x-1/2 -translate-y-1/2 rounded-full',
           'bg-[radial-gradient(circle_at_50%_42%,color-mix(in_oklch,var(--foreground)_76%,white),var(--foreground)_64%)]',
-          'animate-circle-expand-contract-tw-dilate motion-reduce:size-[min(240px,42vw)] motion-reduce:animate-none',
+          'motion-safe:animate-[var(--circle-tw-circle)_var(--circle-tw-cycle-duration)_ease-in-out_infinite]',
+          'motion-reduce:size-[min(240px,42vw)] motion-reduce:animate-none',
         )}
       />
       <p
@@ -30,7 +69,8 @@ export function CircleExpandContractTailwind({
         <span
           className={cn(
             cueClassName,
-            'animate-circle-expand-contract-tw-cue-expand motion-reduce:animate-none',
+            'motion-safe:animate-[var(--circle-tw-cue-expand)_var(--circle-tw-cycle-duration)_linear_infinite]',
+            'motion-reduce:animate-none',
           )}
         >
           Expand
@@ -38,7 +78,8 @@ export function CircleExpandContractTailwind({
         <span
           className={cn(
             cueClassName,
-            'animate-circle-expand-contract-tw-cue-contract motion-reduce:hidden',
+            'motion-safe:animate-[var(--circle-tw-cue-contract)_var(--circle-tw-cycle-duration)_linear_var(--circle-tw-cue-contract-delay)_infinite]',
+            'motion-reduce:hidden',
           )}
         >
           Contract

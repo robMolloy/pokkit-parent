@@ -17,9 +17,11 @@
     --radius-md: calc(var(--radius) * 0.8);
     --radius-lg: var(--radius);
 
-    --animate-circle-expand-contract-tw-dilate: circle-expand-contract-tw-dilate 6s ease-in-out infinite;
-    --animate-circle-expand-contract-tw-cue-expand: circle-expand-contract-tw-cue-expand 6s linear infinite;
-    --animate-circle-expand-contract-tw-cue-contract: circle-expand-contract-tw-cue-contract 6s linear -3s infinite;
+    --animate-circle-expand-contract-tw-dilate: circle-expand-contract-tw-dilate var(--circle-tw-cycle-duration, 6s) ease-in-out infinite;
+    --animate-circle-expand-contract-tw-cue-expand: circle-expand-contract-tw-cue-expand var(--circle-tw-cycle-duration, 6s) linear infinite;
+    --animate-circle-expand-contract-tw-cue-contract: circle-expand-contract-tw-cue-contract var(--circle-tw-cycle-duration, 6s) linear var(--circle-tw-cue-contract-delay, -3s) infinite;
+
+    --animate-circle-up-down: circle-up-down var(--circle-up-down-duration, 6s) ease-in-out infinite;
 
     @keyframes circle-expand-contract-tw-dilate {
         0%,
@@ -50,7 +52,21 @@
         }
     }
 
-    --animate-circle-up-down: circle-up-down 6s ease-in-out infinite;
+    @keyframes circle-expand-contract-tw-cue-contract {
+        0%,
+        42% {
+            opacity: 0;
+        }
+
+        50%,
+        92% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
 
     @keyframes circle-up-down {
         0%,
