@@ -1,9 +1,7 @@
 # Code implementation
 
-Prefer code that a reader can follow in one pass. Unnecessary abstraction—extra layers, indirection, generic helpers, or configuration-driven structure—often hides what actually happens and makes small changes harder.
+Write code someone can read straight through. Extra layers, indirection, and generic helpers often hide what’s actually happening.
 
-Duplication is not always wrong. Repeating a few lines in two places can be clearer than forcing everything through a shared abstraction that only kind of fits both call sites.
+Repeating a few lines in two places is fine if a shared abstraction would be a stretch. A bit longer and explicit beats short but spread across files.
 
-It is fine for code to be a little longer when that length is honest: explicit steps, named values, and straightforward control flow beat a short snippet that requires jumping through three files to understand.
-
-Reach for abstraction when the pattern is real, stable, and repeated—not because shorter line counts look tidy in a diff.
+Reach for abstraction when the same pattern keeps showing up—not just to keep the diff small.
