@@ -1,18 +1,17 @@
 import type { CSSProperties } from 'react'
 import { cn } from 'cn'
-import { circleExpandContractDurationSeconds } from '@/designs/circleExpandContractAnimation.ts'
 
 type CircleUpDownProps = {
   className?: string
-  /** One full up-and-down cycle in seconds. */
+  /** Full up-and-down cycle in seconds. */
   duration?: number
 }
 
-export function CircleUpDown({ className, duration }: CircleUpDownProps) {
-  const cycle = circleExpandContractDurationSeconds(duration) * 2
-  const motionStyle = {
-    '--circle-up-down-duration': `${cycle}s`,
-  } as CSSProperties
+export function CircleUpDown({ className, duration = 6 }: CircleUpDownProps) {
+  const motionTiming =
+    duration > 0 && Number.isFinite(duration)
+      ? ({ animationDuration: `${duration}s` } satisfies CSSProperties)
+      : undefined
 
   return (
     <div
@@ -20,13 +19,13 @@ export function CircleUpDown({ className, duration }: CircleUpDownProps) {
         'flex min-h-[calc(100svh-4.5rem)] flex-1 items-center justify-center',
         className,
       )}
-      style={motionStyle}
     >
       <p className="sr-only">
         A circle slowly rises, then falls. The motion repeats.
       </p>
       <div
         className="size-32 rounded-full bg-[radial-gradient(circle_at_50%_38%,white,var(--foreground)_68%)] shadow-lg motion-safe:animate-circle-up-down motion-reduce:animate-none"
+        style={motionTiming}
         aria-hidden="true"
       />
     </div>

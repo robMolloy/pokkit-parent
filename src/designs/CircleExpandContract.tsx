@@ -1,13 +1,10 @@
 import type { CSSProperties } from 'react'
 import { cn } from 'cn'
-import {
-  circleExpandContractAnimations,
-  circleExpandContractDurationSeconds,
-  circleExpandContractFormatSeconds,
-} from '@/designs/circleExpandContractAnimation.ts'
 import './CircleExpandContract.css'
 
 const dotSize = '8px'
+const defaultDuration = 3
+const cueVisiblePortion = 0.84
 
 type CircleExpandContractProps = {
   className?: string
@@ -15,21 +12,73 @@ type CircleExpandContractProps = {
   contractDuration?: number
 }
 
+function durationSeconds(value: number | undefined) {
+  if (value == null || !Number.isFinite(value) || value <= 0) {
+    return defaultDuration
+  }
+  return value
+}
+
+function formatSeconds(seconds: number) {
+  return `${seconds} ${seconds === 1 ? 'second' : 'seconds'}`
+}
+
+function percent(value: number) {
+  return `${Number(value.toFixed(4))}%`
+}
+
+function expandContractAnimations(expandDuration: number, contractDuration: number) {
+  const total = expandDuration + contractDuration
+  const expandEnd = (expandDuration / total) * 100
+  const expandFadeStart = expandEnd * cueVisiblePortion
+  const contractFadeStart = expandEnd + (100 - expandEnd) * cueVisiblePortion
+  const slug = `${expandDuration}-${contractDuration}`.replace(/[^a-zA-Z0-9_-]/g, '_')
+  const circle = `circle-expand-contract-dilate-${slug}`
+  const cueExpand = `circle-expand-contract-cue-expand-${slug}`
+  const cueContract = `circle-expand-contract-cue-contract-${slug}`
+  const held = percent(expandFadeStart)
+  const peak = percent(expandEnd)
+  const returning = percent(contractFadeStart)
+
+  const css = `
+@keyframes ${circle} {
+  0%, 100% {
+    width: var(--circle-expand-contract-dot);
+    height: var(--circle-expand-contract-dot);
+  }
+  ${peak} {
+    width: 100vw;
+    height: 100vw;
+  }
+}
+@keyframes ${cueExpand} {
+  0%, ${held} { opacity: 1; }
+  ${peak}, ${returning} { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes ${cueContract} {
+  0%, ${held} { opacity: 0; }
+  ${peak}, ${returning} { opacity: 1; }
+  100% { opacity: 0; }
+}
+`
+
+  return { circle, cueExpand, cueContract, css }
+}
+
 export function CircleExpandContract({
   className,
   expandDuration,
   contractDuration,
 }: CircleExpandContractProps) {
-  const expand = circleExpandContractDurationSeconds(expandDuration)
-  const contract = circleExpandContractDurationSeconds(contractDuration)
+  const expand = durationSeconds(expandDuration)
+  const contract = durationSeconds(contractDuration)
   const animations =
-    expand === contract
-      ? null
-      : circleExpandContractAnimations(expand, contract, 'circle-expand-contract')
+    expand === contract ? null : expandContractAnimations(expand, contract)
   const timing =
     expand === contract
-      ? `Each movement takes ${circleExpandContractFormatSeconds(expand)} and repeats.`
-      : `Expanding takes ${circleExpandContractFormatSeconds(expand)}, contracting takes ${circleExpandContractFormatSeconds(contract)}, and the cycle repeats.`
+      ? `Each movement takes ${formatSeconds(expand)} and repeats.`
+      : `Expanding takes ${formatSeconds(expand)}, contracting takes ${formatSeconds(contract)}, and the cycle repeats.`
 
   const circleStyle = {
     '--circle-expand-contract-expand': `${expand}s`,
