@@ -18,6 +18,11 @@ export default function DesignsPage() {
             description="The circle expands to the width of the screen, then contracts to a dot"
           />
           <NavLink
+            to="/designs/final-circle-expand-contract"
+            label="Final circle expand and contract"
+            description="Expand and contract with CSS keyframes and Tailwind—CircleUpDown-style simplicity"
+          />
+          <NavLink
             to="/designs/circle-expand-contract-tailwind"
             label="Circle expand and contract (Tailwind)"
             description="Same expand-and-contract motion built with Tailwind utilities"

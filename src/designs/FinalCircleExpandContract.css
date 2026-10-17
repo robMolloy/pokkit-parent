@@ -1,0 +1,86 @@
+.final-circle-expand-contract-circle {
+  width: 8px;
+  height: 8px;
+}
+
+@keyframes final-circle-expand-contract-dilate {
+  0%,
+  100% {
+    width: 8px;
+    height: 8px;
+  }
+
+  50% {
+    width: 100vw;
+    height: 100vw;
+  }
+}
+
+@keyframes final-circle-expand-contract-cue-expand {
+  0%,
+  42% {
+    opacity: 1;
+  }
+
+  50%,
+  92% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes final-circle-expand-contract-cue-contract {
+  0%,
+  42% {
+    opacity: 0;
+  }
+
+  50%,
+  92% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .final-circle-expand-contract-circle {
+    animation-name: final-circle-expand-contract-dilate;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+
+  .final-circle-expand-contract-cue-expand {
+    animation-name: final-circle-expand-contract-cue-expand;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  .final-circle-expand-contract-cue-contract {
+    animation-name: final-circle-expand-contract-cue-contract;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .final-circle-expand-contract-circle {
+    animation: none;
+    width: min(240px, 42vw);
+    height: min(240px, 42vw);
+  }
+
+  .final-circle-expand-contract-cue-expand,
+  .final-circle-expand-contract-cue-contract {
+    animation: none;
+  }
+
+  .final-circle-expand-contract-cue-contract {
+    display: none;
+  }
+}
