@@ -10,8 +10,8 @@ const designLinks = [
     label: 'Circle expand, contract (Tailwind)',
   },
   {
-    to: '/designs/squeeze-relax',
-    label: 'Squeeze, relax',
+    to: '/designs/circle-up-down',
+    label: 'Circle up, down',
   },
 ]
 
