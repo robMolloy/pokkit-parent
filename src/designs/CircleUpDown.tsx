@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react'
 import { cn } from 'cn'
+import './CircleUpDown.css'
 
 type CircleUpDownProps = {
   className?: string
@@ -24,7 +25,7 @@ export function CircleUpDown({ className, duration }: CircleUpDownProps) {
         className={cn(
           'pointer-events-none fixed top-1/2 left-1/2 size-32 rounded-full shadow-lg',
           'bg-[radial-gradient(circle_at_50%_38%,color-mix(in_oklch,var(--foreground)_76%,white),var(--foreground)_68%)]',
-          'motion-safe:animate-circle-up-down-tw-float motion-reduce:-translate-x-1/2 motion-reduce:-translate-y-1/2 motion-reduce:animate-none',
+          'circle-up-down-circle motion-reduce:-translate-x-1/2 motion-reduce:-translate-y-1/2 motion-reduce:animate-none',
         )}
         style={motionTiming}
       />
