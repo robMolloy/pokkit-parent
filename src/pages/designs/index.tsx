@@ -30,7 +30,7 @@ export default function DesignsPage() {
           <NavLink
             to="/designs/circle-up-down"
             label="Circle up and down"
-            description="A circle slowly rises, then falls—Tailwind layout with CSS keyframe motion"
+            description="A circle slowly rises, then falls—CSS keyframe motion"
           />
         </VerticalNavList>
       </Nav>
