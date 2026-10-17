@@ -17,11 +17,11 @@
     --radius-md: calc(var(--radius) * 0.8);
     --radius-lg: var(--radius);
 
-    --animate-breathe-tw-dilate: breathe-tw-dilate 6s ease-in-out infinite;
-    --animate-breathe-tw-cue: breathe-tw-cue 6s linear infinite;
-    --animate-breathe-tw-cue-out: breathe-tw-cue 6s linear -3s infinite;
+    --animate-circle-expand-contract-tw-dilate: circle-expand-contract-tw-dilate 6s ease-in-out infinite;
+    --animate-circle-expand-contract-tw-cue-expand: circle-expand-contract-tw-cue-expand 6s linear infinite;
+    --animate-circle-expand-contract-tw-cue-contract: circle-expand-contract-tw-cue-contract 6s linear -3s infinite;
 
-    @keyframes breathe-tw-dilate {
+    @keyframes circle-expand-contract-tw-dilate {
         0%,
         100% {
             width: 8px;
@@ -34,7 +34,7 @@
         }
     }
 
-    @keyframes breathe-tw-cue {
+    @keyframes circle-expand-contract-tw-cue-expand {
         0%,
         42% {
             opacity: 1;
@@ -50,9 +50,9 @@
         }
     }
 
-    --animate-squeeze-relax: squeeze-relax 6s ease-in-out infinite;
+    --animate-circle-up-down: circle-up-down 6s ease-in-out infinite;
 
-    @keyframes squeeze-relax {
+    @keyframes circle-up-down {
         0%,
         100% {
             translate: 0 18vh;

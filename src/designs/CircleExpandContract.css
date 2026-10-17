@@ -1,21 +1,21 @@
-.breathe {
-  --breathe-in: 3s;
-  --breathe-out: 3s;
-  --breathe-dot: 8px;
-  --breathe-circle: breathe-dilate;
-  --breathe-cue-in: breathe-cue-in;
-  --breathe-cue-out: breathe-cue-out;
+.circle-expand-contract {
+  --circle-expand-contract-expand: 3s;
+  --circle-expand-contract-contract: 3s;
+  --circle-expand-contract-dot: 8px;
+  --circle-expand-contract-circle: circle-expand-contract-dilate;
+  --circle-expand-contract-cue-expand: circle-expand-contract-cue-expand;
+  --circle-expand-contract-cue-contract: circle-expand-contract-cue-contract;
   position: relative;
   flex: 1;
   min-height: calc(100svh - 4.5rem);
 }
 
-.breathe-circle {
+.circle-expand-contract-circle {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: var(--breathe-dot);
-  height: var(--breathe-dot);
+  width: var(--circle-expand-contract-dot);
+  height: var(--circle-expand-contract-dot);
   translate: -50% -50%;
   border-radius: 50%;
   background: radial-gradient(
@@ -24,17 +24,19 @@
     var(--foreground) 64%
   );
   pointer-events: none;
-  animation-name: var(--breathe-circle);
-  animation-duration: calc(var(--breathe-in) + var(--breathe-out));
+  animation-name: var(--circle-expand-contract-circle);
+  animation-duration: calc(
+    var(--circle-expand-contract-expand) + var(--circle-expand-contract-contract)
+  );
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
 
-@keyframes breathe-dilate {
+@keyframes circle-expand-contract-dilate {
   0%,
   100% {
-    width: var(--breathe-dot);
-    height: var(--breathe-dot);
+    width: var(--circle-expand-contract-dot);
+    height: var(--circle-expand-contract-dot);
   }
 
   50% {
@@ -43,7 +45,7 @@
   }
 }
 
-.breathe-cue {
+.circle-expand-contract-cue {
   position: fixed;
   top: calc(50% + clamp(40px, 8vh, 72px));
   left: 50%;
@@ -55,7 +57,7 @@
   pointer-events: none;
 }
 
-.breathe-cue span {
+.circle-expand-contract-cue span {
   grid-area: 1 / 1;
   padding: 0.45rem 0.95rem;
   border: 1px solid color-mix(in oklch, var(--foreground) 14%, transparent);
@@ -69,20 +71,22 @@
   white-space: nowrap;
   text-transform: uppercase;
   backdrop-filter: blur(10px);
-  animation-duration: calc(var(--breathe-in) + var(--breathe-out));
+  animation-duration: calc(
+    var(--circle-expand-contract-expand) + var(--circle-expand-contract-contract)
+  );
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
 
-.breathe-cue-in {
-  animation-name: var(--breathe-cue-in);
+.circle-expand-contract-cue-expand {
+  animation-name: var(--circle-expand-contract-cue-expand);
 }
 
-.breathe-cue-out {
-  animation-name: var(--breathe-cue-out);
+.circle-expand-contract-cue-contract {
+  animation-name: var(--circle-expand-contract-cue-contract);
 }
 
-@keyframes breathe-cue-in {
+@keyframes circle-expand-contract-cue-expand {
   0%,
   42% {
     opacity: 1;
@@ -98,7 +102,7 @@
   }
 }
 
-@keyframes breathe-cue-out {
+@keyframes circle-expand-contract-cue-contract {
   0%,
   42% {
     opacity: 0;
@@ -115,17 +119,17 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .breathe-circle,
-  .breathe-cue span {
+  .circle-expand-contract-circle,
+  .circle-expand-contract-cue span {
     animation: none;
   }
 
-  .breathe-circle {
+  .circle-expand-contract-circle {
     width: min(240px, 42vw);
     height: min(240px, 42vw);
   }
 
-  .breathe-cue-out {
+  .circle-expand-contract-cue-contract {
     display: none;
   }
 }
