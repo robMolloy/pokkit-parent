@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react'
+import { cn } from 'cn'
 import './FinalCircleExpandContract.css'
 
 type FinalCircleExpandContractProps = {
@@ -24,7 +25,11 @@ export function FinalCircleExpandContract({
         Each movement takes {phase} {phase === 1 ? 'second' : 'seconds'} and repeats.
       </p>
       <div
-        className="final-circle-expand-contract-circle"
+        className={cn(
+          'final-circle-expand-contract-circle fixed top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full',
+          'bg-[radial-gradient(circle_at_50%_42%,color-mix(in_oklch,var(--foreground)_76%,white),var(--foreground)_64%)]',
+          'motion-reduce:size-[min(240px,42vw)]',
+        )}
         style={motionTiming}
       />
     </div>

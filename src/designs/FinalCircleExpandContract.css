@@ -1,18 +1,3 @@
-.final-circle-expand-contract-circle {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  translate: -50% -50%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 50% 42%,
-    color-mix(in oklch, var(--foreground) 76%, white),
-    var(--foreground) 64%
-  );
-}
-
 @keyframes final-circle-expand-contract-dilate {
   0%,
   100% {
@@ -31,13 +16,5 @@
     animation-name: final-circle-expand-contract-dilate;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .final-circle-expand-contract-circle {
-    animation: none;
-    width: min(240px, 42vw);
-    height: min(240px, 42vw);
   }
 }
