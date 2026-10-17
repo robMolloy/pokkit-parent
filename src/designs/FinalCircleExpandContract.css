@@ -1,6 +1,16 @@
 .final-circle-expand-contract-circle {
+  position: fixed;
+  top: 50%;
+  left: 50%;
   width: 8px;
   height: 8px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 42%,
+    color-mix(in oklch, var(--foreground) 76%, white),
+    var(--foreground) 64%
+  );
 }
 
 @keyframes final-circle-expand-contract-dilate {
