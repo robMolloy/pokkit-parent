@@ -1,4 +1,0 @@
-@import "tailwindcss";
-@import "./App.css";
-
-@custom-variant dark (&:is(.dark *));
