@@ -28,10 +28,27 @@ export function SimpleCircleExpandContract({
   } satisfies CSSProperties
 
   useEffect(() => {
-    const id = window.setInterval(() => {
-      setExpanded((value) => !value)
-    }, phase * 1000)
-    return () => window.clearInterval(id)
+    let intervalId: number | undefined
+    let innerFrame: number | undefined
+
+    const outerFrame = window.requestAnimationFrame(() => {
+      innerFrame = window.requestAnimationFrame(() => {
+        setExpanded(true)
+        intervalId = window.setInterval(() => {
+          setExpanded((value) => !value)
+        }, phase * 1000)
+      })
+    })
+
+    return () => {
+      window.cancelAnimationFrame(outerFrame)
+      if (innerFrame !== undefined) {
+        window.cancelAnimationFrame(innerFrame)
+      }
+      if (intervalId !== undefined) {
+        window.clearInterval(intervalId)
+      }
+    }
   }, [phase])
 
   return (
