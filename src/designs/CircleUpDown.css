@@ -1,0 +1,41 @@
+.circle-up-down {
+  --circle-up-down-phase: 3s;
+  position: relative;
+  flex: 1;
+  min-height: calc(100svh - 4.5rem);
+}
+
+.circle-up-down-circle {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 38%,
+    color-mix(in oklch, var(--foreground) 76%, white),
+    var(--foreground) 68%
+  );
+  pointer-events: none;
+  animation: circle-up-down-float calc(2 * var(--circle-up-down-phase)) ease-in-out
+    infinite;
+}
+
+@keyframes circle-up-down-float {
+  0%,
+  100% {
+    translate: -50% -50%;
+  }
+
+  50% {
+    translate: -50% calc(-50% - min(28vh, 11rem));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .circle-up-down-circle {
+    animation: none;
+    translate: -50% -50%;
+  }
+}
