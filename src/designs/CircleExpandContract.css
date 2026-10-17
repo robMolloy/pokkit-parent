@@ -1,42 +1,8 @@
-.circle-expand-contract {
-  --circle-expand-contract-expand: 3s;
-  --circle-expand-contract-contract: 3s;
-  --circle-expand-contract-dot: 8px;
-  --circle-expand-contract-circle: circle-expand-contract-dilate;
-  --circle-expand-contract-cue-expand: circle-expand-contract-cue-expand;
-  --circle-expand-contract-cue-contract: circle-expand-contract-cue-contract;
-  position: relative;
-  flex: 1;
-  min-height: calc(100svh - 4.5rem);
-}
-
-.circle-expand-contract-circle {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: var(--circle-expand-contract-dot);
-  height: var(--circle-expand-contract-dot);
-  translate: -50% -50%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 50% 42%,
-    color-mix(in oklch, var(--foreground) 76%, white),
-    var(--foreground) 64%
-  );
-  pointer-events: none;
-  animation-name: var(--circle-expand-contract-circle);
-  animation-duration: calc(
-    var(--circle-expand-contract-expand) + var(--circle-expand-contract-contract)
-  );
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-
 @keyframes circle-expand-contract-dilate {
   0%,
   100% {
-    width: var(--circle-expand-contract-dot);
-    height: var(--circle-expand-contract-dot);
+    width: 8px;
+    height: 8px;
   }
 
   50% {
@@ -45,91 +11,10 @@
   }
 }
 
-.circle-expand-contract-cue {
-  position: fixed;
-  top: calc(50% + clamp(40px, 8vh, 72px));
-  left: 50%;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  margin: 0;
-  translate: -50% 0;
-  pointer-events: none;
-}
-
-.circle-expand-contract-cue span {
-  grid-area: 1 / 1;
-  padding: 0.45rem 0.95rem;
-  border: 1px solid color-mix(in oklch, var(--foreground) 14%, transparent);
-  border-radius: 999px;
-  background: color-mix(in oklch, var(--background) 88%, transparent);
-  color: var(--foreground);
-  font-size: 0.95rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  line-height: 1;
-  white-space: nowrap;
-  text-transform: uppercase;
-  backdrop-filter: blur(10px);
-  animation-duration: calc(
-    var(--circle-expand-contract-expand) + var(--circle-expand-contract-contract)
-  );
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.circle-expand-contract-cue-expand {
-  animation-name: var(--circle-expand-contract-cue-expand);
-}
-
-.circle-expand-contract-cue-contract {
-  animation-name: var(--circle-expand-contract-cue-contract);
-}
-
-@keyframes circle-expand-contract-cue-expand {
-  0%,
-  42% {
-    opacity: 1;
-  }
-
-  50%,
-  92% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes circle-expand-contract-cue-contract {
-  0%,
-  42% {
-    opacity: 0;
-  }
-
-  50%,
-  92% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .circle-expand-contract-circle,
-  .circle-expand-contract-cue span {
-    animation: none;
-  }
-
+@media (prefers-reduced-motion: no-preference) {
   .circle-expand-contract-circle {
-    width: min(240px, 42vw);
-    height: min(240px, 42vw);
-  }
-
-  .circle-expand-contract-cue-contract {
-    display: none;
+    animation-name: circle-expand-contract-dilate;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
   }
 }

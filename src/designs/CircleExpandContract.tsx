@@ -2,101 +2,36 @@ import type { CSSProperties } from 'react'
 import { cn } from 'cn'
 import './CircleExpandContract.css'
 
-const dotSize = '8px'
-const cueVisiblePortion = 0.84
-
 type CircleExpandContractProps = {
   className?: string
-  expandDuration: number
-  contractDuration: number
-}
-
-function formatSeconds(seconds: number) {
-  return `${seconds} ${seconds === 1 ? 'second' : 'seconds'}`
-}
-
-function percent(value: number) {
-  return `${Number(value.toFixed(4))}%`
-}
-
-function expandContractAnimations(expandDuration: number, contractDuration: number) {
-  const total = expandDuration + contractDuration
-  const expandEnd = (expandDuration / total) * 100
-  const expandFadeStart = expandEnd * cueVisiblePortion
-  const contractFadeStart = expandEnd + (100 - expandEnd) * cueVisiblePortion
-  const slug = `${expandDuration}-${contractDuration}`.replace(/[^a-zA-Z0-9_-]/g, '_')
-  const circle = `circle-expand-contract-dilate-${slug}`
-  const cueExpand = `circle-expand-contract-cue-expand-${slug}`
-  const cueContract = `circle-expand-contract-cue-contract-${slug}`
-  const held = percent(expandFadeStart)
-  const peak = percent(expandEnd)
-  const returning = percent(contractFadeStart)
-
-  const css = `
-@keyframes ${circle} {
-  0%, 100% {
-    width: var(--circle-expand-contract-dot);
-    height: var(--circle-expand-contract-dot);
-  }
-  ${peak} {
-    width: 100vw;
-    height: 100vw;
-  }
-}
-@keyframes ${cueExpand} {
-  0%, ${held} { opacity: 1; }
-  ${peak}, ${returning} { opacity: 0; }
-  100% { opacity: 1; }
-}
-@keyframes ${cueContract} {
-  0%, ${held} { opacity: 0; }
-  ${peak}, ${returning} { opacity: 1; }
-  100% { opacity: 0; }
-}
-`
-
-  return { circle, cueExpand, cueContract, css }
+  /** Seconds for one expand or one contract (full cycle is twice this). */
+  duration: number
 }
 
 export function CircleExpandContract({
   className,
-  expandDuration,
-  contractDuration,
+  duration,
 }: CircleExpandContractProps) {
-  const expand = expandDuration
-  const contract = contractDuration
-  const animations =
-    expand === contract ? null : expandContractAnimations(expand, contract)
-  const timing =
-    expand === contract
-      ? `Each movement takes ${formatSeconds(expand)} and repeats.`
-      : `Expanding takes ${formatSeconds(expand)}, contracting takes ${formatSeconds(contract)}, and the cycle repeats.`
-
-  const circleStyle = {
-    '--circle-expand-contract-expand': `${expand}s`,
-    '--circle-expand-contract-contract': `${contract}s`,
-    '--circle-expand-contract-dot': dotSize,
-    ...(animations
-      ? {
-          '--circle-expand-contract-circle': animations.circle,
-          '--circle-expand-contract-cue-expand': animations.cueExpand,
-          '--circle-expand-contract-cue-contract': animations.cueContract,
-        }
-      : null),
-  } as CSSProperties
+  const phase = duration
+  const cycle = phase * 2
+  const motionTiming = {
+    animationDuration: `${cycle}s`,
+  } satisfies CSSProperties
 
   return (
-    <div className={cn('circle-expand-contract', className)} style={circleStyle}>
-      {animations ? <style>{animations.css}</style> : null}
+    <div className={className}>
       <p className="sr-only">
-        The circle expands to the width of the screen, then contracts to a dot.{' '}
-        {timing}
+        The circle expands to the width of the screen, then contracts to a dot.
+        Each movement takes {phase} {phase === 1 ? 'second' : 'seconds'} and repeats.
       </p>
-      <div className="circle-expand-contract-circle" />
-      <p className="circle-expand-contract-cue" aria-hidden="true">
-        <span className="circle-expand-contract-cue-expand">Expand</span>
-        <span className="circle-expand-contract-cue-contract">Contract</span>
-      </p>
+      <div
+        className={cn(
+          'circle-expand-contract-circle fixed top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full',
+          'bg-[radial-gradient(circle_at_50%_42%,color-mix(in_oklch,var(--foreground)_76%,white),var(--foreground)_64%)]',
+          'motion-reduce:size-[min(240px,42vw)]',
+        )}
+        style={motionTiming}
+      />
     </div>
   )
 }
