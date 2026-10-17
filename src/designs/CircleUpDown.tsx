@@ -1,26 +1,17 @@
 import type { CSSProperties } from 'react'
 import { cn } from 'cn'
 
-const defaultDuration = 3
-
 const cueClassName =
   'col-start-1 row-start-1 rounded-full border border-foreground/14 bg-background/88 px-[0.95rem] py-[0.45rem] text-[0.95rem] leading-none font-medium tracking-[0.16em] text-foreground uppercase whitespace-nowrap backdrop-blur-[10px]'
 
 type CircleUpDownProps = {
   className?: string
   /** Seconds for one rise or one fall (full cycle is twice this). */
-  duration?: number
-}
-
-function durationSeconds(value: number | undefined) {
-  if (value == null || !Number.isFinite(value) || value <= 0) {
-    return defaultDuration
-  }
-  return value
+  duration: number
 }
 
 export function CircleUpDown({ className, duration }: CircleUpDownProps) {
-  const phase = durationSeconds(duration)
+  const phase = duration
   const cycle = phase * 2
   const motionTiming = {
     animationDuration: `${cycle}s`,

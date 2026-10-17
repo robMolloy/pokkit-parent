@@ -3,20 +3,12 @@ import { cn } from 'cn'
 import './CircleExpandContract.css'
 
 const dotSize = '8px'
-const defaultDuration = 3
 const cueVisiblePortion = 0.84
 
 type CircleExpandContractProps = {
   className?: string
-  expandDuration?: number
-  contractDuration?: number
-}
-
-function durationSeconds(value: number | undefined) {
-  if (value == null || !Number.isFinite(value) || value <= 0) {
-    return defaultDuration
-  }
-  return value
+  expandDuration: number
+  contractDuration: number
 }
 
 function formatSeconds(seconds: number) {
@@ -71,8 +63,8 @@ export function CircleExpandContract({
   expandDuration,
   contractDuration,
 }: CircleExpandContractProps) {
-  const expand = durationSeconds(expandDuration)
-  const contract = durationSeconds(contractDuration)
+  const expand = expandDuration
+  const contract = contractDuration
   const animations =
     expand === contract ? null : expandContractAnimations(expand, contract)
   const timing =
