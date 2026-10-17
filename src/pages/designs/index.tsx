@@ -1,20 +1,5 @@
 import { NavLink } from 'react-router'
 
-const designLinks = [
-  {
-    to: '/designs/circle-expand-contract',
-    label: 'Circle expand and contract',
-  },
-  {
-    to: '/designs/circle-expand-contract-tailwind',
-    label: 'Circle expand and contract (Tailwind)',
-  },
-  {
-    to: '/designs/circle-up-down',
-    label: 'Circle up and down',
-  },
-]
-
 export default function DesignsPage() {
   return (
     <section id="center">
@@ -26,11 +11,13 @@ export default function DesignsPage() {
         </p>
       </div>
       <nav className="designs-nav" aria-label="Designs">
-        {designLinks.map((link) => (
-          <NavLink key={link.to} to={link.to}>
-            {link.label}
-          </NavLink>
-        ))}
+        <NavLink to="/designs/circle-expand-contract">
+          Circle expand and contract
+        </NavLink>
+        <NavLink to="/designs/circle-expand-contract-tailwind">
+          Circle expand and contract (Tailwind)
+        </NavLink>
+        <NavLink to="/designs/circle-up-down">Circle up and down</NavLink>
       </nav>
     </section>
   )
