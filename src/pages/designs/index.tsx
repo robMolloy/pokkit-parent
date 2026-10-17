@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router'
+import { Nav, NavLink, VerticalNavList } from '@/components/Nav'
 
 export default function DesignsPage() {
   return (
@@ -10,15 +10,25 @@ export default function DesignsPage() {
           <code>designs/index.tsx</code>, so it is served at <code>/designs</code>.
         </p>
       </div>
-      <nav className="designs-nav" aria-label="Designs">
-        <NavLink to="/designs/circle-expand-contract">
-          Circle expand and contract
-        </NavLink>
-        <NavLink to="/designs/circle-expand-contract-tailwind">
-          Circle expand and contract (Tailwind)
-        </NavLink>
-        <NavLink to="/designs/circle-up-down">Circle up and down</NavLink>
-      </nav>
+      <Nav aria-label="Designs">
+        <VerticalNavList>
+          <NavLink
+            to="/designs/circle-expand-contract"
+            label="Circle expand and contract"
+            description="The circle expands to the width of the screen, then contracts to a dot"
+          />
+          <NavLink
+            to="/designs/circle-expand-contract-tailwind"
+            label="Circle expand and contract (Tailwind)"
+            description="Same expand-and-contract motion built with Tailwind utilities"
+          />
+          <NavLink
+            to="/designs/circle-up-down"
+            label="Circle up and down"
+            description="A circle slowly rises, then falls"
+          />
+        </VerticalNavList>
+      </Nav>
     </section>
   )
 }
