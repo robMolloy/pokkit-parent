@@ -49,11 +49,11 @@
 }
 
 @theme {
-    --animate-breathe-tw-dilate: breathe-tw-dilate 6s ease-in-out infinite;
-    --animate-breathe-tw-cue: breathe-tw-cue 6s linear infinite;
-    --animate-breathe-tw-cue-out: breathe-tw-cue 6s linear -3s infinite;
+    --animate-circle-expand-contract: circle-expand-contract-tw 6s ease-in-out infinite;
+    --animate-circle-expand-cue: circle-expand-cue-tw 6s linear infinite;
+    --animate-circle-contract-cue: circle-expand-cue-tw 6s linear -3s infinite;
 
-    @keyframes breathe-tw-dilate {
+    @keyframes circle-expand-contract-tw {
         0%,
         100% {
             width: 8px;
@@ -66,7 +66,7 @@
         }
     }
 
-    @keyframes breathe-tw-cue {
+    @keyframes circle-expand-cue-tw {
         0%,
         42% {
             opacity: 1;
@@ -82,9 +82,9 @@
         }
     }
 
-    --animate-squeeze-relax: squeeze-relax 6s ease-in-out infinite;
+    --animate-circle-up-down: circle-up-down 6s ease-in-out infinite;
 
-    @keyframes squeeze-relax {
+    @keyframes circle-up-down {
         0%,
         100% {
             translate: 0 18vh;

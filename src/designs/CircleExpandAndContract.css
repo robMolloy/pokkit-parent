@@ -1,21 +1,21 @@
-.breathe {
-  --breathe-in: 3s;
-  --breathe-out: 3s;
-  --breathe-dot: 8px;
-  --breathe-circle: breathe-dilate;
-  --breathe-cue-in: breathe-cue-in;
-  --breathe-cue-out: breathe-cue-out;
+.circle-expand {
+  --circle-expand: 3s;
+  --circle-contract: 3s;
+  --circle-dot: 8px;
+  --circle-motion: circle-expand-contract;
+  --circle-cue-expand: circle-expand-cue;
+  --circle-cue-contract: circle-contract-cue;
   position: relative;
   flex: 1;
   min-height: calc(100svh - 4.5rem);
 }
 
-.breathe-circle {
+.circle-expand-shape {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: var(--breathe-dot);
-  height: var(--breathe-dot);
+  width: var(--circle-dot);
+  height: var(--circle-dot);
   translate: -50% -50%;
   border-radius: 50%;
   background: radial-gradient(
@@ -24,17 +24,17 @@
     var(--foreground) 64%
   );
   pointer-events: none;
-  animation-name: var(--breathe-circle);
-  animation-duration: calc(var(--breathe-in) + var(--breathe-out));
+  animation-name: var(--circle-motion);
+  animation-duration: calc(var(--circle-expand) + var(--circle-contract));
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
 
-@keyframes breathe-dilate {
+@keyframes circle-expand-contract {
   0%,
   100% {
-    width: var(--breathe-dot);
-    height: var(--breathe-dot);
+    width: var(--circle-dot);
+    height: var(--circle-dot);
   }
 
   50% {
@@ -43,7 +43,7 @@
   }
 }
 
-.breathe-cue {
+.circle-expand-cue {
   position: fixed;
   top: calc(50% + clamp(40px, 8vh, 72px));
   left: 50%;
@@ -55,7 +55,7 @@
   pointer-events: none;
 }
 
-.breathe-cue span {
+.circle-expand-cue span {
   grid-area: 1 / 1;
   padding: 0.45rem 0.95rem;
   border: 1px solid color-mix(in oklch, var(--foreground) 14%, transparent);
@@ -69,20 +69,20 @@
   white-space: nowrap;
   text-transform: uppercase;
   backdrop-filter: blur(10px);
-  animation-duration: calc(var(--breathe-in) + var(--breathe-out));
+  animation-duration: calc(var(--circle-expand) + var(--circle-contract));
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
 
-.breathe-cue-in {
-  animation-name: var(--breathe-cue-in);
+.circle-expand-cue-expand {
+  animation-name: var(--circle-cue-expand);
 }
 
-.breathe-cue-out {
-  animation-name: var(--breathe-cue-out);
+.circle-expand-cue-contract {
+  animation-name: var(--circle-cue-contract);
 }
 
-@keyframes breathe-cue-in {
+@keyframes circle-expand-cue {
   0%,
   42% {
     opacity: 1;
@@ -98,7 +98,7 @@
   }
 }
 
-@keyframes breathe-cue-out {
+@keyframes circle-contract-cue {
   0%,
   42% {
     opacity: 0;
@@ -115,17 +115,17 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .breathe-circle,
-  .breathe-cue span {
+  .circle-expand-shape,
+  .circle-expand-cue span {
     animation: none;
   }
 
-  .breathe-circle {
+  .circle-expand-shape {
     width: min(240px, 42vw);
     height: min(240px, 42vw);
   }
 
-  .breathe-cue-out {
+  .circle-expand-cue-contract {
     display: none;
   }
 }

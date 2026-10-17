@@ -3,25 +3,24 @@ import { cn } from 'cn'
 const cueClassName =
   'col-start-1 row-start-1 rounded-full border border-foreground/14 bg-background/88 px-[0.95rem] py-[0.45rem] text-[0.95rem] leading-none font-medium tracking-[0.16em] text-foreground uppercase whitespace-nowrap backdrop-blur-[10px]'
 
-type BreatheInBreatheOutTailwindProps = {
+type CircleExpandAndContractTailwindProps = {
   className?: string
 }
 
-export function BreatheInBreatheOutTailwind({
+export function CircleExpandAndContractTailwind({
   className,
-}: BreatheInBreatheOutTailwindProps) {
+}: CircleExpandAndContractTailwindProps) {
   return (
     <div className={cn('relative min-h-[calc(100svh-4.5rem)] flex-1', className)}>
       <p className="sr-only">
-        Breathe in as the circle expands to the width of the screen, then
-        breathe out as it shrinks to a dot. Each movement takes three seconds
-        and repeats.
+        The circle expands to the width of the screen, then contracts to a
+        dot. Each movement takes three seconds and repeats.
       </p>
       <div
         className={cn(
           'pointer-events-none fixed top-1/2 left-1/2 size-[8px] -translate-x-1/2 -translate-y-1/2 rounded-full',
           'bg-[radial-gradient(circle_at_50%_42%,color-mix(in_oklch,var(--foreground)_76%,white),var(--foreground)_64%)]',
-          'animate-breathe-tw-dilate motion-reduce:size-[min(240px,42vw)] motion-reduce:animate-none',
+          'animate-circle-expand-contract motion-reduce:size-[min(240px,42vw)] motion-reduce:animate-none',
         )}
       />
       <p
@@ -29,12 +28,17 @@ export function BreatheInBreatheOutTailwind({
         aria-hidden="true"
       >
         <span
-          className={cn(cueClassName, 'animate-breathe-tw-cue motion-reduce:animate-none')}
+          className={cn(
+            cueClassName,
+            'animate-circle-expand-cue motion-reduce:animate-none',
+          )}
         >
-          Breathe in
+          Expand
         </span>
-        <span className={cn(cueClassName, 'animate-breathe-tw-cue-out motion-reduce:hidden')}>
-          Breathe out
+        <span
+          className={cn(cueClassName, 'animate-circle-contract-cue motion-reduce:hidden')}
+        >
+          Contract
         </span>
       </p>
     </div>
