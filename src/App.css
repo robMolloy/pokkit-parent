@@ -1,3 +1,103 @@
+@theme inline {
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+
+    --animate-breathe-tw-dilate: breathe-tw-dilate 6s ease-in-out infinite;
+    --animate-breathe-tw-cue: breathe-tw-cue 6s linear infinite;
+    --animate-breathe-tw-cue-out: breathe-tw-cue 6s linear -3s infinite;
+
+    @keyframes breathe-tw-dilate {
+        0%,
+        100% {
+            width: 8px;
+            height: 8px;
+        }
+
+        50% {
+            width: 100vw;
+            height: 100vw;
+        }
+    }
+
+    @keyframes breathe-tw-cue {
+        0%,
+        42% {
+            opacity: 1;
+        }
+
+        50%,
+        92% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    --animate-squeeze-relax: squeeze-relax 6s ease-in-out infinite;
+
+    @keyframes squeeze-relax {
+        0%,
+        100% {
+            translate: 0 18vh;
+        }
+
+        50% {
+            translate: 0 -18vh;
+        }
+    }
+}
+
+:root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --radius: 0.625rem;
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+}
+
 .site-nav {
   position: relative;
   z-index: 2;
