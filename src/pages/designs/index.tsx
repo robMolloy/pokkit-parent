@@ -2,16 +2,16 @@ import { NavLink } from 'react-router'
 
 const designLinks = [
   {
-    to: '/designs/breathe-in-breathe-out',
-    label: 'Breathe in, breathe out',
+    to: '/designs/circle-expand-contract',
+    label: 'Circle expand, contract',
   },
   {
-    to: '/designs/breathe-in-breathe-out-tailwind',
-    label: 'Breathe in, breathe out (Tailwind)',
+    to: '/designs/circle-expand-contract-tailwind',
+    label: 'Circle expand, contract (Tailwind)',
   },
   {
-    to: '/designs/squeeze-relax',
-    label: 'Squeeze, relax',
+    to: '/designs/circle-up-down',
+    label: 'Circle up, down',
   },
 ]
 

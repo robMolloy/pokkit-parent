@@ -46,9 +46,9 @@
         }
     }
 
-    --animate-squeeze-relax: squeeze-relax 6s ease-in-out infinite;
+    --animate-circle-up-down: circle-up-down 6s ease-in-out infinite;
 
-    @keyframes squeeze-relax {
+    @keyframes circle-up-down {
         0%,
         100% {
             translate: 0 18vh;

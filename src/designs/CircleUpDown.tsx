@@ -1,10 +1,10 @@
 import { cn } from 'cn'
 
-type SqueezeRelaxProps = {
+type CircleUpDownProps = {
   className?: string
 }
 
-export function SqueezeRelax({ className }: SqueezeRelaxProps) {
+export function CircleUpDown({ className }: CircleUpDownProps) {
   return (
     <div
       className={cn(
@@ -16,7 +16,7 @@ export function SqueezeRelax({ className }: SqueezeRelaxProps) {
         A ball slowly rises, then falls. The motion repeats.
       </p>
       <div
-        className="size-32 rounded-full bg-[radial-gradient(circle_at_50%_38%,white,var(--foreground)_68%)] shadow-lg motion-safe:animate-squeeze-relax"
+        className="size-32 rounded-full bg-[radial-gradient(circle_at_50%_38%,white,var(--foreground)_68%)] shadow-lg motion-safe:animate-circle-up-down"
         aria-hidden="true"
       />
     </div>
