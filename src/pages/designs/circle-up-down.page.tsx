@@ -18,7 +18,7 @@ export default function CircleUpDownPage() {
         />
         <span className="text-muted-foreground tabular-nums">{duration}s</span>
       </label>
-      <CircleUpDown duration={duration} />
+      <CircleUpDown className="flex-1 min-h-0" duration={duration} />
     </div>
   )
 }
