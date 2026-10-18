@@ -13,6 +13,11 @@ export default function DesignsPage() {
       <Nav aria-label="Designs">
         <VerticalNavList>
           <NavLink
+            to="/docs/todo-list"
+            label="Simplify styles"
+            description="Consolidate CSS across designs and shared components (see docs to-do list)"
+          />
+          <NavLink
             to="/designs/circle-expand-contract"
             label="Circle expand and contract"
             description="The circle expands to the width of the screen, then contracts to a dot"

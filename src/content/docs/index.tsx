@@ -9,6 +9,11 @@ export default function DocsContent() {
       <Nav aria-label="Docs">
         <VerticalNavList>
           <NavLink
+            to="/docs/todo-list"
+            label="To-do list"
+            description="Open tasks for the site, starting with simplifying styles"
+          />
+          <NavLink
             to="/docs/pages-philosophy"
             label="Pages philosophy"
             description="How page files map to content components"
