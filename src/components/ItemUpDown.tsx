@@ -4,11 +4,18 @@ import { cn } from 'cn'
 type ItemUpDownProps = {
   children: ReactNode
   className?: string
+  /** Classes on the overflow clip that defines travel distance (default height `h-72`). */
+  containerClassName?: string
   /** Seconds for one rise or one fall (full cycle is twice this). */
   duration: number
 }
 
-export function ItemUpDown({ children, className, duration }: ItemUpDownProps) {
+export function ItemUpDown({
+  children,
+  className,
+  containerClassName,
+  duration,
+}: ItemUpDownProps) {
   const phase = duration
   const durationMs = phase * 1000
   const containerRef = useRef<HTMLDivElement>(null)
@@ -70,6 +77,7 @@ export function ItemUpDown({ children, className, duration }: ItemUpDownProps) {
         ref={containerRef}
         className={cn(
           'flex h-72 w-full flex-col items-center justify-start overflow-hidden',
+          containerClassName,
         )}
       >
         <div ref={elementRef} className="shrink-0">
