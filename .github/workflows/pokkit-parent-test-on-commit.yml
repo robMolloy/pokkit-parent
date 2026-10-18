@@ -3,6 +3,7 @@ name: Pokkit Parent Test on Commit
 on: pull_request
 permissions:
   contents: read
+  pull-requests: write
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -15,4 +16,128 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm test
+
+      - name: Run tests
+        id: tests
+        continue-on-error: true
+        run: npm test -- --reporter=default --reporter=junit --outputFile=junit.xml
+
+      - name: Post test results on the pull request
+        if: always() && steps.tests.outcome != 'cancelled'
+        uses: actions/github-script@v9
+        env:
+          TEST_OUTCOME: ${{ steps.tests.outcome }}
+        with:
+          script: |
+            const fs = require("fs");
+            const marker = "<!-- pokkit-parent-test-results -->";
+            const commit = context.sha.slice(0, 7);
+            const outcome = process.env.TEST_OUTCOME;
+            const workflowUrl = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
+
+            const decodeXml = (value) =>
+              value
+                .replace(/&quot;/g, '"')
+                .replace(/&apos;/g, "'")
+                .replace(/&lt;/g, "<")
+                .replace(/&gt;/g, ">")
+                .replace(/&amp;/g, "&");
+
+            let tests = 0;
+            let failures = 0;
+            let errors = 0;
+            const failureDetails = [];
+
+            if (fs.existsSync("junit.xml")) {
+              const xml = fs.readFileSync("junit.xml", "utf8");
+              const suitesTag = xml.match(/<testsuites[^>]*>/);
+              if (suitesTag) {
+                const tag = suitesTag[0];
+                for (const name of ["tests", "failures", "errors"]) {
+                  const match = tag.match(new RegExp(`${name}="(\\d+)"`));
+                  if (match) {
+                    const value = Number.parseInt(match[1], 10);
+                    if (name === "tests") tests = value;
+                    if (name === "failures") failures = value;
+                    if (name === "errors") errors = value;
+                  }
+                }
+              }
+
+              const failureRegex =
+                /<testcase[^>]*name="([^"]*)"[^>]*>\s*<failure[^>]*>([\s\S]*?)<\/failure>/g;
+              let match;
+              while ((match = failureRegex.exec(xml)) !== null) {
+                failureDetails.push({
+                  name: decodeXml(match[1]),
+                  message: decodeXml(match[2].trim()).slice(0, 800),
+                });
+              }
+            }
+
+            const failedCount = failures + errors;
+            const passedCount = Math.max(tests - failedCount, 0);
+            const statusEmoji = outcome === "success" ? "✅" : "❌";
+            const statusLine =
+              outcome === "success"
+                ? `${statusEmoji} All tests passed (${tests} ${tests === 1 ? "test" : "tests"})`
+                : `${statusEmoji} ${failedCount} failed, ${passedCount} passed (${tests} ${tests === 1 ? "test" : "tests"})`;
+
+            const lines = [
+              marker,
+              `Test results for commit \`${commit}\`:`,
+              "",
+              statusLine,
+              "",
+            ];
+
+            if (failureDetails.length > 0) {
+              lines.push("<details><summary>Failures</summary>", "");
+              for (const failure of failureDetails) {
+                lines.push(`**${failure.name}**`, "", "```", failure.message, "```", "");
+              }
+              lines.push("</details>", "");
+            }
+
+            lines.push(
+              `[View workflow run](${workflowUrl})`,
+              "",
+              "<sub>via Vitest · GitHub Actions</sub>",
+            );
+
+            const body = lines.join("\n");
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner,
+              repo,
+              issue_number,
+              per_page: 100,
+            });
+            const existing = [...comments]
+              .reverse()
+              .find(
+                (comment) =>
+                  comment.user?.type === "Bot" && comment.body?.includes(marker),
+              );
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number,
+                body,
+              });
+            }
+
+      - name: Fail if tests did not pass
+        if: steps.tests.outcome == 'failure'
+        run: exit 1
