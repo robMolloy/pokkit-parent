@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CircleUpDown } from '@/components/circle/CircleUpDown.tsx'
+import { CircleUpDown } from '@/components/CircleUpDown.tsx'
 
 export default function CircleUpDownPage() {
   const [duration, setDuration] = useState(3)

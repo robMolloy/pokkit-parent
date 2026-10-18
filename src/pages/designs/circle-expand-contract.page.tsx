@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CircleExpandContract } from '@/components/circle/CircleExpandContract.tsx'
+import { CircleExpandContract } from '@/components/CircleExpandContract.tsx'
 
 export default function CircleExpandContractPage() {
   const [duration, setDuration] = useState(3)
