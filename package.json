@@ -8,6 +8,8 @@
     "build": "tsc --noEmit && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "tsc": "./node_modules/.bin/tsc"
   },
   "dependencies": {
@@ -35,6 +37,7 @@
     "oxlint": "^1.81.0",
     "typescript": "~6.0.2",
     "vite": "^8.3.0",
-    "vite-plugin-pages": "^0.33.3"
+    "vite-plugin-pages": "^0.33.3",
+    "vitest": "^5.0.5"
   }
 }
