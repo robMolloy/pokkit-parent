@@ -3,6 +3,7 @@ name: Pokkit Parent Test on Commit
 on: pull_request
 permissions:
   contents: read
+  pull-requests: write
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -15,4 +16,26 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm test
+
+      - name: Run tests
+        id: tests
+        continue-on-error: true
+        run: npm test
+
+      - name: Post test results on the pull request
+        if: always() && steps.tests.outcome != 'cancelled'
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const passed = "${{ steps.tests.outcome }}" === "success";
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: passed
+                ? `✅ Tests passed (commit ${context.sha.slice(0, 7)})`
+                : `❌ Tests failed (commit ${context.sha.slice(0, 7)})`,
+            });
+
+      - if: steps.tests.outcome == 'failure'
+        run: exit 1
