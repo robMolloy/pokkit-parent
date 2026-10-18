@@ -21,7 +21,7 @@ describe('ItemUpDown', () => {
         <span>Item</span>
       </ItemUpDown>,
     )
-    expect(container.firstElementChild).toHaveClass('motion-demo')
+    expect(container.firstElementChild).toHaveClass('motion-demo', 'item-up-down-root')
   })
 
   it('describes singular duration in screen-reader text', () => {

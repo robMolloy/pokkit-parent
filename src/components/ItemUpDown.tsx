@@ -17,15 +17,13 @@ export function ItemUpDown({ children, className, duration }: ItemUpDownProps) {
   } satisfies CSSProperties
 
   return (
-    <div className={className}>
+    <div className={cn('item-up-down-root relative size-full', className)}>
       <p className="sr-only">
         Content slowly rises, then falls. Each movement takes {phase}{' '}
         {phase === 1 ? 'second' : 'seconds'} and repeats.
       </p>
       <div
-        className={cn(
-          'item-up-down-motion fixed top-1/2 left-1/2',
-        )}
+        className={cn('item-up-down-motion absolute top-1/2 left-1/2')}
         style={motionTiming}
       >
         {children}

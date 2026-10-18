@@ -1,3 +1,7 @@
+.item-up-down-root {
+  container-type: size;
+}
+
 @keyframes item-up-down-float {
   0%,
   100% {
@@ -5,7 +9,7 @@
   }
 
   50% {
-    translate: -50% calc(-50% - min(28vh, 11rem));
+    translate: -50% calc(-50% - min(28cqh, 11rem));
   }
 }
 
