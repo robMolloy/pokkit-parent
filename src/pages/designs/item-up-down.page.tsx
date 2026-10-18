@@ -18,11 +18,13 @@ export default function ItemUpDownPage() {
         />
         <span className="text-muted-foreground tabular-nums">{duration}s</span>
       </label>
-      <ItemUpDown duration={duration}>
-        <div className="flex size-32 items-center justify-center rounded-2xl border border-border bg-card text-lg font-medium shadow-sm">
-          Any JSX
-        </div>
-      </ItemUpDown>
+      <div className="flex flex-1 items-center justify-center px-5 py-8">
+        <ItemUpDown className="w-full max-w-md" duration={duration}>
+          <div className="flex size-32 items-center justify-center rounded-2xl border border-border bg-card text-lg font-medium shadow-sm">
+            Any JSX
+          </div>
+        </ItemUpDown>
+      </div>
     </div>
   )
 }
