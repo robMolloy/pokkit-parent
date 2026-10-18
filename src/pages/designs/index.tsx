@@ -22,6 +22,11 @@ export default function DesignsPage() {
             label="Circle up and down"
             description="A circle slowly rises, then falls—Tailwind layout with CSS keyframe motion"
           />
+          <NavLink
+            to="/designs/item-up-down"
+            label="Item up and down"
+            description="Pass any JSX as children—it rises and falls with the same motion as the circle demo"
+          />
         </VerticalNavList>
       </Nav>
     </section>
