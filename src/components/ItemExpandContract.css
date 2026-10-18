@@ -1,0 +1,20 @@
+@keyframes item-expand-contract-dilate {
+  0%,
+  100% {
+    translate: -50% -50%;
+    scale: var(--item-expand-contract-min, 0.0625);
+  }
+
+  50% {
+    translate: -50% -50%;
+    scale: var(--item-expand-contract-peak, 8);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .item-expand-contract-motion {
+    animation-name: item-expand-contract-dilate;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+}

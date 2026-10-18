@@ -32,6 +32,11 @@ export default function DesignsPage() {
             label="Item up and down"
             description="Pass any JSX as children—it rises and falls with the same motion as the circle demo"
           />
+          <NavLink
+            to="/designs/item-expand-contract"
+            label="Item expand and contract"
+            description="Pass any JSX as children—it expands and contracts with the same motion as the circle demo"
+          />
         </VerticalNavList>
       </Nav>
     </section>
