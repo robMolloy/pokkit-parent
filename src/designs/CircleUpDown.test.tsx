@@ -30,4 +30,24 @@ describe('CircleUpDown', () => {
       screen.getByText(/Each movement takes 2\.5 seconds and repeats\./),
     ).toHaveClass('sr-only')
   })
+
+  it('moves the circle after 0.1 seconds', async () => {
+    render(<CircleUpDown duration={3} />)
+    const circle = document.querySelector('.circle-up-down-circle')
+    expect(circle).toBeInTheDocument()
+
+    const top = () => circle!.getBoundingClientRect().top
+    const beforeTop = top()
+    const beforeTransform = getComputedStyle(circle!).transform
+
+    await new Promise((resolve) => setTimeout(resolve, 100))
+
+    const afterTop = top()
+    if (beforeTop !== afterTop) {
+      expect(afterTop).not.toBe(beforeTop)
+      return
+    }
+
+    expect(getComputedStyle(circle!).transform).not.toBe(beforeTransform)
+  })
 })
