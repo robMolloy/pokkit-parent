@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { ItemUpDown } from './ItemUpDown'
 
 describe('ItemUpDown', () => {
-  it('sets animation duration to twice the phase length', () => {
+  it('sets animation duration to one phase (rise or fall)', () => {
     render(
       <ItemUpDown duration={3}>
         <span data-testid="child">Hello</span>
@@ -11,7 +11,7 @@ describe('ItemUpDown', () => {
     )
     const motion = document.querySelector('.item-up-down-motion')
     expect(motion).toBeInTheDocument()
-    expect(motion).toHaveStyle({ animationDuration: '6s' })
+    expect(motion).toHaveStyle({ animationDuration: '3s' })
     expect(screen.getByTestId('child')).toBeInTheDocument()
   })
 
