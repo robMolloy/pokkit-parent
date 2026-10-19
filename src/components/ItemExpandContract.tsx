@@ -18,7 +18,6 @@ export function ItemExpandContract({
   containerClassName,
   duration,
 }: ItemExpandContractProps) {
-  console.log('ItemExpandContract render')
   const phase = duration
   const durationMs = phase * 1000
   const containerRef = useRef<HTMLDivElement>(null)
@@ -97,7 +96,7 @@ export function ItemExpandContract({
       >
         <div
           ref={elementRef}
-          className="origin-center will-change-transform motion-reduce:scale-100"
+          className="flex origin-center items-center justify-center will-change-transform motion-reduce:scale-100"
         >
           {children}
         </div>
