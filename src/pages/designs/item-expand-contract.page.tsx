@@ -17,6 +17,15 @@ const examples = [
     childClassName: `${childBase} h-20 w-full text-sm`,
   },
   {
+    label: 'Full width at rest (centred)',
+    description:
+      'Same horizontal bar as above, vertically centred in the container at rest. Scale still collapses to a dot at the centre of the clip region.',
+    wrapperClassName: 'w-full max-w-md',
+    containerClassName: `h-72 ${clipBorder}`,
+    childClassName: `${childBase} h-20 w-full text-sm`,
+    childLayout: 'centre-vertical',
+  },
+  {
     label: 'Full height at rest',
     description:
       'Child is 100% of container height and a fixed partial width (vertical strip). Same uniform scale: rest size → dot → rest.',
@@ -66,7 +75,14 @@ const examples = [
     containerClassName: `h-96 ${clipBorder}`,
     childClassName: `${childBase} size-full text-sm`,
   },
-] as const
+] as const satisfies ReadonlyArray<{
+  label: string
+  description: string
+  wrapperClassName: string
+  containerClassName: string
+  childClassName: string
+  childLayout?: 'centre-vertical'
+}>
 
 export default function ItemExpandContractPage() {
   const [duration, setDuration] = useState(3)
@@ -97,7 +113,13 @@ export default function ItemExpandContractPage() {
               containerClassName={example.containerClassName}
               duration={duration}
             >
-              <div className={example.childClassName}>Any JSX</div>
+              {example.childLayout === 'centre-vertical' ? (
+                <div className="flex h-full w-full items-center justify-center">
+                  <div className={example.childClassName}>Any JSX</div>
+                </div>
+              ) : (
+                <div className={example.childClassName}>Any JSX</div>
+              )}
             </ItemExpandContract>
           </figure>
         ))}
