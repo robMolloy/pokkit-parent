@@ -1,48 +1,11 @@
 import { useState } from 'react'
 import { ItemExpandContract } from '@/components/ItemExpandContract.tsx'
 
-const examples = [
-  {
-    label: 'Compact',
-    description: 'max-w-xs',
-    wrapperClassName: 'w-full max-w-xs',
-    containerClassName:
-      'rounded-xl border border-dashed border-border bg-muted/30 px-6 py-8',
-    childClassName: 'size-16 text-sm',
-  },
-  {
-    label: 'Medium',
-    description: 'max-w-sm',
-    wrapperClassName: 'w-full max-w-sm',
-    containerClassName:
-      'rounded-xl border border-dashed border-border bg-muted/30 px-8 py-10',
-    childClassName: 'size-24 text-base',
-  },
-  {
-    label: 'Default',
-    description: 'max-w-md',
-    wrapperClassName: 'w-full max-w-md',
-    containerClassName:
-      'rounded-xl border border-dashed border-border bg-muted/30 px-10 py-12',
-    childClassName: 'size-32 text-lg',
-  },
-  {
-    label: 'Wide & short',
-    description: 'full width',
-    wrapperClassName: 'w-full',
-    containerClassName:
-      'rounded-xl border border-dashed border-border bg-muted/30 px-8 py-6',
-    childClassName: 'h-20 w-40 text-sm',
-  },
-  {
-    label: 'Narrow & tall',
-    description: 'max-w-[10rem]',
-    wrapperClassName: 'w-full max-w-[10rem]',
-    containerClassName:
-      'rounded-xl border border-dashed border-border bg-muted/30 px-4 py-12',
-    childClassName: 'size-20 text-sm',
-  },
-] as const
+const clipBorder =
+  'rounded-xl border border-dashed border-border bg-muted/30'
+
+const childBase =
+  'flex items-center justify-center rounded-2xl border border-border bg-card font-medium shadow-sm'
 
 export default function ItemExpandContractPage() {
   const [duration, setDuration] = useState(3)
@@ -62,28 +25,127 @@ export default function ItemExpandContractPage() {
         <span className="text-muted-foreground tabular-nums">{duration}s</span>
       </label>
       <div className="grid flex-1 gap-8 px-5 py-8 sm:grid-cols-2 lg:grid-cols-3">
-        {examples.map((example) => (
-          <figure
-            key={example.label}
-            className="flex flex-col gap-3"
+        <figure className="flex flex-col gap-3">
+          <figcaption className="text-sm font-medium">
+            Full width at rest
+          </figcaption>
+          <ItemExpandContract
+            className="w-full max-w-md"
+            containerClassName={`h-72 ${clipBorder}`}
+            duration={duration}
           >
-            <figcaption className="text-sm">
-              <span className="font-medium">{example.label}</span>
-              <span className="text-muted-foreground"> — {example.description}</span>
-            </figcaption>
-            <ItemExpandContract
-              className={example.wrapperClassName}
-              containerClassName={example.containerClassName}
-              duration={duration}
-            >
-              <div
-                className={`flex shrink-0 items-center justify-center rounded-2xl border border-border bg-card font-medium shadow-sm ${example.childClassName}`}
-              >
-                Any JSX
-              </div>
-            </ItemExpandContract>
-          </figure>
-        ))}
+            <div className={`${childBase} h-20 w-full text-sm`}>Any JSX</div>
+          </ItemExpandContract>
+        </figure>
+
+        <figure className="flex flex-col gap-3">
+          <figcaption className="text-sm font-medium">
+            Full width at rest (centred)
+          </figcaption>
+          <ItemExpandContract
+            className="w-full max-w-md"
+            containerClassName={`h-72 ${clipBorder}`}
+            duration={duration}
+          >
+            <div className="flex h-full w-full items-center justify-center">
+              <div className={`${childBase} h-20 w-full text-sm`}>Any JSX</div>
+            </div>
+          </ItemExpandContract>
+        </figure>
+
+        <figure className="flex flex-col gap-3">
+          <figcaption className="text-sm font-medium">
+            Full height at rest
+          </figcaption>
+          <ItemExpandContract
+            className="w-full max-w-md"
+            containerClassName={`h-72 ${clipBorder}`}
+            duration={duration}
+          >
+            <div className={`${childBase} h-full w-24 text-sm`}>Any JSX</div>
+          </ItemExpandContract>
+        </figure>
+
+        <figure className="flex flex-col gap-3">
+          <figcaption className="text-sm font-medium">
+            Full height at rest (centred)
+          </figcaption>
+          <ItemExpandContract
+            className="w-full max-w-md"
+            containerClassName={`h-72 ${clipBorder}`}
+            duration={duration}
+          >
+            <div className="flex h-full w-full items-center justify-center">
+              <div className={`${childBase} h-full w-24 text-sm`}>Any JSX</div>
+            </div>
+          </ItemExpandContract>
+        </figure>
+
+        <figure className="flex flex-col gap-3">
+          <figcaption className="text-sm font-medium">Compact</figcaption>
+          <ItemExpandContract
+            className="w-full max-w-xs"
+            containerClassName={`h-32 ${clipBorder}`}
+            duration={duration}
+          >
+            <div className={`${childBase} size-full text-sm`}>Any JSX</div>
+          </ItemExpandContract>
+        </figure>
+
+        <figure className="flex flex-col gap-3">
+          <figcaption className="text-sm font-medium">Medium</figcaption>
+          <ItemExpandContract
+            className="w-full max-w-sm"
+            containerClassName={`h-48 ${clipBorder}`}
+            duration={duration}
+          >
+            <div className={`${childBase} size-full text-base`}>Any JSX</div>
+          </ItemExpandContract>
+        </figure>
+
+        <figure className="flex flex-col gap-3">
+          <figcaption className="text-sm font-medium">Default</figcaption>
+          <ItemExpandContract
+            className="w-full max-w-md"
+            containerClassName={`h-72 ${clipBorder}`}
+            duration={duration}
+          >
+            <div className={`${childBase} size-full text-lg`}>Any JSX</div>
+          </ItemExpandContract>
+        </figure>
+
+        <figure className="flex flex-col gap-3">
+          <figcaption className="text-sm font-medium">Tall</figcaption>
+          <ItemExpandContract
+            className="w-full max-w-md"
+            containerClassName={`h-[28rem] ${clipBorder}`}
+            duration={duration}
+          >
+            <div className={`${childBase} size-full text-lg`}>Any JSX</div>
+          </ItemExpandContract>
+        </figure>
+
+        <figure className="flex flex-col gap-3">
+          <figcaption className="text-sm font-medium">Wide & short</figcaption>
+          <ItemExpandContract
+            className="w-full"
+            containerClassName={`h-36 ${clipBorder}`}
+            duration={duration}
+          >
+            <div className={`${childBase} size-full text-sm`}>Any JSX</div>
+          </ItemExpandContract>
+        </figure>
+
+        <figure className="flex flex-col gap-3">
+          <figcaption className="text-sm font-medium">Narrow & tall</figcaption>
+          <ItemExpandContract
+            className="w-full max-w-[10rem]"
+            containerClassName={`h-96 ${clipBorder}`}
+            duration={duration}
+          >
+            <div className={`${childBase} size-full text-sm`}>Any JSX</div>
+          </ItemExpandContract>
+        </figure>
       </div>
     </div>
   )
