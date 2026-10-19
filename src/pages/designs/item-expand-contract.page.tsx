@@ -9,7 +9,6 @@ const childBase =
 
 type ItemExpandContractExample = {
   label: string
-  description: string
   wrapperClassName: string
   containerClassName: string
   childClassName: string
@@ -20,16 +19,12 @@ type ItemExpandContractExample = {
 const examples: readonly ItemExpandContractExample[] = [
   {
     label: 'Full width at rest',
-    description:
-      'Child is 100% of container width and a fixed partial height (horizontal bar). Uniform scale collapses to a dot in X and Y, then returns to this shape.',
     wrapperClassName: 'w-full max-w-md',
     containerClassName: `h-72 ${clipBorder}`,
     childClassName: `${childBase} h-20 w-full text-sm`,
   },
   {
     label: 'Full width at rest (centred)',
-    description:
-      'Same horizontal bar as above, vertically centred in the container at rest. Scale still collapses to a dot at the centre of the clip region.',
     wrapperClassName: 'w-full max-w-md',
     containerClassName: `h-72 ${clipBorder}`,
     childClassName: `${childBase} h-20 w-full text-sm`,
@@ -37,16 +32,12 @@ const examples: readonly ItemExpandContractExample[] = [
   },
   {
     label: 'Full height at rest',
-    description:
-      'Child is 100% of container height and a fixed partial width (vertical strip). Same uniform scale: rest size → dot → rest.',
     wrapperClassName: 'w-full max-w-md',
     containerClassName: `h-72 ${clipBorder}`,
     childClassName: `${childBase} h-full w-24 text-sm`,
   },
   {
     label: 'Full height at rest (centred)',
-    description:
-      'Same vertical strip as above, horizontally centred in the container at rest. Scale still collapses to a dot at the centre of the clip region.',
     wrapperClassName: 'w-full max-w-md',
     containerClassName: `h-72 ${clipBorder}`,
     childClassName: `${childBase} h-full w-24 text-sm`,
@@ -54,42 +45,36 @@ const examples: readonly ItemExpandContractExample[] = [
   },
   {
     label: 'Compact',
-    description: 'h-32 · max-w-xs',
     wrapperClassName: 'w-full max-w-xs',
     containerClassName: `h-32 ${clipBorder}`,
     childClassName: `${childBase} size-full text-sm`,
   },
   {
     label: 'Medium',
-    description: 'h-48 · max-w-sm',
     wrapperClassName: 'w-full max-w-sm',
     containerClassName: `h-48 ${clipBorder}`,
     childClassName: `${childBase} size-full text-base`,
   },
   {
     label: 'Default',
-    description: 'h-72 · max-w-md',
     wrapperClassName: 'w-full max-w-md',
     containerClassName: `h-72 ${clipBorder}`,
     childClassName: `${childBase} size-full text-lg`,
   },
   {
     label: 'Tall',
-    description: 'h-[28rem] · max-w-md',
     wrapperClassName: 'w-full max-w-md',
     containerClassName: `h-[28rem] ${clipBorder}`,
     childClassName: `${childBase} size-full text-lg`,
   },
   {
     label: 'Wide & short',
-    description: 'h-36 · full width',
     wrapperClassName: 'w-full',
     containerClassName: `h-36 ${clipBorder}`,
     childClassName: `${childBase} size-full text-sm`,
   },
   {
     label: 'Narrow & tall',
-    description: 'h-96 · max-w-[10rem]',
     wrapperClassName: 'w-full max-w-[10rem]',
     containerClassName: `h-96 ${clipBorder}`,
     childClassName: `${childBase} size-full text-sm`,
@@ -116,10 +101,7 @@ export default function ItemExpandContractPage() {
       <div className="grid flex-1 gap-8 px-5 py-8 sm:grid-cols-2 lg:grid-cols-3">
         {examples.map((example) => (
           <figure key={example.label} className="flex flex-col gap-3">
-            <figcaption className="text-sm">
-              <span className="font-medium">{example.label}</span>
-              <span className="text-muted-foreground"> — {example.description}</span>
-            </figcaption>
+            <figcaption className="text-sm font-medium">{example.label}</figcaption>
             <ItemExpandContract
               className={example.wrapperClassName}
               containerClassName={example.containerClassName}
