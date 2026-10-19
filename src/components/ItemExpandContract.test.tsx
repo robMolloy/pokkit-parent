@@ -122,8 +122,10 @@ describe('ItemExpandContract', () => {
       </ItemUpDown>,
     )
 
+    const motion = container.querySelector('.item-up-down-motion')
     const motionSlot = container.querySelector('.item-up-down-motion > div')
-    expect(motionSlot).toHaveClass('w-fit', 'shrink-0')
+    expect(motion).toHaveClass('h-fit', 'items-start')
+    expect(motionSlot).toHaveClass('w-fit', 'shrink-0', 'self-start')
     expect(motionSlot?.firstElementChild).toHaveClass('w-fit')
   })
 

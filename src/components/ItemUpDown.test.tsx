@@ -24,6 +24,16 @@ describe('ItemUpDown', () => {
     expect(container.firstElementChild).toHaveClass('motion-demo')
   })
 
+  it('merges optional trackClassName on the motion track', () => {
+    const { container } = render(
+      <ItemUpDown trackClassName="z-[1] demo-motion" duration={2}>
+        <span>Item</span>
+      </ItemUpDown>,
+    )
+    const motion = container.querySelector('.item-up-down-motion')
+    expect(motion).toHaveClass('demo-motion', 'h-fit', 'items-start')
+  })
+
   it('merges optional containerClassName on the clip region', () => {
     const { container } = render(
       <ItemUpDown containerClassName="h-40 demo-clip" duration={2}>

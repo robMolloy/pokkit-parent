@@ -12,11 +12,15 @@ function ItemUpDownExpandContractDemo({
   duration,
   wrapperClassName,
   containerClassName,
+  trackClassName,
+  expandContainerClassName,
   children,
 }: {
   duration: number
   wrapperClassName: string
   containerClassName: string
+  trackClassName?: string
+  expandContainerClassName?: string
   children: ReactNode
 }) {
   return (
@@ -24,8 +28,16 @@ function ItemUpDownExpandContractDemo({
       className={wrapperClassName}
       containerClassName={containerClassName}
       duration={duration}
+      {...(trackClassName != null ? { trackClassName } : {})}
     >
-      <ItemExpandContract duration={duration}>{children}</ItemExpandContract>
+      <ItemExpandContract
+        duration={duration}
+        {...(expandContainerClassName != null
+          ? { containerClassName: expandContainerClassName }
+          : {})}
+      >
+        {children}
+      </ItemExpandContract>
     </ItemUpDown>
   )
 }
@@ -49,11 +61,20 @@ export default function ItemUpDownExpandContractPage() {
       </label>
       <div className="flex flex-1 flex-col gap-8 px-5 py-8">
         <figure className="flex flex-col gap-3">
-          <figcaption className="text-sm font-medium">Default</figcaption>
+          <figcaption className="text-sm">
+            <span className="font-medium">Default</span>
+            <span className="text-muted-foreground">
+              {' '}
+              — dashed border is the travel clip; red outline is the motion
+              track; blue border is the expand/contract clip
+            </span>
+          </figcaption>
           <ItemUpDownExpandContractDemo
             duration={duration}
             wrapperClassName="w-full max-w-md"
             containerClassName={`h-72 ${clipBorder}`}
+            trackClassName="outline outline-2 outline-dotted outline-red-500/70 -outline-offset-1"
+            expandContainerClassName="rounded-lg border border-sky-500/70"
           >
             <div className={`${childBase} size-32 text-lg`}>Any JSX</div>
           </ItemUpDownExpandContractDemo>

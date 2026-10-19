@@ -7,6 +7,8 @@ type ItemUpDownProps = {
   className?: string
   /** Classes on the overflow clip that defines travel distance (default height `h-72`). */
   containerClassName?: string
+  /** Classes on the animated motion track (useful for layout debugging). */
+  trackClassName?: string
   /** Seconds for one rise or one fall (full cycle is twice this). */
   duration: number
 }
@@ -15,6 +17,7 @@ export function ItemUpDown({
   children,
   className,
   containerClassName,
+  trackClassName,
   duration,
 }: ItemUpDownProps) {
   const phase = duration
@@ -35,10 +38,13 @@ export function ItemUpDown({
         )}
       >
         <div
-          className="item-up-down-motion absolute inset-x-0 flex justify-center"
+          className={cn(
+            'item-up-down-motion absolute inset-x-0 top-0 flex h-fit w-full items-start justify-center',
+            trackClassName,
+          )}
           style={motionTiming}
         >
-          <div className="w-fit max-w-full shrink-0">{children}</div>
+          <div className="w-fit max-w-full shrink-0 self-start">{children}</div>
         </div>
       </div>
     </div>
