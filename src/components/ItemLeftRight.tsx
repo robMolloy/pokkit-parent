@@ -7,6 +7,8 @@ type ItemLeftRightProps = {
   className?: string
   /** Classes on the overflow clip that defines travel distance (default height `h-72`). */
   containerClassName?: string
+  /** Classes on the slot around children (default shrink-wraps with `w-fit max-w-full shrink-0`). */
+  contentClassName?: string
   /** Seconds for one horizontal sweep in either direction (full cycle is twice this). */
   duration: number
 }
@@ -15,6 +17,7 @@ export function ItemLeftRight({
   children,
   className,
   containerClassName,
+  contentClassName,
   duration,
 }: ItemLeftRightProps) {
   const phase = duration
@@ -38,7 +41,14 @@ export function ItemLeftRight({
           className="item-left-right-motion absolute inset-y-0 flex items-center"
           style={motionTiming}
         >
-          <div className="w-fit max-w-full shrink-0">{children}</div>
+          <div
+            className={cn(
+              'w-fit max-w-full shrink-0',
+              contentClassName,
+            )}
+          >
+            {children}
+          </div>
         </div>
       </div>
     </div>

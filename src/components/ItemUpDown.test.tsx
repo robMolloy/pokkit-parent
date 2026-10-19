@@ -1,15 +1,16 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
+import { ItemLeftRight } from './ItemLeftRight'
 import { ItemUpDown } from './ItemUpDown'
 
 describe('ItemUpDown', () => {
   it('sets animation duration to one phase (rise or fall)', () => {
-    render(
+    const { container } = render(
       <ItemUpDown duration={3}>
         <span data-testid="child">Hello</span>
       </ItemUpDown>,
     )
-    const motion = document.querySelector('.item-up-down-motion')
+    const motion = container.querySelector('.item-up-down-motion')
     expect(motion).toBeInTheDocument()
     expect(motion).toHaveStyle({ animationDuration: '3s' })
     expect(screen.getByTestId('child')).toBeInTheDocument()
@@ -43,6 +44,20 @@ describe('ItemUpDown', () => {
     expect(
       screen.getByText(/Each movement takes 1 second and repeats\./),
     ).toHaveClass('sr-only')
+  })
+
+  it('lets nested ItemLeftRight fill the clip when contentClassName is full size', () => {
+    const { container } = render(
+      <ItemUpDown contentClassName="h-full w-full" duration={2}>
+        <ItemLeftRight className="h-full w-full" duration={2}>
+          <span data-testid="nested-child">Hello</span>
+        </ItemLeftRight>
+      </ItemUpDown>,
+    )
+
+    const motionSlot = container.querySelector('.item-up-down-motion > div')
+    expect(motionSlot).toHaveClass('w-full', 'h-full')
+    expect(screen.getByTestId('nested-child')).toBeInTheDocument()
   })
 
   it('describes plural duration in screen-reader text', () => {

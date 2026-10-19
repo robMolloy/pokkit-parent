@@ -23,9 +23,14 @@ function ItemUpDownLeftRightDemo({
     <ItemUpDown
       className={wrapperClassName}
       containerClassName={containerClassName}
+      contentClassName="h-full w-full"
       duration={duration}
     >
-      <ItemLeftRight className="w-full" duration={duration}>
+      <ItemLeftRight
+        className="h-full w-full"
+        containerClassName="h-full w-full rounded-none border-0 bg-transparent shadow-none"
+        duration={duration}
+      >
         {children}
       </ItemLeftRight>
     </ItemUpDown>
