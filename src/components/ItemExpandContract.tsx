@@ -66,14 +66,9 @@ export function ItemExpandContract({
       )
     }
 
-    const observer = new ResizeObserver(updateAnimation)
-    observer.observe(container)
-    observer.observe(element)
-
     updateAnimation()
 
     return () => {
-      observer.disconnect()
       animation?.cancel()
     }
   }, [durationMs])

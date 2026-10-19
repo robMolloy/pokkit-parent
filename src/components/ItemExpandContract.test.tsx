@@ -5,7 +5,6 @@ import { ItemUpDown } from './ItemUpDown'
 
 describe('ItemExpandContract', () => {
   const animateMock = vi.fn(() => ({ cancel: vi.fn() }))
-  let resizeObserverCallback: ResizeObserverCallback | undefined
 
   beforeEach(() => {
     animateMock.mockClear()
@@ -18,23 +17,11 @@ describe('ItemExpandContract', () => {
         removeEventListener: vi.fn(),
       })),
     )
-    class ResizeObserverMock {
-      constructor(callback: ResizeObserverCallback) {
-        resizeObserverCallback = callback
-        callback([], this as unknown as ResizeObserver)
-      }
-
-      observe = vi.fn()
-      disconnect = vi.fn()
-      unobserve = vi.fn()
-    }
-    vi.stubGlobal('ResizeObserver', ResizeObserverMock)
     Element.prototype.animate = animateMock as unknown as Element['animate']
   })
 
   afterEach(() => {
     vi.unstubAllGlobals()
-    resizeObserverCallback = undefined
   })
 
   it('animates the child with duration matching one movement phase', () => {
@@ -127,15 +114,4 @@ describe('ItemExpandContract', () => {
     expect(motionSlot?.firstElementChild).toHaveClass('w-fit')
   })
 
-  it('recomputes animation when the container resizes', () => {
-    render(
-      <ItemExpandContract containerClassName="h-40" duration={2}>
-        <span>Item</span>
-      </ItemExpandContract>,
-    )
-
-    const callsBefore = animateMock.mock.calls.length
-    resizeObserverCallback?.([], {} as ResizeObserver)
-    expect(animateMock.mock.calls.length).toBeGreaterThan(callsBefore)
-  })
 })
