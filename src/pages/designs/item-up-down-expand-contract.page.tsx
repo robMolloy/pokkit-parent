@@ -27,20 +27,14 @@ function ItemUpDownExpandContractDemo({
       containerClassName={containerClassName}
       duration={duration}
     >
-      <div className="relative w-full shrink-0">
-        <div aria-hidden className="invisible">
-          {children}
-        </div>
-        <div className="absolute inset-x-0 top-0">
-          <ItemExpandContract
-            className="w-full"
-            containerClassName={expandContainerClassName}
-            duration={duration}
-          >
-            {children}
-          </ItemExpandContract>
-        </div>
-      </div>
+      <ItemExpandContract
+        className="w-full"
+        containerClassName={expandContainerClassName}
+        duration={duration}
+        fillContainer={false}
+      >
+        {children}
+      </ItemExpandContract>
     </ItemUpDown>
   )
 }
