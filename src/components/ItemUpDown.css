@@ -1,17 +1,20 @@
+.item-up-down-clip {
+  container-type: size;
+}
+
 @keyframes item-up-down {
   from {
-    top: 0;
-    transform: translateY(0);
+    translate: 0 0;
   }
 
   to {
-    top: 100%;
-    transform: translateY(-100%);
+    translate: 0 calc(100cqh - 100%);
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .item-up-down-motion {
+    top: 0;
     animation-name: item-up-down;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;

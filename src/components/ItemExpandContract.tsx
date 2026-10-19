@@ -90,13 +90,13 @@ export function ItemExpandContract({
       <div
         ref={containerRef}
         className={cn(
-          'flex h-72 w-full items-center justify-center overflow-hidden',
+          'relative h-72 w-full overflow-hidden',
           containerClassName,
         )}
       >
         <div
           ref={elementRef}
-          className="origin-center will-change-transform motion-reduce:scale-100"
+          className="absolute inset-0 flex origin-center items-center justify-center will-change-transform motion-reduce:scale-100"
         >
           {children}
         </div>

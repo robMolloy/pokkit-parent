@@ -57,13 +57,17 @@ export default function ItemUpDownExpandContractPage() {
       </label>
       <div className="flex flex-1 flex-col gap-8 px-5 py-8">
         <figure className="flex flex-col gap-3">
-          <figcaption className="text-sm font-medium">
-            Full width at rest
+          <figcaption className="text-sm">
+            <span className="font-medium">Full width at rest</span>
+            <span className="text-muted-foreground">
+              {' '}
+              — tall travel lane (h-[28rem]) with h-72 expand region
+            </span>
           </figcaption>
           <ItemUpDownExpandContractDemo
             duration={duration}
             wrapperClassName="w-full max-w-md"
-            containerClassName={`h-72 ${clipBorder}`}
+            containerClassName={`h-[28rem] ${clipBorder}`}
             expandContainerClassName={`h-72 ${clipBorder}`}
           >
             <div className={`${childBase} h-20 w-full text-sm`}>Any JSX</div>

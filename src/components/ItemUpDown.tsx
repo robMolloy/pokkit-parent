@@ -30,7 +30,7 @@ export function ItemUpDown({
       </p>
       <div
         className={cn(
-          'relative h-72 w-full overflow-hidden',
+          'item-up-down-clip relative h-72 w-full overflow-hidden',
           containerClassName,
         )}
       >
