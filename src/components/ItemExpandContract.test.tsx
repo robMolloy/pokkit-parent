@@ -1,59 +1,19 @@
 import { render, screen } from '@testing-library/react'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { ItemExpandContract } from './ItemExpandContract'
 import { ItemUpDown } from './ItemUpDown'
 
 describe('ItemExpandContract', () => {
-  const animateMock = vi.fn(() => ({ cancel: vi.fn() }))
-  let resizeObserverCallback: ResizeObserverCallback | undefined
-
-  beforeEach(() => {
-    animateMock.mockClear()
-    vi.stubGlobal(
-      'matchMedia',
-      vi.fn().mockImplementation((query: string) => ({
-        matches: query === '(prefers-reduced-motion: reduce)' ? false : false,
-        media: query,
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-      })),
-    )
-    class ResizeObserverMock {
-      constructor(callback: ResizeObserverCallback) {
-        resizeObserverCallback = callback
-        callback([], this as unknown as ResizeObserver)
-      }
-
-      observe = vi.fn()
-      disconnect = vi.fn()
-      unobserve = vi.fn()
-    }
-    vi.stubGlobal('ResizeObserver', ResizeObserverMock)
-    Element.prototype.animate = animateMock as unknown as Element['animate']
-  })
-
-  afterEach(() => {
-    vi.unstubAllGlobals()
-    resizeObserverCallback = undefined
-  })
-
-  it('animates the child with duration matching one movement phase', () => {
+  it('sets animation duration to one movement phase', () => {
     render(
       <ItemExpandContract containerClassName="h-40" duration={3}>
         <span data-testid="child">Hello</span>
       </ItemExpandContract>,
     )
 
-    expect(animateMock).toHaveBeenCalled()
-    const lastCall = animateMock.mock.calls.at(-1) as
-      | [Keyframe[], KeyframeAnimationOptions]
-      | undefined
-    const keyframes = lastCall?.[0]
-    const options = lastCall?.[1]
-    expect(keyframes?.[0]).toMatchObject({ transform: expect.stringContaining('scale(') })
-    expect(keyframes?.[1]).toMatchObject({ transform: 'scale(1)' })
-    expect(options?.duration).toBe(3000)
-    expect(options?.direction).toBe('alternate')
+    const motion = document.querySelector('.item-expand-contract-motion')
+    expect(motion).toBeInTheDocument()
+    expect(motion).toHaveStyle({ animationDuration: '3s' })
     expect(screen.getByTestId('child')).toBeInTheDocument()
   })
 
@@ -125,17 +85,5 @@ describe('ItemExpandContract', () => {
     const motionSlot = container.querySelector('.item-up-down-motion > div')
     expect(motionSlot).toHaveClass('w-fit', 'shrink-0')
     expect(motionSlot?.firstElementChild).toHaveClass('w-fit')
-  })
-
-  it('recomputes animation when the container resizes', () => {
-    render(
-      <ItemExpandContract containerClassName="h-40" duration={2}>
-        <span>Item</span>
-      </ItemExpandContract>,
-    )
-
-    const callsBefore = animateMock.mock.calls.length
-    resizeObserverCallback?.([], {} as ResizeObserver)
-    expect(animateMock.mock.calls.length).toBeGreaterThan(callsBefore)
   })
 })

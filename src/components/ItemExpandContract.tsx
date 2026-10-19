@@ -1,7 +1,6 @@
-import { useEffect, useRef, type ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { cn } from 'cn'
-
-const MIN_EXPAND_PX = 8
+import './ItemExpandContract.css'
 
 type ItemExpandContractProps = {
   children: ReactNode
@@ -19,64 +18,9 @@ export function ItemExpandContract({
   duration,
 }: ItemExpandContractProps) {
   const phase = duration
-  const durationMs = phase * 1000
-  const containerRef = useRef<HTMLDivElement>(null)
-  const elementRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const container = containerRef.current
-    const element = elementRef.current
-
-    if (!container || !element) return
-
-    const prefersReducedMotion =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    let animation: Animation | undefined
-
-    function updateAnimation() {
-      animation?.cancel()
-
-      if (prefersReducedMotion) {
-        element!.style.transform = 'scale(1)'
-        return
-      }
-
-      const measureWidth = element!.offsetWidth
-      const measureHeight = element!.offsetHeight
-
-      const minScale = Math.min(
-        MIN_EXPAND_PX / Math.max(measureWidth, 1),
-        MIN_EXPAND_PX / Math.max(measureHeight, 1),
-        1,
-      )
-
-      animation = element!.animate(
-        [
-          { transform: `scale(${minScale})` },
-          { transform: 'scale(1)' },
-        ],
-        {
-          duration: durationMs,
-          iterations: Infinity,
-          direction: 'alternate',
-          easing: 'ease-in-out',
-        },
-      )
-    }
-
-    const observer = new ResizeObserver(updateAnimation)
-    observer.observe(container)
-    observer.observe(element)
-
-    updateAnimation()
-
-    return () => {
-      observer.disconnect()
-      animation?.cancel()
-    }
-  }, [durationMs])
+  const motionTiming = {
+    animationDuration: `${phase}s`,
+  } satisfies CSSProperties
 
   return (
     <div className={cn('w-fit max-w-full', className)}>
@@ -86,15 +30,14 @@ export function ItemExpandContract({
         repeats.
       </p>
       <div
-        ref={containerRef}
         className={cn(
           'mx-auto flex h-auto w-fit max-w-full items-center justify-center overflow-hidden',
           containerClassName,
         )}
       >
         <div
-          ref={elementRef}
-          className="origin-center will-change-transform motion-reduce:scale-100"
+          className="item-expand-contract-motion origin-center will-change-transform motion-reduce:scale-100"
+          style={motionTiming}
         >
           {children}
         </div>
