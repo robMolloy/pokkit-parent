@@ -28,9 +28,10 @@ function ItemUpDownExpandContractDemo({
       duration={duration}
     >
       <ItemExpandContract
-        className={wrapperClassName}
+        className="w-full"
         containerClassName={expandContainerClassName}
         duration={duration}
+        fillContainer={false}
       >
         {children}
       </ItemExpandContract>
@@ -64,7 +65,7 @@ export default function ItemUpDownExpandContractPage() {
             duration={duration}
             wrapperClassName="w-full max-w-md"
             containerClassName={`h-72 ${clipBorder}`}
-            expandContainerClassName={`h-72 ${clipBorder}`}
+            expandContainerClassName={clipBorder}
           >
             <div className={`${childBase} h-20 w-full text-sm`}>Any JSX</div>
           </ItemUpDownExpandContractDemo>

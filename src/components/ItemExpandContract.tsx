@@ -6,10 +6,15 @@ const MIN_EXPAND_PX = 8
 type ItemExpandContractProps = {
   children: ReactNode
   className?: string
-  /** Classes on the clip region that defines max size (default height `h-72`). */
+  /** Classes on the clip region (default shrink-wraps content; pass a height to define a fill region). */
   containerClassName?: string
   /** Seconds for one expand or one contract (full cycle is twice this). */
   duration: number
+  /**
+   * When true, the animated element is sized to the clip (use with a fixed clip height).
+   * When false, the clip and motion layout follow child content size.
+   */
+  fillContainer?: boolean
 }
 
 export function ItemExpandContract({
@@ -17,6 +22,7 @@ export function ItemExpandContract({
   className,
   containerClassName,
   duration,
+  fillContainer = true,
 }: ItemExpandContractProps) {
   const phase = duration
   const durationMs = phase * 1000
@@ -41,17 +47,25 @@ export function ItemExpandContract({
       const width = container!.clientWidth
       const height = container!.clientHeight
 
-      element!.style.width = `${width}px`
-      element!.style.height = `${height}px`
+      if (fillContainer) {
+        element!.style.width = `${width}px`
+        element!.style.height = `${height}px`
+      } else {
+        element!.style.width = ''
+        element!.style.height = ''
+      }
 
       if (prefersReducedMotion) {
         element!.style.transform = 'scale(1)'
         return
       }
 
+      const measureWidth = fillContainer ? width : element!.offsetWidth
+      const measureHeight = fillContainer ? height : element!.offsetHeight
+
       const minScale = Math.min(
-        MIN_EXPAND_PX / width,
-        MIN_EXPAND_PX / height,
+        MIN_EXPAND_PX / Math.max(measureWidth, 1),
+        MIN_EXPAND_PX / Math.max(measureHeight, 1),
         1,
       )
 
@@ -71,6 +85,9 @@ export function ItemExpandContract({
 
     const observer = new ResizeObserver(updateAnimation)
     observer.observe(container)
+    if (!fillContainer) {
+      observer.observe(element)
+    }
 
     updateAnimation()
 
@@ -78,7 +95,7 @@ export function ItemExpandContract({
       observer.disconnect()
       animation?.cancel()
     }
-  }, [durationMs])
+  }, [durationMs, fillContainer])
 
   return (
     <div className={className}>
@@ -90,13 +107,16 @@ export function ItemExpandContract({
       <div
         ref={containerRef}
         className={cn(
-          'flex h-72 w-full items-center justify-center overflow-hidden',
+          'flex h-auto w-full items-center justify-center overflow-hidden',
           containerClassName,
         )}
       >
         <div
           ref={elementRef}
-          className="origin-center will-change-transform motion-reduce:scale-100"
+          className={cn(
+            'origin-center will-change-transform motion-reduce:scale-100',
+            !fillContainer && 'w-full',
+          )}
         >
           {children}
         </div>

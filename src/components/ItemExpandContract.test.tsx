@@ -38,7 +38,7 @@ describe('ItemExpandContract', () => {
 
   it('animates the child with duration matching one movement phase', () => {
     render(
-      <ItemExpandContract duration={3}>
+      <ItemExpandContract containerClassName="h-40" duration={3}>
         <span data-testid="child">Hello</span>
       </ItemExpandContract>,
     )
@@ -97,9 +97,28 @@ describe('ItemExpandContract', () => {
     ).toHaveClass('sr-only')
   })
 
+  it('does not pin animated element size when fillContainer is false', () => {
+    const { container } = render(
+      <ItemExpandContract
+        fillContainer={false}
+        containerClassName="demo-clip"
+        duration={2}
+      >
+        <span>Hello</span>
+      </ItemExpandContract>,
+    )
+
+    const clip = container.querySelector('.demo-clip')
+    const animated = clip?.firstElementChild as HTMLElement | null
+    expect(clip).toHaveClass('h-auto')
+    expect(animated).toBeTruthy()
+    expect(animated?.style.width).toBe('')
+    expect(animated?.style.height).toBe('')
+  })
+
   it('recomputes animation when the container resizes', () => {
     render(
-      <ItemExpandContract duration={2}>
+      <ItemExpandContract containerClassName="h-40" duration={2}>
         <span>Item</span>
       </ItemExpandContract>,
     )
