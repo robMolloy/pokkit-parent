@@ -26,14 +26,8 @@ export default function ItemExpandContractPage() {
       </label>
       <div className="grid flex-1 gap-8 px-5 py-8 sm:grid-cols-2 lg:grid-cols-3">
         <figure className="flex flex-col gap-3">
-          <figcaption className="text-sm">
-            <span className="font-medium">Full width at rest</span>
-            <span className="text-muted-foreground">
-              {' '}
-              — Child is 100% of container width and a fixed partial height
-              (horizontal bar). Uniform scale collapses to a dot in X and Y,
-              then returns to this shape.
-            </span>
+          <figcaption className="text-sm font-medium">
+            Full width at rest
           </figcaption>
           <ItemExpandContract
             className="w-full max-w-md"
@@ -45,14 +39,8 @@ export default function ItemExpandContractPage() {
         </figure>
 
         <figure className="flex flex-col gap-3">
-          <figcaption className="text-sm">
-            <span className="font-medium">Full width at rest (centred)</span>
-            <span className="text-muted-foreground">
-              {' '}
-              — Same horizontal bar as above, vertically centred in the container
-              at rest. Scale still collapses to a dot at the centre of the clip
-              region.
-            </span>
+          <figcaption className="text-sm font-medium">
+            Full width at rest (centred)
           </figcaption>
           <ItemExpandContract
             className="w-full max-w-md"
@@ -66,13 +54,8 @@ export default function ItemExpandContractPage() {
         </figure>
 
         <figure className="flex flex-col gap-3">
-          <figcaption className="text-sm">
-            <span className="font-medium">Full height at rest</span>
-            <span className="text-muted-foreground">
-              {' '}
-              — Child is 100% of container height and a fixed partial width
-              (vertical strip). Same uniform scale: rest size → dot → rest.
-            </span>
+          <figcaption className="text-sm font-medium">
+            Full height at rest
           </figcaption>
           <ItemExpandContract
             className="w-full max-w-md"
@@ -84,14 +67,8 @@ export default function ItemExpandContractPage() {
         </figure>
 
         <figure className="flex flex-col gap-3">
-          <figcaption className="text-sm">
-            <span className="font-medium">Full height at rest (centred)</span>
-            <span className="text-muted-foreground">
-              {' '}
-              — Same vertical strip as above, horizontally centred in the
-              container at rest. Scale still collapses to a dot at the centre of
-              the clip region.
-            </span>
+          <figcaption className="text-sm font-medium">
+            Full height at rest (centred)
           </figcaption>
           <ItemExpandContract
             className="w-full max-w-md"
@@ -105,10 +82,7 @@ export default function ItemExpandContractPage() {
         </figure>
 
         <figure className="flex flex-col gap-3">
-          <figcaption className="text-sm">
-            <span className="font-medium">Compact</span>
-            <span className="text-muted-foreground"> — h-32 · max-w-xs</span>
-          </figcaption>
+          <figcaption className="text-sm font-medium">Compact</figcaption>
           <ItemExpandContract
             className="w-full max-w-xs"
             containerClassName={`h-32 ${clipBorder}`}
@@ -119,10 +93,7 @@ export default function ItemExpandContractPage() {
         </figure>
 
         <figure className="flex flex-col gap-3">
-          <figcaption className="text-sm">
-            <span className="font-medium">Medium</span>
-            <span className="text-muted-foreground"> — h-48 · max-w-sm</span>
-          </figcaption>
+          <figcaption className="text-sm font-medium">Medium</figcaption>
           <ItemExpandContract
             className="w-full max-w-sm"
             containerClassName={`h-48 ${clipBorder}`}
@@ -133,10 +104,7 @@ export default function ItemExpandContractPage() {
         </figure>
 
         <figure className="flex flex-col gap-3">
-          <figcaption className="text-sm">
-            <span className="font-medium">Default</span>
-            <span className="text-muted-foreground"> — h-72 · max-w-md</span>
-          </figcaption>
+          <figcaption className="text-sm font-medium">Default</figcaption>
           <ItemExpandContract
             className="w-full max-w-md"
             containerClassName={`h-72 ${clipBorder}`}
@@ -147,10 +115,7 @@ export default function ItemExpandContractPage() {
         </figure>
 
         <figure className="flex flex-col gap-3">
-          <figcaption className="text-sm">
-            <span className="font-medium">Tall</span>
-            <span className="text-muted-foreground"> — h-[28rem] · max-w-md</span>
-          </figcaption>
+          <figcaption className="text-sm font-medium">Tall</figcaption>
           <ItemExpandContract
             className="w-full max-w-md"
             containerClassName={`h-[28rem] ${clipBorder}`}
@@ -161,10 +126,7 @@ export default function ItemExpandContractPage() {
         </figure>
 
         <figure className="flex flex-col gap-3">
-          <figcaption className="text-sm">
-            <span className="font-medium">Wide & short</span>
-            <span className="text-muted-foreground"> — h-36 · full width</span>
-          </figcaption>
+          <figcaption className="text-sm font-medium">Wide & short</figcaption>
           <ItemExpandContract
             className="w-full"
             containerClassName={`h-36 ${clipBorder}`}
@@ -175,10 +137,7 @@ export default function ItemExpandContractPage() {
         </figure>
 
         <figure className="flex flex-col gap-3">
-          <figcaption className="text-sm">
-            <span className="font-medium">Narrow & tall</span>
-            <span className="text-muted-foreground"> — h-96 · max-w-[10rem]</span>
-          </figcaption>
+          <figcaption className="text-sm font-medium">Narrow & tall</figcaption>
           <ItemExpandContract
             className="w-full max-w-[10rem]"
             containerClassName={`h-96 ${clipBorder}`}
