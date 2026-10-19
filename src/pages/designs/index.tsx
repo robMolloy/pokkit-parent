@@ -43,6 +43,11 @@ export default function DesignsPage() {
             description="Pass any JSX as children—it expands and contracts around its natural size, like the circle expand demo"
           />
           <NavLink
+            to="/designs/item-up-down-left-right"
+            label="Item up, down, left, and right"
+            description="Combine vertical and horizontal travel—wrap children in ItemLeftRight, then ItemUpDown"
+          />
+          <NavLink
             to="/designs/item-up-down-expand-contract"
             label="Item up, down, expand, and contract"
             description="Combine up-and-down travel with expand-and-contract—wrap children in ItemExpandContract, then ItemUpDown"
