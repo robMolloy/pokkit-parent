@@ -72,7 +72,19 @@ describe('ItemExpandContract', () => {
       </ItemExpandContract>,
     )
     const clip = container.querySelector('.demo-clip')
-    expect(clip).toHaveClass('h-40', 'overflow-hidden')
+    expect(clip).toHaveClass('h-40', 'overflow-hidden', 'relative')
+  })
+
+  it('keeps the scaled layer out of normal layout flow', () => {
+    const { container } = render(
+      <ItemExpandContract duration={2}>
+        <span>Item</span>
+      </ItemExpandContract>,
+    )
+    const clip = container.querySelector('.overflow-hidden')
+    const layer = clip?.firstElementChild
+    expect(layer).toHaveClass('absolute', 'inset-0')
+    expect(layer?.textContent).toBe('Item')
   })
 
   it('describes singular duration in screen-reader text', () => {

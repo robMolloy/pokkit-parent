@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { ItemExpandContract } from './ItemExpandContract'
 import { ItemUpDown } from './ItemUpDown'
 
 describe('ItemUpDown', () => {
@@ -31,7 +32,58 @@ describe('ItemUpDown', () => {
       </ItemUpDown>,
     )
     const clip = container.querySelector('.demo-clip')
-    expect(clip).toHaveClass('h-40', 'overflow-hidden')
+    expect(clip).toHaveClass('h-40', 'overflow-hidden', 'item-up-down-clip')
+  })
+
+  it('anchors vertical motion at the top of the travel lane', () => {
+    render(
+      <ItemUpDown duration={2}>
+        <span>Item</span>
+      </ItemUpDown>,
+    )
+    const motion = document.querySelector('.item-up-down-motion')
+    expect(motion).toHaveClass('top-0')
+  })
+
+  describe('nested ItemExpandContract', () => {
+    beforeEach(() => {
+      vi.stubGlobal(
+        'matchMedia',
+        vi.fn().mockImplementation((query: string) => ({
+          matches: false,
+          media: query,
+          addEventListener: vi.fn(),
+          removeEventListener: vi.fn(),
+        })),
+      )
+      class ResizeObserverMock {
+        observe = vi.fn()
+        disconnect = vi.fn()
+        unobserve = vi.fn()
+      }
+      vi.stubGlobal('ResizeObserver', ResizeObserverMock)
+      Element.prototype.animate = vi.fn(() => ({ cancel: vi.fn() })) as unknown as Element['animate']
+    })
+
+    afterEach(() => {
+      vi.unstubAllGlobals()
+    })
+
+    it('allows expand content to travel when the lane is taller than the inner clip', () => {
+      render(
+        <ItemUpDown containerClassName="h-96 travel-lane" duration={2}>
+          <ItemExpandContract containerClassName="h-72 inner-clip" duration={2}>
+            <span data-testid="nested">Nested</span>
+          </ItemExpandContract>
+        </ItemUpDown>,
+      )
+
+      const lane = document.querySelector('.travel-lane')
+      const inner = document.querySelector('.inner-clip')
+      expect(lane).toHaveClass('item-up-down-clip', 'h-96')
+      expect(inner).toHaveClass('h-72')
+      expect(screen.getByTestId('nested')).toBeInTheDocument()
+    })
   })
 
   it('describes singular duration in screen-reader text', () => {

@@ -30,12 +30,12 @@ export function ItemUpDown({
       </p>
       <div
         className={cn(
-          'relative h-72 w-full overflow-hidden',
+          'item-up-down-clip relative h-72 w-full overflow-hidden',
           containerClassName,
         )}
-      >
+        >
         <div
-          className="item-up-down-motion absolute inset-x-0 flex justify-center"
+          className="item-up-down-motion absolute inset-x-0 top-0 flex justify-center"
           style={motionTiming}
         >
           <div className="shrink-0">{children}</div>
