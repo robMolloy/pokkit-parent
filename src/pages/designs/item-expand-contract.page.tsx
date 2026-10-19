@@ -13,7 +13,8 @@ type ItemExpandContractExample = {
   wrapperClassName: string
   containerClassName: string
   childClassName: string
-  childLayout?: 'centre-vertical'
+  /** Flex-centre the child within the animated wrapper at rest (bar or strip). */
+  childLayout?: 'centred'
 }
 
 const examples: readonly ItemExpandContractExample[] = [
@@ -32,7 +33,7 @@ const examples: readonly ItemExpandContractExample[] = [
     wrapperClassName: 'w-full max-w-md',
     containerClassName: `h-72 ${clipBorder}`,
     childClassName: `${childBase} h-20 w-full text-sm`,
-    childLayout: 'centre-vertical',
+    childLayout: 'centred',
   },
   {
     label: 'Full height at rest',
@@ -41,6 +42,15 @@ const examples: readonly ItemExpandContractExample[] = [
     wrapperClassName: 'w-full max-w-md',
     containerClassName: `h-72 ${clipBorder}`,
     childClassName: `${childBase} h-full w-24 text-sm`,
+  },
+  {
+    label: 'Full height at rest (centred)',
+    description:
+      'Same vertical strip as above, horizontally centred in the container at rest. Scale still collapses to a dot at the centre of the clip region.',
+    wrapperClassName: 'w-full max-w-md',
+    containerClassName: `h-72 ${clipBorder}`,
+    childClassName: `${childBase} h-full w-24 text-sm`,
+    childLayout: 'centred',
   },
   {
     label: 'Compact',
@@ -115,7 +125,7 @@ export default function ItemExpandContractPage() {
               containerClassName={example.containerClassName}
               duration={duration}
             >
-              {example.childLayout === 'centre-vertical' ? (
+              {example.childLayout === 'centred' ? (
                 <div className="flex h-full w-full items-center justify-center">
                   <div className={example.childClassName}>Any JSX</div>
                 </div>
