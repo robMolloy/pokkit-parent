@@ -12,13 +12,11 @@ function ItemUpDownExpandContractDemo({
   duration,
   wrapperClassName,
   containerClassName,
-  expandContainerClassName,
   children,
 }: {
   duration: number
   wrapperClassName: string
   containerClassName: string
-  expandContainerClassName: string
   children: ReactNode
 }) {
   return (
@@ -27,13 +25,7 @@ function ItemUpDownExpandContractDemo({
       containerClassName={containerClassName}
       duration={duration}
     >
-      <ItemExpandContract
-        className="w-full"
-        containerClassName={expandContainerClassName}
-        duration={duration}
-      >
-        {children}
-      </ItemExpandContract>
+      <ItemExpandContract duration={duration}>{children}</ItemExpandContract>
     </ItemUpDown>
   )
 }
@@ -62,7 +54,6 @@ export default function ItemUpDownExpandContractPage() {
             duration={duration}
             wrapperClassName="w-full max-w-md"
             containerClassName={`h-72 ${clipBorder}`}
-            expandContainerClassName={`px-10 py-12 ${clipBorder}`}
           >
             <div className={`${childBase} size-32 text-lg`}>Any JSX</div>
           </ItemUpDownExpandContractDemo>

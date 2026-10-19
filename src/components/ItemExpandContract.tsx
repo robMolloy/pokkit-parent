@@ -88,7 +88,7 @@ export function ItemExpandContract({
       <div
         ref={containerRef}
         className={cn(
-          'flex h-auto w-full items-center justify-center overflow-hidden',
+          'mx-auto flex h-auto w-fit max-w-full items-center justify-center overflow-hidden',
           containerClassName,
         )}
       >
