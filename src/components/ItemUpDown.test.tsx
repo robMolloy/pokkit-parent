@@ -3,7 +3,27 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ItemExpandContract } from './ItemExpandContract'
 import { ItemUpDown } from './ItemUpDown'
 
+let resizeObserverCallback: ResizeObserverCallback | undefined
+
 describe('ItemUpDown', () => {
+  beforeEach(() => {
+    class ResizeObserverMock {
+      constructor(callback: ResizeObserverCallback) {
+        resizeObserverCallback = callback
+      }
+
+      observe = vi.fn()
+      disconnect = vi.fn()
+      unobserve = vi.fn()
+    }
+    vi.stubGlobal('ResizeObserver', ResizeObserverMock)
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+    resizeObserverCallback = undefined
+  })
+
   it('sets animation duration to one phase (rise or fall)', () => {
     render(
       <ItemUpDown duration={3}>
@@ -56,17 +76,7 @@ describe('ItemUpDown', () => {
           removeEventListener: vi.fn(),
         })),
       )
-      class ResizeObserverMock {
-        observe = vi.fn()
-        disconnect = vi.fn()
-        unobserve = vi.fn()
-      }
-      vi.stubGlobal('ResizeObserver', ResizeObserverMock)
       Element.prototype.animate = vi.fn(() => ({ cancel: vi.fn() })) as unknown as Element['animate']
-    })
-
-    afterEach(() => {
-      vi.unstubAllGlobals()
     })
 
     it('allows expand content to travel when the lane is taller than the inner clip', () => {
@@ -83,6 +93,42 @@ describe('ItemUpDown', () => {
       expect(lane).toHaveClass('item-up-down-clip', 'h-96')
       expect(inner).toHaveClass('h-72')
       expect(screen.getByTestId('nested')).toBeInTheDocument()
+    })
+
+    it('measures travel from the expand clip, not the outer payload wrapper', () => {
+      const laneHeight = 448
+      const expandClipHeight = 288
+
+      const { container } = render(
+        <ItemUpDown containerClassName="h-96 travel-lane" duration={2}>
+          <ItemExpandContract containerClassName="h-72 inner-clip" duration={2}>
+            <div className="h-20 w-full">Nested</div>
+          </ItemExpandContract>
+        </ItemUpDown>,
+      )
+
+      const lane = container.querySelector('.travel-lane') as HTMLElement
+      const inner = container.querySelector('.item-expand-contract-clip') as HTMLElement
+      const payload = container.querySelector('.shrink-0') as HTMLElement
+
+      Object.defineProperty(lane, 'clientHeight', {
+        configurable: true,
+        value: laneHeight,
+      })
+      Object.defineProperty(inner, 'offsetHeight', {
+        configurable: true,
+        value: expandClipHeight,
+      })
+      Object.defineProperty(payload, 'offsetHeight', {
+        configurable: true,
+        value: expandClipHeight + 80,
+      })
+
+      resizeObserverCallback?.([], {} as ResizeObserver)
+
+      expect(lane.style.getPropertyValue('--item-up-down-travel')).toBe(
+        `${laneHeight - expandClipHeight}px`,
+      )
     })
   })
 

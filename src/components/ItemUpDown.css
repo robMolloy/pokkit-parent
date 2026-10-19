@@ -8,7 +8,7 @@
   }
 
   to {
-    transform: translate(0, calc(100cqh - 100%));
+    transform: translate(0, var(--item-up-down-travel, calc(100cqh - 100%)));
   }
 }
 

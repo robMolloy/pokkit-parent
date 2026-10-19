@@ -72,7 +72,12 @@ describe('ItemExpandContract', () => {
       </ItemExpandContract>,
     )
     const clip = container.querySelector('.demo-clip')
-    expect(clip).toHaveClass('h-40', 'overflow-hidden', 'relative')
+    expect(clip).toHaveClass(
+      'h-40',
+      'overflow-hidden',
+      'relative',
+      'item-expand-contract-clip',
+    )
   })
 
   it('keeps the scaled layer out of normal layout flow', () => {

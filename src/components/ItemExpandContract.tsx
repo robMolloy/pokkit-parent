@@ -90,7 +90,7 @@ export function ItemExpandContract({
       <div
         ref={containerRef}
         className={cn(
-          'relative flex h-72 w-full items-center justify-center overflow-hidden',
+          'item-expand-contract-clip relative flex h-72 w-full items-center justify-center overflow-hidden',
           containerClassName,
         )}
       >
