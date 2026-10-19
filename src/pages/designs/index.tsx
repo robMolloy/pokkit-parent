@@ -35,7 +35,7 @@ export default function DesignsPage() {
           <NavLink
             to="/designs/item-expand-contract"
             label="Item expand and contract"
-            description="Pass any JSX as children—it grows to fill its container, then shrinks, like the circle expand demo"
+            description="Pass any JSX as children—it expands and contracts around its natural size, like the circle expand demo"
           />
           <NavLink
             to="/designs/item-up-down-expand-contract"

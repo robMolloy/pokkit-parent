@@ -6,7 +6,7 @@ const clipBorder =
   'rounded-xl border border-dashed border-border bg-muted/30'
 
 const childBase =
-  'flex items-center justify-center rounded-2xl border border-border bg-card font-medium shadow-sm'
+  'flex shrink-0 items-center justify-center rounded-2xl border border-border bg-card font-medium shadow-sm'
 
 function ItemUpDownExpandContractDemo({
   duration,
@@ -31,7 +31,6 @@ function ItemUpDownExpandContractDemo({
         className="w-full"
         containerClassName={expandContainerClassName}
         duration={duration}
-        fillContainer={false}
       >
         {children}
       </ItemExpandContract>
@@ -58,16 +57,14 @@ export default function ItemUpDownExpandContractPage() {
       </label>
       <div className="flex flex-1 flex-col gap-8 px-5 py-8">
         <figure className="flex flex-col gap-3">
-          <figcaption className="text-sm font-medium">
-            Full width at rest
-          </figcaption>
+          <figcaption className="text-sm font-medium">Default</figcaption>
           <ItemUpDownExpandContractDemo
             duration={duration}
             wrapperClassName="w-full max-w-md"
             containerClassName={`h-72 ${clipBorder}`}
-            expandContainerClassName={clipBorder}
+            expandContainerClassName={`px-10 py-12 ${clipBorder}`}
           >
-            <div className={`${childBase} h-20 w-full text-sm`}>Any JSX</div>
+            <div className={`${childBase} size-32 text-lg`}>Any JSX</div>
           </ItemUpDownExpandContractDemo>
         </figure>
       </div>

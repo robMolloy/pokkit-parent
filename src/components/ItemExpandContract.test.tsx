@@ -97,13 +97,9 @@ describe('ItemExpandContract', () => {
     ).toHaveClass('sr-only')
   })
 
-  it('does not pin animated element size when fillContainer is false', () => {
+  it('does not set inline size on the animated element', () => {
     const { container } = render(
-      <ItemExpandContract
-        fillContainer={false}
-        containerClassName="demo-clip"
-        duration={2}
-      >
+      <ItemExpandContract containerClassName="demo-clip" duration={2}>
         <span>Hello</span>
       </ItemExpandContract>,
     )
