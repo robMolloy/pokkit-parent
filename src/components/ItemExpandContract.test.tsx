@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ItemExpandContract } from './ItemExpandContract'
+import { ItemUpDown } from './ItemUpDown'
 
 describe('ItemExpandContract', () => {
   const animateMock = vi.fn(() => ({ cancel: vi.fn() }))
@@ -97,13 +98,9 @@ describe('ItemExpandContract', () => {
     ).toHaveClass('sr-only')
   })
 
-  it('does not pin animated element size when fillContainer is false', () => {
+  it('does not set inline size on the animated element', () => {
     const { container } = render(
-      <ItemExpandContract
-        fillContainer={false}
-        containerClassName="demo-clip"
-        duration={2}
-      >
+      <ItemExpandContract containerClassName="demo-clip" duration={2}>
         <span>Hello</span>
       </ItemExpandContract>,
     )
@@ -114,6 +111,20 @@ describe('ItemExpandContract', () => {
     expect(animated).toBeTruthy()
     expect(animated?.style.width).toBe('')
     expect(animated?.style.height).toBe('')
+  })
+
+  it('shrink-wraps the motion slot when nested in ItemUpDown', () => {
+    const { container } = render(
+      <ItemUpDown duration={2}>
+        <ItemExpandContract duration={2}>
+          <span data-testid="nested-child">Hello</span>
+        </ItemExpandContract>
+      </ItemUpDown>,
+    )
+
+    const motionSlot = container.querySelector('.item-up-down-motion > div')
+    expect(motionSlot).toHaveClass('w-fit', 'shrink-0')
+    expect(motionSlot?.firstElementChild).toHaveClass('w-fit')
   })
 
   it('recomputes animation when the container resizes', () => {
