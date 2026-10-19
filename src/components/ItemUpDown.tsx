@@ -38,7 +38,7 @@ export function ItemUpDown({
           className="item-up-down-motion absolute inset-x-0 flex justify-center"
           style={motionTiming}
         >
-          <div className="shrink-0">{children}</div>
+          <div className="w-fit max-w-full shrink-0">{children}</div>
         </div>
       </div>
     </div>

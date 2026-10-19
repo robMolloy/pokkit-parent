@@ -79,7 +79,7 @@ export function ItemExpandContract({
   }, [durationMs])
 
   return (
-    <div className={className}>
+    <div className={cn('w-fit max-w-full', className)}>
       <p className="sr-only">
         Content slowly expands to its natural size, then contracts. Each
         movement takes {phase} {phase === 1 ? 'second' : 'seconds'} and
