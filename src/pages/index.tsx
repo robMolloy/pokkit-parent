@@ -10,9 +10,9 @@ export default function HomePage() {
       <Nav aria-label="Exercises">
         <VerticalNavList>
           <NavLink
-            to="/exercises/kegel-squeezes"
-            label="Kegel squeezes"
-            description="Pelvic-floor squeezes to build strength and control"
+            to="/exercises/pelvic-floor-exercises"
+            label="Pelvic floor exercises"
+            description="Pelvic-floor work to build strength and control"
           />
         </VerticalNavList>
       </Nav>
