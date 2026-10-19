@@ -1,5 +1,6 @@
-import { useEffect, useRef, type ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { cn } from 'cn'
+import './ItemUpDown.css'
 
 type ItemUpDownProps = {
   children: ReactNode
@@ -17,55 +18,10 @@ export function ItemUpDown({
   duration,
 }: ItemUpDownProps) {
   const phase = duration
-  const durationMs = phase * 1000
-  const containerRef = useRef<HTMLDivElement>(null)
-  const elementRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const container = containerRef.current
-    const element = elementRef.current
-
-    if (!container || !element) return
-
-    if (
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
-      return
-    }
-
-    let animation: Animation | undefined
-
-    function updateAnimation() {
-      animation?.cancel()
-
-      const distance = container!.clientHeight - element!.offsetHeight
-
-      animation = element!.animate(
-        [
-          { transform: 'translateY(0)' },
-          { transform: `translateY(${Math.max(0, distance)}px)` },
-        ],
-        {
-          duration: durationMs,
-          iterations: Infinity,
-          direction: 'alternate',
-          easing: 'ease-in-out',
-        },
-      )
-    }
-
-    const observer = new ResizeObserver(updateAnimation)
-    observer.observe(container)
-    observer.observe(element)
-
-    updateAnimation()
-
-    return () => {
-      observer.disconnect()
-      animation?.cancel()
-    }
-  }, [durationMs])
+  const cycle = phase * 2
+  const motionTiming = {
+    animationDuration: `${cycle}s`,
+  } satisfies CSSProperties
 
   return (
     <div className={className}>
@@ -74,14 +30,16 @@ export function ItemUpDown({
         {phase === 1 ? 'second' : 'seconds'} and repeats.
       </p>
       <div
-        ref={containerRef}
         className={cn(
-          'flex h-72 w-full flex-col items-center justify-start overflow-hidden',
+          'relative h-72 w-full overflow-hidden',
           containerClassName,
         )}
       >
-        <div ref={elementRef} className="shrink-0">
-          {children}
+        <div
+          className="item-up-down-motion absolute inset-x-0 flex justify-center"
+          style={motionTiming}
+        >
+          <div className="shrink-0">{children}</div>
         </div>
       </div>
     </div>
