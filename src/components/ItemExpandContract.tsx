@@ -39,17 +39,18 @@ export function ItemExpandContract({
       animation?.cancel()
 
       const containerWidth = container!.clientWidth
-      const minWidth = Math.min(MIN_EXPAND_PX, containerWidth)
-
-      element!.style.maxWidth = `${containerWidth}px`
-      element!.style.width = `${containerWidth}px`
+      const minScaleX = Math.min(MIN_EXPAND_PX / containerWidth, 1)
 
       if (prefersReducedMotion) {
+        element!.style.transform = 'scale(1, 1)'
         return
       }
 
       animation = element!.animate(
-        [{ width: `${minWidth}px` }, { width: `${containerWidth}px` }],
+        [
+          { transform: 'scale(1, 1)' },
+          { transform: `scale(${minScaleX}, 1)` },
+        ],
         {
           duration: durationMs,
           iterations: Infinity,
@@ -73,9 +74,9 @@ export function ItemExpandContract({
   return (
     <div className={className}>
       <p className="sr-only">
-        A full-width bar slowly expands to the width of the container, then
-        contracts horizontally without changing height. Each movement takes{' '}
-        {phase} {phase === 1 ? 'second' : 'seconds'} and repeats.
+        A full-width bar rests at the width of the container, then contracts
+        horizontally and expands back without changing height. Each movement
+        takes {phase} {phase === 1 ? 'second' : 'seconds'} and repeats.
       </p>
       <div
         ref={containerRef}
@@ -86,7 +87,7 @@ export function ItemExpandContract({
       >
         <div
           ref={elementRef}
-          className="max-w-full shrink-0 overflow-hidden will-change-[width] motion-reduce:w-full"
+          className="w-full origin-center will-change-transform motion-reduce:scale-100"
         >
           {children}
         </div>

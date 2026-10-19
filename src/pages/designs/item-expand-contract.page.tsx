@@ -27,8 +27,8 @@ export default function ItemExpandContractPage() {
             <span className="font-medium">Full-width bar</span>
             <span className="text-muted-foreground">
               {' '}
-              — spans the container width at full expansion; height stays fixed
-              while width pulses in and out
+              — at rest the bar spans the full container width (container is
+              taller than the bar); it contracts horizontally and expands back
             </span>
           </figcaption>
           <ItemExpandContract
