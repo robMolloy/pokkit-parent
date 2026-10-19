@@ -1,0 +1,20 @@
+@keyframes item-left-right {
+  from {
+    left: 0;
+    transform: translateX(0);
+  }
+
+  to {
+    left: 100%;
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .item-left-right-motion {
+    animation-name: item-left-right;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+}
