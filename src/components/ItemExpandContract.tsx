@@ -39,26 +39,21 @@ export function ItemExpandContract({
       animation?.cancel()
 
       const width = container!.clientWidth
-      const height = container!.clientHeight
 
       element!.style.width = `${width}px`
-      element!.style.height = `${height}px`
+      element!.style.height = ''
 
       if (prefersReducedMotion) {
-        element!.style.transform = 'scale(1)'
+        element!.style.transform = 'scale(1, 1)'
         return
       }
 
-      const minScale = Math.min(
-        MIN_EXPAND_PX / width,
-        MIN_EXPAND_PX / height,
-        1,
-      )
+      const minScaleX = Math.min(MIN_EXPAND_PX / width, 1)
 
       animation = element!.animate(
         [
-          { transform: `scale(${minScale})` },
-          { transform: 'scale(1)' },
+          { transform: `scale(${minScaleX}, 1)` },
+          { transform: 'scale(1, 1)' },
         ],
         {
           duration: durationMs,
@@ -83,7 +78,8 @@ export function ItemExpandContract({
   return (
     <div className={className}>
       <p className="sr-only">
-        Content slowly expands to fill the container, then contracts. Each
+        Content slowly expands to the full width of the container, then
+        contracts horizontally without changing height. Each
         movement takes {phase} {phase === 1 ? 'second' : 'seconds'} and
         repeats.
       </p>

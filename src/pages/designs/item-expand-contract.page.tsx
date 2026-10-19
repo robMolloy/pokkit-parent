@@ -1,99 +1,54 @@
-import { useState, type ReactNode } from 'react'
+import { useState } from 'react'
 import { ItemExpandContract } from '@/components/ItemExpandContract.tsx'
 
-const cardChildClass =
-  'flex shrink-0 items-center justify-center border border-border bg-card font-medium shadow-sm'
+const barClassName =
+  'flex w-full shrink-0 items-center justify-center rounded-2xl border border-border bg-card font-medium shadow-sm'
 
-const examples: {
-  label: string
-  description: string
-  wrapperClassName: string
-  containerClassName: string
-  child: ReactNode
-}[] = [
+const examples = [
   {
     label: 'Compact',
-    description: 'h-32 · max-w-xs · child fills box',
+    description: 'h-32 container · h-10 bar',
     wrapperClassName: 'w-full max-w-xs',
     containerClassName: 'h-32 rounded-xl border border-dashed border-border bg-muted/30',
-    child: (
-      <div className={`${cardChildClass} size-full rounded-2xl text-sm`}>Any JSX</div>
-    ),
+    childClassName: 'h-10 text-sm',
   },
   {
-    label: 'Medium square',
-    description: 'h-48 · max-w-sm · square child',
+    label: 'Medium',
+    description: 'h-48 container · h-12 bar',
     wrapperClassName: 'w-full max-w-sm',
     containerClassName: 'h-48 rounded-xl border border-dashed border-border bg-muted/30',
-    child: (
-      <div className={`${cardChildClass} size-24 rounded-2xl text-base`}>Any JSX</div>
-    ),
+    childClassName: 'h-12 text-base',
   },
   {
     label: 'Default',
-    description: 'h-72 · max-w-md · square child',
+    description: 'h-72 container · h-14 bar',
     wrapperClassName: 'w-full max-w-md',
     containerClassName: 'h-72 rounded-xl border border-dashed border-border bg-muted/30',
-    child: (
-      <div className={`${cardChildClass} size-32 rounded-2xl text-lg`}>Any JSX</div>
-    ),
+    childClassName: 'h-14 text-lg',
   },
   {
-    label: 'Tall box, small child',
-    description: 'h-[28rem] · max-w-md',
+    label: 'Tall container',
+    description: 'h-[28rem] container · h-14 bar',
     wrapperClassName: 'w-full max-w-md',
     containerClassName:
       'h-[28rem] rounded-xl border border-dashed border-border bg-muted/30',
-    child: (
-      <div className={`${cardChildClass} size-32 rounded-2xl text-lg`}>Any JSX</div>
-    ),
+    childClassName: 'h-14 text-lg',
   },
   {
-    label: 'Wide & short',
-    description: 'h-36 · full width · wide child',
+    label: 'Wide & short container',
+    description: 'h-36 · full width · h-8 bar',
     wrapperClassName: 'w-full',
     containerClassName: 'h-36 rounded-xl border border-dashed border-border bg-muted/30',
-    child: (
-      <div className={`${cardChildClass} h-20 w-40 rounded-2xl text-sm`}>Any JSX</div>
-    ),
+    childClassName: 'h-8 text-sm',
   },
   {
-    label: 'Narrow & tall',
-    description: 'h-96 · max-w-[10rem] · small child',
+    label: 'Narrow & tall container',
+    description: 'h-96 · max-w-[10rem] · h-12 bar',
     wrapperClassName: 'w-full max-w-[10rem]',
     containerClassName: 'h-96 rounded-xl border border-dashed border-border bg-muted/30',
-    child: (
-      <div className={`${cardChildClass} size-20 rounded-2xl text-sm`}>Any JSX</div>
-    ),
+    childClassName: 'h-12 text-sm',
   },
-  {
-    label: 'Circle in rectangle',
-    description: 'h-48 · max-w-lg · round child',
-    wrapperClassName: 'w-full max-w-lg',
-    containerClassName: 'h-48 rounded-xl border border-dashed border-border bg-muted/30',
-    child: (
-      <div className={`${cardChildClass} size-28 rounded-full text-base`}>Any JSX</div>
-    ),
-  },
-  {
-    label: 'Pill in tall slot',
-    description: 'h-80 · max-w-xs · wide pill',
-    wrapperClassName: 'w-full max-w-xs',
-    containerClassName: 'h-80 rounded-xl border border-dashed border-border bg-muted/30',
-    child: (
-      <div className={`${cardChildClass} h-14 w-44 rounded-full text-sm`}>Any JSX</div>
-    ),
-  },
-  {
-    label: 'Sharp card',
-    description: 'h-56 · max-w-sm · square corners',
-    wrapperClassName: 'w-full max-w-sm',
-    containerClassName: 'h-56 rounded-2xl border border-dashed border-border bg-muted/30',
-    child: (
-      <div className={`${cardChildClass} h-24 w-56 rounded-none text-sm`}>Any JSX</div>
-    ),
-  },
-]
+] as const
 
 export default function ItemExpandContractPage() {
   const [duration, setDuration] = useState(3)
@@ -124,7 +79,9 @@ export default function ItemExpandContractPage() {
               containerClassName={example.containerClassName}
               duration={duration}
             >
-              {example.child}
+              <div className={`${barClassName} ${example.childClassName}`}>
+                Any JSX
+              </div>
             </ItemExpandContract>
           </figure>
         ))}
