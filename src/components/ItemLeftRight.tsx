@@ -5,7 +5,7 @@ import './ItemLeftRight.css'
 type ItemLeftRightProps = {
   children: ReactNode
   className?: string
-  /** Classes on the overflow clip that defines travel distance (default height `h-72`). */
+  /** Classes on the overflow clip (travel height is set on the root via `className`, default `h-72`). */
   containerClassName?: string
   /** Classes on the slot around children (default shrink-wraps with `w-fit max-w-full shrink-0`). */
   contentClassName?: string
@@ -26,14 +26,14 @@ export function ItemLeftRight({
   } satisfies CSSProperties
 
   return (
-    <div className={className}>
+    <div className={cn('relative h-72 w-full', className)}>
       <p className="sr-only">
         Content slowly moves right, then left. Each movement takes {phase}{' '}
         {phase === 1 ? 'second' : 'seconds'} and repeats.
       </p>
       <div
         className={cn(
-          'relative h-72 w-full overflow-hidden',
+          'absolute inset-0 overflow-hidden',
           containerClassName,
         )}
       >

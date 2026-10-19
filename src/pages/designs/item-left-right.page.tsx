@@ -1,47 +1,50 @@
 import { useState } from 'react'
 import { ItemLeftRight } from '@/components/ItemLeftRight.tsx'
 
+const clipBorder =
+  'rounded-xl border border-dashed border-border bg-muted/30'
+
 const examples = [
   {
     label: 'Compact',
     description: 'h-32 · max-w-xs',
-    wrapperClassName: 'w-full max-w-xs',
-    containerClassName: 'h-32 rounded-xl border border-dashed border-border bg-muted/30',
+    wrapperClassName: 'h-32 w-full max-w-xs',
+    containerClassName: clipBorder,
     childClassName: 'size-16 text-sm',
   },
   {
     label: 'Medium',
     description: 'h-48 · max-w-sm',
-    wrapperClassName: 'w-full max-w-sm',
-    containerClassName: 'h-48 rounded-xl border border-dashed border-border bg-muted/30',
+    wrapperClassName: 'h-48 w-full max-w-sm',
+    containerClassName: clipBorder,
     childClassName: 'size-24 text-base',
   },
   {
     label: 'Default',
     description: 'h-72 · max-w-md',
-    wrapperClassName: 'w-full max-w-md',
-    containerClassName: 'h-72 rounded-xl border border-dashed border-border bg-muted/30',
+    wrapperClassName: 'h-72 w-full max-w-md',
+    containerClassName: clipBorder,
     childClassName: 'size-32 text-lg',
   },
   {
     label: 'Wide',
     description: 'h-36 · full width',
-    wrapperClassName: 'w-full',
-    containerClassName: 'h-36 rounded-xl border border-dashed border-border bg-muted/30',
+    wrapperClassName: 'h-36 w-full',
+    containerClassName: clipBorder,
     childClassName: 'h-20 w-40 text-sm',
   },
   {
     label: 'Narrow',
     description: 'h-48 · max-w-[10rem]',
-    wrapperClassName: 'w-full max-w-[10rem]',
-    containerClassName: 'h-48 rounded-xl border border-dashed border-border bg-muted/30',
+    wrapperClassName: 'h-48 w-full max-w-[10rem]',
+    containerClassName: clipBorder,
     childClassName: 'size-20 text-sm',
   },
   {
     label: 'Short travel',
     description: 'h-72 · max-w-[8rem]',
-    wrapperClassName: 'w-full max-w-[8rem]',
-    containerClassName: 'h-72 rounded-xl border border-dashed border-border bg-muted/30',
+    wrapperClassName: 'h-72 w-full max-w-[8rem]',
+    containerClassName: clipBorder,
     childClassName: 'size-24 text-base',
   },
 ] as const

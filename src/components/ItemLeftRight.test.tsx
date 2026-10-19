@@ -24,14 +24,23 @@ describe('ItemLeftRight', () => {
     expect(container.firstElementChild).toHaveClass('motion-demo')
   })
 
+  it('merges optional className for travel height on the root', () => {
+    const { container } = render(
+      <ItemLeftRight className="h-40 motion-demo" duration={2}>
+        <span>Item</span>
+      </ItemLeftRight>,
+    )
+    expect(container.firstElementChild).toHaveClass('h-40', 'motion-demo')
+  })
+
   it('merges optional containerClassName on the clip region', () => {
     const { container } = render(
-      <ItemLeftRight containerClassName="h-40 demo-clip" duration={2}>
+      <ItemLeftRight containerClassName="demo-clip" duration={2}>
         <span>Item</span>
       </ItemLeftRight>,
     )
     const clip = container.querySelector('.demo-clip')
-    expect(clip).toHaveClass('h-40', 'overflow-hidden')
+    expect(clip).toHaveClass('inset-0', 'overflow-hidden')
   })
 
   it('describes singular duration in screen-reader text', () => {

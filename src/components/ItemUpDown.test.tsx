@@ -55,8 +55,13 @@ describe('ItemUpDown', () => {
       </ItemUpDown>,
     )
 
-    const motionSlot = container.querySelector('.item-up-down-motion > div')
+    const upDownMotion = container.querySelector('.item-up-down-motion')
+    const motionSlot = upDownMotion?.firstElementChild
+    const leftRightRoot = motionSlot?.firstElementChild
+
+    expect(upDownMotion).toHaveClass('h-full')
     expect(motionSlot).toHaveClass('w-full', 'h-full')
+    expect(leftRightRoot).toHaveClass('h-full', 'w-full')
     expect(screen.getByTestId('nested-child')).toBeInTheDocument()
   })
 
