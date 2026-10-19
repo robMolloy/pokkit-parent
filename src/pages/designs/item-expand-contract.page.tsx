@@ -7,7 +7,16 @@ const clipBorder =
 const childBase =
   'flex items-center justify-center rounded-2xl border border-border bg-card font-medium shadow-sm'
 
-const examples = [
+type ItemExpandContractExample = {
+  label: string
+  description: string
+  wrapperClassName: string
+  containerClassName: string
+  childClassName: string
+  childLayout?: 'centre-vertical'
+}
+
+const examples: readonly ItemExpandContractExample[] = [
   {
     label: 'Full width at rest',
     description:
@@ -75,14 +84,7 @@ const examples = [
     containerClassName: `h-96 ${clipBorder}`,
     childClassName: `${childBase} size-full text-sm`,
   },
-] as const satisfies ReadonlyArray<{
-  label: string
-  description: string
-  wrapperClassName: string
-  containerClassName: string
-  childClassName: string
-  childLayout?: 'centre-vertical'
-}>
+]
 
 export default function ItemExpandContractPage() {
   const [duration, setDuration] = useState(3)
