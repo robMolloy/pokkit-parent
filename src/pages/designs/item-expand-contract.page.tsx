@@ -1,49 +1,25 @@
 import { useState } from 'react'
 import { ItemExpandContract } from '@/components/ItemExpandContract.tsx'
 
+const containerClassName =
+  'h-72 rounded-xl border border-dashed border-border bg-muted/30'
+
 const examples = [
   {
-    label: 'Compact',
-    description: 'h-32 · max-w-xs',
-    wrapperClassName: 'w-full max-w-xs',
-    containerClassName: 'h-32 rounded-xl border border-dashed border-border bg-muted/30',
-    childClassName: 'text-sm',
-  },
-  {
-    label: 'Medium',
-    description: 'h-48 · max-w-sm',
-    wrapperClassName: 'w-full max-w-sm',
-    containerClassName: 'h-48 rounded-xl border border-dashed border-border bg-muted/30',
-    childClassName: 'text-base',
-  },
-  {
-    label: 'Default',
-    description: 'h-72 · max-w-md',
+    label: 'Full width at rest',
+    description:
+      'Child is 100% of container width and a fixed partial height (horizontal bar). Uniform scale collapses to a dot in X and Y, then returns to this shape.',
     wrapperClassName: 'w-full max-w-md',
-    containerClassName: 'h-72 rounded-xl border border-dashed border-border bg-muted/30',
-    childClassName: 'text-lg',
+    childClassName:
+      'flex h-20 w-full items-center justify-center rounded-2xl border border-border bg-card text-sm font-medium shadow-sm',
   },
   {
-    label: 'Tall',
-    description: 'h-[28rem] · max-w-md',
+    label: 'Full height at rest',
+    description:
+      'Child is 100% of container height and a fixed partial width (vertical strip). Same uniform scale: rest size → dot → rest.',
     wrapperClassName: 'w-full max-w-md',
-    containerClassName:
-      'h-[28rem] rounded-xl border border-dashed border-border bg-muted/30',
-    childClassName: 'text-lg',
-  },
-  {
-    label: 'Wide & short',
-    description: 'h-36 · full width',
-    wrapperClassName: 'w-full',
-    containerClassName: 'h-36 rounded-xl border border-dashed border-border bg-muted/30',
-    childClassName: 'text-sm',
-  },
-  {
-    label: 'Narrow & tall',
-    description: 'h-96 · max-w-[10rem]',
-    wrapperClassName: 'w-full max-w-[10rem]',
-    containerClassName: 'h-96 rounded-xl border border-dashed border-border bg-muted/30',
-    childClassName: 'text-sm',
+    childClassName:
+      'flex h-full w-24 items-center justify-center rounded-2xl border border-border bg-card text-sm font-medium shadow-sm',
   },
 ] as const
 
@@ -64,7 +40,7 @@ export default function ItemExpandContractPage() {
         />
         <span className="text-muted-foreground tabular-nums">{duration}s</span>
       </label>
-      <div className="grid flex-1 gap-8 px-5 py-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid flex-1 gap-10 px-5 py-8 sm:grid-cols-2">
         {examples.map((example) => (
           <figure key={example.label} className="flex flex-col gap-3">
             <figcaption className="text-sm">
@@ -73,14 +49,10 @@ export default function ItemExpandContractPage() {
             </figcaption>
             <ItemExpandContract
               className={example.wrapperClassName}
-              containerClassName={example.containerClassName}
+              containerClassName={containerClassName}
               duration={duration}
             >
-              <div
-                className={`flex size-full items-center justify-center rounded-2xl border border-border bg-card font-medium shadow-sm ${example.childClassName}`}
-              >
-                Any JSX
-              </div>
+              <div className={example.childClassName}>Any JSX</div>
             </ItemExpandContract>
           </figure>
         ))}
