@@ -50,9 +50,11 @@ describe('ItemExpandContract', () => {
     const keyframes = lastCall?.[0]
     const options = lastCall?.[1]
     expect(keyframes?.[0]).toMatchObject({
-      transform: expect.stringMatching(/^scale\([^,]+, 1\)$/),
+      width: expect.stringMatching(/^\d+px$/),
     })
-    expect(keyframes?.[1]).toMatchObject({ transform: 'scale(1, 1)' })
+    expect(keyframes?.[1]).toMatchObject({
+      width: expect.stringMatching(/^\d+px$/),
+    })
     expect(options?.duration).toBe(3000)
     expect(options?.direction).toBe('alternate')
     expect(screen.getByTestId('child')).toBeInTheDocument()

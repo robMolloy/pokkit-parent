@@ -4,52 +4,6 @@ import { ItemExpandContract } from '@/components/ItemExpandContract.tsx'
 const barClassName =
   'flex w-full shrink-0 items-center justify-center rounded-2xl border border-border bg-card font-medium shadow-sm'
 
-const examples = [
-  {
-    label: 'Compact',
-    description: 'h-32 container · h-10 bar',
-    wrapperClassName: 'w-full max-w-xs',
-    containerClassName: 'h-32 rounded-xl border border-dashed border-border bg-muted/30',
-    childClassName: 'h-10 text-sm',
-  },
-  {
-    label: 'Medium',
-    description: 'h-48 container · h-12 bar',
-    wrapperClassName: 'w-full max-w-sm',
-    containerClassName: 'h-48 rounded-xl border border-dashed border-border bg-muted/30',
-    childClassName: 'h-12 text-base',
-  },
-  {
-    label: 'Default',
-    description: 'h-72 container · h-14 bar',
-    wrapperClassName: 'w-full max-w-md',
-    containerClassName: 'h-72 rounded-xl border border-dashed border-border bg-muted/30',
-    childClassName: 'h-14 text-lg',
-  },
-  {
-    label: 'Tall container',
-    description: 'h-[28rem] container · h-14 bar',
-    wrapperClassName: 'w-full max-w-md',
-    containerClassName:
-      'h-[28rem] rounded-xl border border-dashed border-border bg-muted/30',
-    childClassName: 'h-14 text-lg',
-  },
-  {
-    label: 'Wide & short container',
-    description: 'h-36 · full width · h-8 bar',
-    wrapperClassName: 'w-full',
-    containerClassName: 'h-36 rounded-xl border border-dashed border-border bg-muted/30',
-    childClassName: 'h-8 text-sm',
-  },
-  {
-    label: 'Narrow & tall container',
-    description: 'h-96 · max-w-[10rem] · h-12 bar',
-    wrapperClassName: 'w-full max-w-[10rem]',
-    containerClassName: 'h-96 rounded-xl border border-dashed border-border bg-muted/30',
-    childClassName: 'h-12 text-sm',
-  },
-] as const
-
 export default function ItemExpandContractPage() {
   const [duration, setDuration] = useState(3)
 
@@ -67,24 +21,24 @@ export default function ItemExpandContractPage() {
         />
         <span className="text-muted-foreground tabular-nums">{duration}s</span>
       </label>
-      <div className="grid flex-1 gap-8 px-5 py-8 sm:grid-cols-2 lg:grid-cols-3">
-        {examples.map((example) => (
-          <figure key={example.label} className="flex flex-col gap-3">
-            <figcaption className="text-sm">
-              <span className="font-medium">{example.label}</span>
-              <span className="text-muted-foreground"> — {example.description}</span>
-            </figcaption>
-            <ItemExpandContract
-              className={example.wrapperClassName}
-              containerClassName={example.containerClassName}
-              duration={duration}
-            >
-              <div className={`${barClassName} ${example.childClassName}`}>
-                Any JSX
-              </div>
-            </ItemExpandContract>
-          </figure>
-        ))}
+      <div className="flex flex-1 flex-col gap-10 px-5 py-8">
+        <figure className="mx-auto flex w-full max-w-2xl flex-col gap-3">
+          <figcaption className="text-sm">
+            <span className="font-medium">Full-width bar</span>
+            <span className="text-muted-foreground">
+              {' '}
+              — spans the container width at full expansion; height stays fixed
+              while width pulses in and out
+            </span>
+          </figcaption>
+          <ItemExpandContract
+            className="w-full"
+            containerClassName="h-72 rounded-xl border border-dashed border-border bg-muted/30"
+            duration={duration}
+          >
+            <div className={`${barClassName} h-14 text-lg`}>Any JSX</div>
+          </ItemExpandContract>
+        </figure>
       </div>
     </div>
   )
