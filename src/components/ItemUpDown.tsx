@@ -38,7 +38,7 @@ export function ItemUpDown({
         )}
       >
         <div
-          className="item-up-down-motion absolute inset-x-0 top-0 flex h-full justify-center"
+          className="item-up-down-motion absolute inset-x-0 top-0 flex w-full justify-center"
           style={motionTiming}
         >
           <div

@@ -23,11 +23,11 @@ function ItemUpDownLeftRightDemo({
     <ItemUpDown
       className={wrapperClassName}
       containerClassName={containerClassName}
-      contentClassName="h-full w-full"
+      contentClassName="w-full"
       duration={duration}
     >
       <ItemLeftRight
-        className="h-full w-full"
+        className="h-36 w-full"
         containerClassName="rounded-none border-0 bg-transparent shadow-none"
         duration={duration}
       >

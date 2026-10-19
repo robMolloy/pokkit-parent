@@ -46,10 +46,10 @@ describe('ItemUpDown', () => {
     ).toHaveClass('sr-only')
   })
 
-  it('lets nested ItemLeftRight fill the clip when contentClassName is full size', () => {
+  it('nests ItemLeftRight with full width and shorter height for vertical travel', () => {
     const { container } = render(
-      <ItemUpDown contentClassName="h-full w-full" duration={2}>
-        <ItemLeftRight className="h-full w-full" duration={2}>
+      <ItemUpDown contentClassName="w-full" duration={2}>
+        <ItemLeftRight className="h-36 w-full" duration={2}>
           <span data-testid="nested-child">Hello</span>
         </ItemLeftRight>
       </ItemUpDown>,
@@ -59,9 +59,9 @@ describe('ItemUpDown', () => {
     const motionSlot = upDownMotion?.firstElementChild
     const leftRightRoot = motionSlot?.firstElementChild
 
-    expect(upDownMotion).toHaveClass('h-full')
-    expect(motionSlot).toHaveClass('w-full', 'h-full')
-    expect(leftRightRoot).toHaveClass('h-full', 'w-full')
+    expect(upDownMotion).not.toHaveClass('h-full')
+    expect(motionSlot).toHaveClass('w-full')
+    expect(leftRightRoot).toHaveClass('h-36', 'w-full')
     expect(screen.getByTestId('nested-child')).toBeInTheDocument()
   })
 
