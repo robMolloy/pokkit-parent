@@ -7,7 +7,17 @@ const clipBorder =
 const childBase =
   'flex items-center justify-center rounded-2xl border border-border bg-card font-medium shadow-sm'
 
-const examples = [
+type ItemExpandContractExample = {
+  label: string
+  description: string
+  wrapperClassName: string
+  containerClassName: string
+  childClassName: string
+  /** Flex-centre the child within the animated wrapper at rest (bar or strip). */
+  childLayout?: 'centred'
+}
+
+const examples: readonly ItemExpandContractExample[] = [
   {
     label: 'Full width at rest',
     description:
@@ -17,12 +27,30 @@ const examples = [
     childClassName: `${childBase} h-20 w-full text-sm`,
   },
   {
+    label: 'Full width at rest (centred)',
+    description:
+      'Same horizontal bar as above, vertically centred in the container at rest. Scale still collapses to a dot at the centre of the clip region.',
+    wrapperClassName: 'w-full max-w-md',
+    containerClassName: `h-72 ${clipBorder}`,
+    childClassName: `${childBase} h-20 w-full text-sm`,
+    childLayout: 'centred',
+  },
+  {
     label: 'Full height at rest',
     description:
       'Child is 100% of container height and a fixed partial width (vertical strip). Same uniform scale: rest size → dot → rest.',
     wrapperClassName: 'w-full max-w-md',
     containerClassName: `h-72 ${clipBorder}`,
     childClassName: `${childBase} h-full w-24 text-sm`,
+  },
+  {
+    label: 'Full height at rest (centred)',
+    description:
+      'Same vertical strip as above, horizontally centred in the container at rest. Scale still collapses to a dot at the centre of the clip region.',
+    wrapperClassName: 'w-full max-w-md',
+    containerClassName: `h-72 ${clipBorder}`,
+    childClassName: `${childBase} h-full w-24 text-sm`,
+    childLayout: 'centred',
   },
   {
     label: 'Compact',
@@ -66,7 +94,7 @@ const examples = [
     containerClassName: `h-96 ${clipBorder}`,
     childClassName: `${childBase} size-full text-sm`,
   },
-] as const
+]
 
 export default function ItemExpandContractPage() {
   const [duration, setDuration] = useState(3)
@@ -97,7 +125,13 @@ export default function ItemExpandContractPage() {
               containerClassName={example.containerClassName}
               duration={duration}
             >
-              <div className={example.childClassName}>Any JSX</div>
+              {example.childLayout === 'centred' ? (
+                <div className="flex h-full w-full items-center justify-center">
+                  <div className={example.childClassName}>Any JSX</div>
+                </div>
+              ) : (
+                <div className={example.childClassName}>Any JSX</div>
+              )}
             </ItemExpandContract>
           </figure>
         ))}
