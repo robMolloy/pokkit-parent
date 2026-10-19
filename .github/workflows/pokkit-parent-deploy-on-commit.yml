@@ -18,9 +18,23 @@ jobs:
 
       - run: npm ci
       - run: npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - id: deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_POKKIT_PARENT }}
           expires: 2h
           projectId: pokkit-parent
+          disableComment: true
+
+      - name: Post preview link on the pull request
+        if: steps.deploy.outputs.details_url != ''
+        uses: actions/github-script@v9
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `🔗 ${{ steps.deploy.outputs.details_url }} (commit ${context.sha.slice(0, 7)})`,
+            });
