@@ -1,0 +1,18 @@
+@keyframes item-expand-contract {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .item-expand-contract-motion {
+    animation-name: item-expand-contract;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+}
