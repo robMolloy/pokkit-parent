@@ -18,9 +18,8 @@ export function ItemUpDown({
   duration,
 }: ItemUpDownProps) {
   const phase = duration
-  const cycle = phase * 2
   const motionTiming = {
-    animationDuration: `${cycle}s`,
+    animationDuration: `${phase}s`,
   } satisfies CSSProperties
 
   return (
