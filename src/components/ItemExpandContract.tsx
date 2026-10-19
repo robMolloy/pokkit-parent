@@ -18,6 +18,7 @@ export function ItemExpandContract({
   containerClassName,
   duration,
 }: ItemExpandContractProps) {
+  console.log('ItemExpandContract render')
   const phase = duration
   const durationMs = phase * 1000
   const containerRef = useRef<HTMLDivElement>(null)
