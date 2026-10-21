@@ -1,6 +1,20 @@
 import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { ItemLeftRight } from './ItemLeftRight'
+
+function fireAnimationIteration(
+  addEventListenerSpy: ReturnType<typeof vi.spyOn>,
+  animationName: string,
+) {
+  const listener = addEventListenerSpy.mock.calls.find(
+    ([type]) => type === 'animationiteration',
+  )?.[1]
+  expect(listener).toEqual(expect.any(Function))
+
+  ;(listener as (event: AnimationEvent) => void)({
+    animationName,
+  } as AnimationEvent)
+}
 
 describe('ItemLeftRight', () => {
   it('sets animation duration to one phase (right or left sweep)', () => {
@@ -52,6 +66,45 @@ describe('ItemLeftRight', () => {
     expect(
       screen.getByText(/Each movement takes 1 second and repeats\./),
     ).toHaveClass('sr-only')
+  })
+
+  it('calls onSweepComplete and onCycleComplete every two sweeps', () => {
+    const addEventListener = vi.spyOn(HTMLElement.prototype, 'addEventListener')
+
+    const onSweepComplete = vi.fn()
+    const onCycleComplete = vi.fn()
+    render(
+      <ItemLeftRight
+        duration={2}
+        onCycleComplete={onCycleComplete}
+        onSweepComplete={onSweepComplete}
+      >
+        <span>Item</span>
+      </ItemLeftRight>,
+    )
+    fireAnimationIteration(addEventListener, 'item-left-right')
+    expect(onSweepComplete).toHaveBeenCalledTimes(1)
+    expect(onCycleComplete).not.toHaveBeenCalled()
+
+    fireAnimationIteration(addEventListener, 'item-left-right')
+    expect(onSweepComplete).toHaveBeenCalledTimes(2)
+    expect(onCycleComplete).toHaveBeenCalledTimes(1)
+
+    addEventListener.mockRestore()
+  })
+
+  it('ignores animationiteration for other animation names', () => {
+    const addEventListener = vi.spyOn(HTMLElement.prototype, 'addEventListener')
+
+    const onSweepComplete = vi.fn()
+    render(
+      <ItemLeftRight duration={2} onSweepComplete={onSweepComplete}>
+        <span>Item</span>
+      </ItemLeftRight>,
+    )
+    fireAnimationIteration(addEventListener, 'other-animation')
+    expect(onSweepComplete).not.toHaveBeenCalled()
+    addEventListener.mockRestore()
   })
 
   it('describes plural duration in screen-reader text', () => {
