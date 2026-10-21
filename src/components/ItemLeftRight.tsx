@@ -2,7 +2,7 @@ import type { CSSProperties, ReactNode } from 'react'
 import { cn } from 'cn'
 import './ItemLeftRight.css'
 
-type ItemLeftRightProps = {
+export function ItemLeftRight(p: {
   children: ReactNode
   className?: string
   /** Classes on the overflow clip (travel height is set on the root via `className`, default `h-72`). */
@@ -11,30 +11,21 @@ type ItemLeftRightProps = {
   contentClassName?: string
   /** Seconds for one horizontal sweep in either direction (full cycle is twice this). */
   duration: number
-}
-
-export function ItemLeftRight({
-  children,
-  className,
-  containerClassName,
-  contentClassName,
-  duration,
-}: ItemLeftRightProps) {
-  const phase = duration
+}) {
   const motionTiming = {
-    animationDuration: `${phase}s`,
+    animationDuration: `${p.duration}s`,
   } satisfies CSSProperties
 
   return (
-    <div className={cn('relative h-72 w-full', className)}>
+    <div className={cn('relative h-72 w-full', p.className)}>
       <p className="sr-only">
-        Content slowly moves right, then left. Each movement takes {phase}{' '}
-        {phase === 1 ? 'second' : 'seconds'} and repeats.
+        Content slowly moves right, then left. Each movement takes {p.duration}{' '}
+        {p.duration === 1 ? 'second' : 'seconds'} and repeats.
       </p>
       <div
         className={cn(
           'absolute inset-0 overflow-hidden',
-          containerClassName,
+          p.containerClassName,
         )}
       >
         <div
@@ -44,10 +35,10 @@ export function ItemLeftRight({
           <div
             className={cn(
               'w-fit max-w-full shrink-0',
-              contentClassName,
+              p.contentClassName,
             )}
           >
-            {children}
+            {p.children}
           </div>
         </div>
       </div>
