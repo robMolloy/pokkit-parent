@@ -1,5 +1,9 @@
 import { useEffect, useRef, type ReactNode } from 'react'
 import { cn } from 'cn'
+import {
+  afterItemLeftRightAnimationIteration,
+  type ItemLeftRightMotionCallbacks,
+} from './itemLeftRightMotion'
 import './ItemLeftRight.css'
 
 /**
@@ -30,12 +34,12 @@ export function ItemLeftRight(p: {
    * Called once each time a **sweep** completes: the item has finished moving in one
    * direction and the animation is about to reverse for the next leg.
    */
-  onSweepComplete?: () => void
+  onSweepComplete?: ItemLeftRightMotionCallbacks['onSweepComplete']
   /**
    * Called once each time a **cycle** completes: two sweeps in a row (out and back to the
    * starting side). Fires on every second `onSweepComplete` while motion is running.
    */
-  onCycleComplete?: () => void
+  onCycleComplete?: ItemLeftRightMotionCallbacks['onCycleComplete']
 }) {
   const motionRef = useRef<HTMLDivElement>(null)
   const sweepCount = useRef(0)
@@ -44,20 +48,25 @@ export function ItemLeftRight(p: {
     const el = motionRef.current
     if (!el) return
 
+    const callbacks: ItemLeftRightMotionCallbacks = {}
+    if (p.onSweepComplete !== undefined) {
+      callbacks.onSweepComplete = p.onSweepComplete
+    }
+    if (p.onCycleComplete !== undefined) {
+      callbacks.onCycleComplete = p.onCycleComplete
+    }
+
     const onIteration = (event: AnimationEvent) => {
-      if (event.animationName !== 'item-left-right') return
-
-      p.onSweepComplete?.()
-
-      sweepCount.current += 1
-      if (sweepCount.current % 2 === 0) {
-        p.onCycleComplete?.()
-      }
+      sweepCount.current = afterItemLeftRightAnimationIteration(
+        event.animationName,
+        sweepCount.current,
+        callbacks,
+      )
     }
 
     el.addEventListener('animationiteration', onIteration)
     return () => el.removeEventListener('animationiteration', onIteration)
-  }, [p.onSweepComplete, p.onCycleComplete])
+  }, [p.onCycleComplete, p.onSweepComplete])
 
   return (
     <div className={cn('relative h-72 w-full', p.className)}>
