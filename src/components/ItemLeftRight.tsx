@@ -1,9 +1,5 @@
 import { useEffect, useRef, type ReactNode } from 'react'
 import { cn } from 'cn'
-import {
-  afterItemLeftRightAnimationIteration,
-  type ItemLeftRightMotionCallbacks,
-} from './itemLeftRightMotion'
 import './ItemLeftRight.css'
 
 /**
@@ -34,12 +30,12 @@ export function ItemLeftRight(p: {
    * Called once each time a **sweep** completes: the item has finished moving in one
    * direction and the animation is about to reverse for the next leg.
    */
-  onSweepComplete?: ItemLeftRightMotionCallbacks['onSweepComplete']
+  onSweepComplete?: () => void
   /**
    * Called once each time a **cycle** completes: two sweeps in a row (out and back to the
    * starting side). Fires on every second `onSweepComplete` while motion is running.
    */
-  onCycleComplete?: ItemLeftRightMotionCallbacks['onCycleComplete']
+  onCycleComplete?: () => void
 }) {
   const motionRef = useRef<HTMLDivElement>(null)
   const sweepCount = useRef(0)
@@ -48,7 +44,10 @@ export function ItemLeftRight(p: {
     const el = motionRef.current
     if (!el) return
 
-    const callbacks: ItemLeftRightMotionCallbacks = {}
+    const callbacks: {
+      onSweepComplete?: () => void
+      onCycleComplete?: () => void
+    } = {}
     if (p.onSweepComplete !== undefined) {
       callbacks.onSweepComplete = p.onSweepComplete
     }
@@ -57,11 +56,14 @@ export function ItemLeftRight(p: {
     }
 
     const onIteration = (event: AnimationEvent) => {
-      sweepCount.current = afterItemLeftRightAnimationIteration(
-        event.animationName,
-        sweepCount.current,
-        callbacks,
-      )
+      if (event.animationName !== 'item-left-right') return
+
+      callbacks.onSweepComplete?.()
+
+      sweepCount.current += 1
+      if (sweepCount.current % 2 === 0) {
+        callbacks.onCycleComplete?.()
+      }
     }
 
     el.addEventListener('animationiteration', onIteration)
