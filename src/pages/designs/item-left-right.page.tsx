@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ItemLeftRight } from '@/components/ItemLeftRight.tsx'
 
 const clipBorder =
@@ -53,11 +53,6 @@ export default function ItemLeftRightPage() {
   const [duration, setDuration] = useState(3)
   const [sweepCount, setSweepCount] = useState(0)
   const [cycleCount, setCycleCount] = useState(0)
-
-  useEffect(() => {
-    setSweepCount(0)
-    setCycleCount(0)
-  }, [duration])
 
   return (
     <div className="flex min-h-[calc(100svh-4.5rem)] flex-col">
