@@ -23,6 +23,8 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_POKKIT_PARENT }}
+          # firebase-tools 15.34+ checks Service Usage API (serviceusage.services.get); pin until the deploy SA has that role.
+          firebaseToolsVersion: 15.33.0
           expires: 2h
           projectId: pokkit-parent
           disableComment: true
