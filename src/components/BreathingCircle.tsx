@@ -5,6 +5,10 @@ import { cn } from 'cn'
 /** Vertical travel in pixels (matches circle-up-down CSS travel: min(28vh, 11rem) cap at 11rem). */
 const TRAVEL_PX = 176
 
+/** Scale at the bottom resting position (exhale). */
+const REST_SCALE = 0.5
+
+/** Peak scale at the top of the rise (inhale), slightly above full size. */
 const RISE_SCALE = 1.06
 
 export type BreathingCircleProps = {
@@ -27,7 +31,7 @@ export function BreathingCircle({
 
   const atRest = {
     y: 0,
-    scale: 1,
+    scale: REST_SCALE,
   }
 
   useEffect(() => {
@@ -43,7 +47,7 @@ export function BreathingCircle({
       element,
       {
         y: [0, -TRAVEL_PX, 0],
-        scale: [1, RISE_SCALE, 1],
+        scale: [REST_SCALE, RISE_SCALE, REST_SCALE],
       },
       {
         duration: totalDuration,
