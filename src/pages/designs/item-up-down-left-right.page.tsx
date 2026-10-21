@@ -34,8 +34,8 @@ function ItemUpDownLeftRightDemo({
         className="h-36 w-full"
         containerClassName="rounded-none border-0 bg-transparent shadow-none"
         duration={duration}
-        onCycleComplete={onCycleComplete}
-        onSweepComplete={onSweepComplete}
+        {...(onCycleComplete !== undefined ? { onCycleComplete } : {})}
+        {...(onSweepComplete !== undefined ? { onSweepComplete } : {})}
       >
         {children}
       </ItemLeftRight>
