@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ItemLeftRight } from '@/components/ItemLeftRight.tsx'
 
 const clipBorder =
@@ -51,21 +51,40 @@ const examples = [
 
 export default function ItemLeftRightPage() {
   const [duration, setDuration] = useState(3)
+  const [sweepCount, setSweepCount] = useState(0)
+  const [cycleCount, setCycleCount] = useState(0)
+
+  useEffect(() => {
+    setSweepCount(0)
+    setCycleCount(0)
+  }, [duration])
 
   return (
     <div className="flex min-h-[calc(100svh-4.5rem)] flex-col">
-      <label className="relative z-[2] flex flex-col gap-1 border-b border-border bg-background/90 px-5 py-4 text-sm backdrop-blur-sm">
-        Duration per movement (s)
-        <input
-          type="range"
-          min={1}
-          max={8}
-          step={0.5}
-          value={duration}
-          onChange={(event) => setDuration(Number(event.target.value))}
-        />
-        <span className="text-muted-foreground tabular-nums">{duration}s</span>
-      </label>
+      <div className="relative z-[2] flex flex-wrap items-end gap-x-8 gap-y-3 border-b border-border bg-background/90 px-5 py-4 text-sm backdrop-blur-sm">
+        <label className="flex min-w-[12rem] flex-1 flex-col gap-1">
+          Duration per movement (s)
+          <input
+            type="range"
+            min={1}
+            max={8}
+            step={0.5}
+            value={duration}
+            onChange={(event) => setDuration(Number(event.target.value))}
+          />
+          <span className="text-muted-foreground tabular-nums">{duration}s</span>
+        </label>
+        <dl className="flex gap-8">
+          <div>
+            <dt className="text-muted-foreground">Sweeps</dt>
+            <dd className="text-lg font-medium tabular-nums">{sweepCount}</dd>
+          </div>
+          <div>
+            <dt className="text-muted-foreground">Cycles</dt>
+            <dd className="text-lg font-medium tabular-nums">{cycleCount}</dd>
+          </div>
+        </dl>
+      </div>
       <div className="grid flex-1 gap-8 px-5 py-8 sm:grid-cols-2 lg:grid-cols-3">
         {examples.map((example) => (
           <figure
@@ -75,11 +94,25 @@ export default function ItemLeftRightPage() {
             <figcaption className="text-sm">
               <span className="font-medium">{example.label}</span>
               <span className="text-muted-foreground"> — {example.description}</span>
+              {example.label === 'Default' ? (
+                <span className="text-muted-foreground">
+                  {' '}
+                  · header counters track this layout
+                </span>
+              ) : null}
             </figcaption>
             <ItemLeftRight
               className={example.wrapperClassName}
               containerClassName={example.containerClassName}
               duration={duration}
+              {...(example.label === 'Default'
+                ? {
+                    onCycleComplete: () =>
+                      setCycleCount((count) => count + 1),
+                    onSweepComplete: () =>
+                      setSweepCount((count) => count + 1),
+                  }
+                : {})}
             >
               <div
                 className={`flex shrink-0 items-center justify-center rounded-2xl border border-border bg-card font-medium shadow-sm ${example.childClassName}`}

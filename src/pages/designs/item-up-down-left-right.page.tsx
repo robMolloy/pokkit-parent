@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { ItemLeftRight } from '@/components/ItemLeftRight.tsx'
 import { ItemUpDown } from '@/components/ItemUpDown.tsx'
 
@@ -12,11 +12,15 @@ function ItemUpDownLeftRightDemo({
   duration,
   wrapperClassName,
   containerClassName,
+  onCycleComplete,
+  onSweepComplete,
   children,
 }: {
   duration: number
   wrapperClassName: string
   containerClassName: string
+  onCycleComplete?: () => void
+  onSweepComplete?: () => void
   children: ReactNode
 }) {
   return (
@@ -30,6 +34,8 @@ function ItemUpDownLeftRightDemo({
         className="h-36 w-full"
         containerClassName="rounded-none border-0 bg-transparent shadow-none"
         duration={duration}
+        onCycleComplete={onCycleComplete}
+        onSweepComplete={onSweepComplete}
       >
         {children}
       </ItemLeftRight>
@@ -39,21 +45,40 @@ function ItemUpDownLeftRightDemo({
 
 export default function ItemUpDownLeftRightPage() {
   const [duration, setDuration] = useState(3)
+  const [sweepCount, setSweepCount] = useState(0)
+  const [cycleCount, setCycleCount] = useState(0)
+
+  useEffect(() => {
+    setSweepCount(0)
+    setCycleCount(0)
+  }, [duration])
 
   return (
     <div className="flex min-h-[calc(100svh-4.5rem)] flex-col">
-      <label className="relative z-[2] flex flex-col gap-1 border-b border-border bg-background/90 px-5 py-4 text-sm backdrop-blur-sm">
-        Duration per movement (s)
-        <input
-          type="range"
-          min={1}
-          max={8}
-          step={0.5}
-          value={duration}
-          onChange={(event) => setDuration(Number(event.target.value))}
-        />
-        <span className="text-muted-foreground tabular-nums">{duration}s</span>
-      </label>
+      <div className="relative z-[2] flex flex-wrap items-end gap-x-8 gap-y-3 border-b border-border bg-background/90 px-5 py-4 text-sm backdrop-blur-sm">
+        <label className="flex min-w-[12rem] flex-1 flex-col gap-1">
+          Duration per movement (s)
+          <input
+            type="range"
+            min={1}
+            max={8}
+            step={0.5}
+            value={duration}
+            onChange={(event) => setDuration(Number(event.target.value))}
+          />
+          <span className="text-muted-foreground tabular-nums">{duration}s</span>
+        </label>
+        <dl className="flex gap-8">
+          <div>
+            <dt className="text-muted-foreground">Sweeps</dt>
+            <dd className="text-lg font-medium tabular-nums">{sweepCount}</dd>
+          </div>
+          <div>
+            <dt className="text-muted-foreground">Cycles</dt>
+            <dd className="text-lg font-medium tabular-nums">{cycleCount}</dd>
+          </div>
+        </dl>
+      </div>
       <div className="flex flex-1 flex-col gap-8 px-5 py-8">
         <figure className="flex flex-col gap-3">
           <figcaption className="text-sm font-medium">Default</figcaption>
@@ -61,6 +86,8 @@ export default function ItemUpDownLeftRightPage() {
             duration={duration}
             wrapperClassName="w-full max-w-md"
             containerClassName={`h-72 ${clipBorder}`}
+            onCycleComplete={() => setCycleCount((count) => count + 1)}
+            onSweepComplete={() => setSweepCount((count) => count + 1)}
           >
             <div className={`${childBase} size-32 text-lg`}>Any JSX</div>
           </ItemUpDownLeftRightDemo>
