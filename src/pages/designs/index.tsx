@@ -28,6 +28,11 @@ export default function DesignsPage() {
             description="A circle slowly rises, then falls—Tailwind layout with CSS keyframe motion"
           />
           <NavLink
+            to="/designs/circle-up-down-motion"
+            label="Circle up and down (Motion)"
+            description="Breathing-style rise and fall with a gentle hold at the top, implemented with the Motion library"
+          />
+          <NavLink
             to="/designs/item-up-down"
             label="Item up and down"
             description="Pass any JSX as children—it rises and falls with the same motion as the circle demo"
