@@ -1,10 +1,10 @@
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { CircleUpDownMotion } from './CircleUpDownMotion'
 
 describe('CircleUpDownMotion', () => {
   it('renders the animated circle', () => {
-    render(<CircleUpDownMotion duration={3} />)
+    render(<CircleUpDownMotion />)
     expect(
       document.querySelector('.circle-up-down-motion-circle'),
     ).toBeInTheDocument()
@@ -12,22 +12,24 @@ describe('CircleUpDownMotion', () => {
 
   it('merges optional className on the wrapper', () => {
     const { container } = render(
-      <CircleUpDownMotion className="motion-demo" duration={2} />,
+      <CircleUpDownMotion className="motion-demo" />,
     )
     expect(container.firstElementChild).toHaveClass('motion-demo')
   })
 
-  it('describes singular duration in screen-reader text', () => {
-    render(<CircleUpDownMotion duration={1} />)
-    expect(
-      screen.getByText(/Each inhale or exhale takes 1 second and repeats\./),
-    ).toHaveClass('sr-only')
+  it('describes default rise and fall timing in screen-reader text', () => {
+    const { container } = render(<CircleUpDownMotion />)
+    expect(container.querySelector('.sr-only')).toHaveTextContent(
+      'A circle slowly rises as you breathe in over 4 seconds, then falls as you breathe out over 8 seconds, and repeats.',
+    )
   })
 
-  it('describes plural duration in screen-reader text', () => {
-    render(<CircleUpDownMotion duration={2.5} />)
-    expect(
-      screen.getByText(/Each inhale or exhale takes 2\.5 seconds and repeats\./),
-    ).toHaveClass('sr-only')
+  it('describes custom rise and fall timing in screen-reader text', () => {
+    const { container } = render(
+      <CircleUpDownMotion riseDuration={1} fallDuration={2.5} />,
+    )
+    expect(container.querySelector('.sr-only')).toHaveTextContent(
+      'A circle slowly rises as you breathe in over 1 second, then falls as you breathe out over 2.5 seconds, and repeats.',
+    )
   })
 })

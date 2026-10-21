@@ -30,7 +30,7 @@ export default function DesignsPage() {
           <NavLink
             to="/designs/circle-up-down-motion"
             label="Circle up and down (Motion)"
-            description="Breathing-style rise and fall with a gentle hold at the top, implemented with the Motion library"
+            description="Breathing-style rise (4s) and fall (8s) with Motion—slow inhale, slower exhale"
           />
           <NavLink
             to="/designs/item-up-down"
