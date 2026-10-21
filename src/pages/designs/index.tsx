@@ -38,6 +38,11 @@ export default function DesignsPage() {
             description="Pass any JSX as children—it travels horizontally with the same motion pattern as Item up and down"
           />
           <NavLink
+            to="/designs/item-left-right-motion"
+            label="Item left and right (Motion)"
+            description="Same horizontal travel as Item left and right, implemented with the Motion library instead of CSS keyframes"
+          />
+          <NavLink
             to="/designs/item-expand-contract"
             label="Item expand and contract"
             description="Pass any JSX as children—it expands and contracts around its natural size, like the circle expand demo"
