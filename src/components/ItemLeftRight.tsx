@@ -1,8 +1,5 @@
 import { useEffect, useRef, type ReactNode } from 'react'
 import { cn } from 'cn'
-import {
-  afterItemLeftRightAnimationIteration,
-} from './itemLeftRightMotion'
 import './ItemLeftRight.css'
 
 /**
@@ -58,11 +55,14 @@ export function ItemLeftRight({
     if (!el) return
 
     const onIteration = (event: AnimationEvent) => {
-      sweepCount.current = afterItemLeftRightAnimationIteration(
-        event.animationName,
-        sweepCount.current,
-        { onCycleComplete, onSweepComplete },
-      )
+      if (event.animationName !== 'item-left-right') return
+
+      onSweepComplete?.()
+
+      sweepCount.current += 1
+      if (sweepCount.current % 2 === 0) {
+        onCycleComplete?.()
+      }
     }
 
     el.addEventListener('animationiteration', onIteration)
