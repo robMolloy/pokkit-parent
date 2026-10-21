@@ -17,7 +17,7 @@ import './ItemLeftRight.css'
  *
  * Callbacks run only when the keyframe animation is active (`prefers-reduced-motion: no-preference`).
  */
-export type ItemLeftRightProps = {
+export function ItemLeftRight(p: {
   children: ReactNode
   className?: string
   /** Classes on the overflow clip (travel height is set on the root via `className`, default `h-72`). */
@@ -36,17 +36,7 @@ export type ItemLeftRightProps = {
    * starting side). Fires on every second `onSweepComplete` while motion is running.
    */
   onCycleComplete?: () => void
-}
-
-export function ItemLeftRight({
-  children,
-  className,
-  containerClassName,
-  contentClassName,
-  duration,
-  onSweepComplete,
-  onCycleComplete,
-}: ItemLeftRightProps) {
+}) {
   const motionRef = useRef<HTMLDivElement>(null)
   const sweepCount = useRef(0)
 
@@ -57,42 +47,42 @@ export function ItemLeftRight({
     const onIteration = (event: AnimationEvent) => {
       if (event.animationName !== 'item-left-right') return
 
-      onSweepComplete?.()
+      p.onSweepComplete?.()
 
       sweepCount.current += 1
       if (sweepCount.current % 2 === 0) {
-        onCycleComplete?.()
+        p.onCycleComplete?.()
       }
     }
 
     el.addEventListener('animationiteration', onIteration)
     return () => el.removeEventListener('animationiteration', onIteration)
-  }, [onSweepComplete, onCycleComplete])
+  }, [p.onSweepComplete, p.onCycleComplete])
 
   return (
-    <div className={cn('relative h-72 w-full', className)}>
+    <div className={cn('relative h-72 w-full', p.className)}>
       <p className="sr-only">
-        Content slowly moves right, then left. Each movement takes {duration}{' '}
-        {duration === 1 ? 'second' : 'seconds'} and repeats.
+        Content slowly moves right, then left. Each movement takes {p.duration}{' '}
+        {p.duration === 1 ? 'second' : 'seconds'} and repeats.
       </p>
       <div
         className={cn(
           'absolute inset-0 overflow-hidden',
-          containerClassName,
+          p.containerClassName,
         )}
       >
         <div
           ref={motionRef}
           className="item-left-right-motion absolute inset-y-0 flex items-center"
-          style={{ animationDuration: `${duration}s` }}
+          style={{ animationDuration: `${p.duration}s` }}
         >
           <div
             className={cn(
               'w-fit max-w-full shrink-0',
-              contentClassName,
+              p.contentClassName,
             )}
           >
-            {children}
+            {p.children}
           </div>
         </div>
       </div>
