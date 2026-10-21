@@ -1,7 +1,22 @@
-import type { ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import { cn } from 'cn'
 import './ItemLeftRight.css'
 
+/**
+ * Slides `children` horizontally inside a clipped region, easing back and forth forever.
+ *
+ * Timing vocabulary (matches `duration` and the optional completion callbacks):
+ *
+ * - **Sweep** — travel in one direction only (for example left edge → right edge, or the
+ *   return right → left). One sweep lasts `duration` seconds. Each finished sweep fires
+ *   `onSweepComplete` (via the CSS `animationiteration` event on one keyframe leg).
+ *
+ * - **Cycle** — a full round trip: two sweeps in sequence (out, then back). One cycle
+ *   lasts `2 × duration` seconds. Each finished cycle fires `onCycleComplete` (every
+ *   second sweep completion).
+ *
+ * Callbacks run only when the keyframe animation is active (`prefers-reduced-motion: no-preference`).
+ */
 export function ItemLeftRight(p: {
   children: ReactNode
   className?: string
@@ -9,9 +24,41 @@ export function ItemLeftRight(p: {
   containerClassName?: string
   /** Classes on the slot around children (default shrink-wraps with `w-fit max-w-full shrink-0`). */
   contentClassName?: string
-  /** Seconds for one horizontal sweep in either direction (full cycle is twice this). */
+  /** Seconds for a single sweep (one horizontal leg). A full out-and-back cycle is `2 × duration`. */
   duration: number
+  /**
+   * Called once each time a **sweep** completes: the item has finished moving in one
+   * direction and the animation is about to reverse for the next leg.
+   */
+  onSweepComplete?: () => void
+  /**
+   * Called once each time a **cycle** completes: two sweeps in a row (out and back to the
+   * starting side). Fires on every second `onSweepComplete` while motion is running.
+   */
+  onCycleComplete?: () => void
 }) {
+  const motionRef = useRef<HTMLDivElement>(null)
+  const sweepCount = useRef(0)
+
+  useEffect(() => {
+    const el = motionRef.current
+    if (!el) return
+
+    const onIteration = (event: AnimationEvent) => {
+      if (event.animationName !== 'item-left-right') return
+
+      p.onSweepComplete?.()
+
+      sweepCount.current += 1
+      if (sweepCount.current % 2 === 0) {
+        p.onCycleComplete?.()
+      }
+    }
+
+    el.addEventListener('animationiteration', onIteration)
+    return () => el.removeEventListener('animationiteration', onIteration)
+  }, [p.onSweepComplete, p.onCycleComplete])
+
   return (
     <div className={cn('relative h-72 w-full', p.className)}>
       <p className="sr-only">
@@ -25,6 +72,7 @@ export function ItemLeftRight(p: {
         )}
       >
         <div
+          ref={motionRef}
           className="item-left-right-motion absolute inset-y-0 flex items-center"
           style={{ animationDuration: `${p.duration}s` }}
         >
