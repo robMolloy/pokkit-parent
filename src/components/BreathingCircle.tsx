@@ -11,6 +11,12 @@ const REST_SCALE = 0.5
 /** Peak scale at the top of the rise (inhale), slightly above full size. */
 const RISE_SCALE = 1.06
 
+/** Brief scale bump when the circle reaches the top (seconds). */
+const PULSE_DURATION = 0.2
+
+/** Scale at the quick pulse peak. */
+const PULSE_SCALE = 1.14
+
 export type BreathingCircleProps = {
   className?: string
   /** Seconds to rise from rest to the top of travel. Default 8. */
@@ -43,16 +49,20 @@ export function BreathingCircle({
       return
     }
 
+    const pulseFraction = PULSE_DURATION / totalDuration
+    const pulsePeakTime = phaseBoundary + pulseFraction / 2
+    const pulseEndTime = phaseBoundary + pulseFraction
+
     const controls = runAnimation(
       element,
       {
-        y: [0, -TRAVEL_PX, 0],
-        scale: [REST_SCALE, RISE_SCALE, REST_SCALE],
+        y: [0, -TRAVEL_PX, -TRAVEL_PX, -TRAVEL_PX, 0],
+        scale: [REST_SCALE, RISE_SCALE, PULSE_SCALE, RISE_SCALE, REST_SCALE],
       },
       {
         duration: totalDuration,
-        times: [0, phaseBoundary, 1],
-        ease: 'easeInOut',
+        times: [0, phaseBoundary, pulsePeakTime, pulseEndTime, 1],
+        ease: ['easeInOut', 'easeOut', 'easeIn', 'easeInOut'],
         repeat: Infinity,
       },
     )
