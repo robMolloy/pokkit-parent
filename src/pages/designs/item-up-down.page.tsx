@@ -52,7 +52,7 @@ export default function ItemUpDownPage() {
 
   return (
     <div className="flex min-h-[calc(100svh-4.5rem)] flex-col">
-      <label className="relative z-[2] flex flex-col gap-1 border-b border-border bg-background/90 px-5 py-4 text-sm backdrop-blur-sm">
+      <label className="flex shrink-0 flex-col gap-1 border-b border-border bg-background px-5 py-4 text-sm">
         Duration per movement (s)
         <input
           type="range"

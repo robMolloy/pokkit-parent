@@ -16,19 +16,24 @@ export function CircleUpDown({ className, duration }: CircleUpDownProps) {
   } satisfies CSSProperties
 
   return (
-    <div className={className}>
+    <div className={cn('relative min-h-0 flex-1', className)}>
       <p className="sr-only">
         A circle slowly rises, then falls. Each movement takes {phase}{' '}
         {phase === 1 ? 'second' : 'seconds'} and repeats.
       </p>
       <div
-        className={cn(
-          'fixed top-1/2 left-1/2 size-32 -translate-x-1/2 -translate-y-1/2 rounded-full',
-          'bg-[radial-gradient(circle_at_50%_38%,color-mix(in_oklch,var(--foreground)_76%,white),var(--foreground)_68%)]',
-          'circle-up-down-circle',
-        )}
-        style={motionTiming}
-      />
+        aria-hidden
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        <div
+          className={cn(
+            'absolute top-1/2 left-1/2 size-32 -translate-x-1/2 -translate-y-1/2 rounded-full',
+            'bg-[radial-gradient(circle_at_50%_38%,color-mix(in_oklch,var(--foreground)_76%,white),var(--foreground)_68%)]',
+            'circle-up-down-circle',
+          )}
+          style={motionTiming}
+        />
+      </div>
     </div>
   )
 }
