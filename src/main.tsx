@@ -4,9 +4,16 @@ import './index.css'
 import './starter.css'
 import './firebase'
 import App from './App.tsx'
+import { loadMopData } from './loadMopData.ts'
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+async function bootstrap() {
+  await loadMopData()
+
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  )
+}
+
+void bootstrap()
