@@ -14,7 +14,7 @@
 
 ## Abstraction
 
-- Prefer concrete, local code over extra layers of abstraction. Abstraction has a cost (indirection, naming, and mental overhead) and should earn its place.
-- Do not introduce helpers, config objects, or generic patterns mainly to reduce duplication when the duplicated pieces are small or appear only once or twice.
-- In React, favor inlining JSX in the component when the structure is fixed and readable. Iterating over an array of objects to render a small, static set of similar blocks is often harder to scan than repeating a few explicit elements.
-- Reach for abstraction when the same non-trivial logic or UI pattern is reused in multiple places, when behavior must vary in ways that inline code would duplicate dangerously, or when a boundary (API, module, test seam) genuinely needs a stable interface.
+- Prefer simple, concrete code over unnecessary abstractions.
+- Don't add helpers, config objects or generic patterns just to avoid small amounts of duplication.
+- In React, prefer explicit JSX for small, fixed layouts over arrays of objects and loops when it's easier to read.
+- Abstract when substantial logic or UI is reused, inline duplication risks bugs, or a stable interface is genuinely needed.
