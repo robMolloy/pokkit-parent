@@ -4,10 +4,10 @@ import './index.css'
 import './starter.css'
 import './firebase'
 import App from './App.tsx'
-import { loadMopData } from './loadMopData.ts'
+import { loadMockData } from './loadMockData.ts'
 
 async function bootstrap() {
-  await loadMopData()
+  await loadMockData()
 
   createRoot(document.getElementById('root')!).render(
     <StrictMode>

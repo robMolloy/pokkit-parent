@@ -75,7 +75,7 @@ function addSessions(db: IDBDatabase, sessions: Sessions[]): Promise<void> {
  * Opens IndexedDB and seeds mock session records only when the sessions store
  * has no existing items.
  */
-export async function loadMopData(): Promise<void> {
+export async function loadMockData(): Promise<void> {
   const db = await openDatabase()
 
   try {
