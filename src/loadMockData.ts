@@ -1,8 +1,8 @@
 import type { Sessions } from './types/sessions.ts'
-
-const DB_NAME = 'pokkit-parent'
-const DB_VERSION = 1
-const STORE_NAME = 'sessions'
+import {
+  openSessionsDatabase,
+  SESSIONS_STORE_NAME,
+} from './sessionsDb.ts'
 
 const MOCK_SESSIONS: Sessions[] = [
   {
@@ -19,31 +19,10 @@ const MOCK_SESSIONS: Sessions[] = [
   },
 ]
 
-function openDatabase(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, DB_VERSION)
-
-    request.onerror = () => {
-      reject(request.error ?? new Error('Failed to open IndexedDB'))
-    }
-
-    request.onupgradeneeded = () => {
-      const db = request.result
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        db.createObjectStore(STORE_NAME, { autoIncrement: true })
-      }
-    }
-
-    request.onsuccess = () => {
-      resolve(request.result)
-    }
-  })
-}
-
 function indexedDbHasAnySessions(db: IDBDatabase): Promise<boolean> {
   return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE_NAME, 'readonly')
-    const request = tx.objectStore(STORE_NAME).count()
+    const tx = db.transaction(SESSIONS_STORE_NAME, 'readonly')
+    const request = tx.objectStore(SESSIONS_STORE_NAME).count()
 
     request.onerror = () => {
       reject(request.error ?? new Error('Failed to read sessions from IndexedDB'))
@@ -57,8 +36,8 @@ function indexedDbHasAnySessions(db: IDBDatabase): Promise<boolean> {
 
 function addSessions(db: IDBDatabase, sessions: Sessions[]): Promise<void> {
   return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE_NAME, 'readwrite')
-    const store = tx.objectStore(STORE_NAME)
+    const tx = db.transaction(SESSIONS_STORE_NAME, 'readwrite')
+    const store = tx.objectStore(SESSIONS_STORE_NAME)
 
     for (const session of sessions) {
       store.add(session)
@@ -76,7 +55,7 @@ function addSessions(db: IDBDatabase, sessions: Sessions[]): Promise<void> {
  * has no existing items.
  */
 export async function loadMockData(): Promise<void> {
-  const db = await openDatabase()
+  const db = await openSessionsDatabase()
 
   try {
     const hasAnySessions = await indexedDbHasAnySessions(db)
