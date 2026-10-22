@@ -1,5 +1,9 @@
 # Agent instructions
 
+## Responses
+
+- All responses to prompts should finish with the word `end`.
+
 ## Testing
 
 - Do not use browser automation, screenshots, or screen recordings unless the user explicitly requests debugging or UI verification.
