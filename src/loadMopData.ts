@@ -40,17 +40,17 @@ function openDatabase(): Promise<IDBDatabase> {
   })
 }
 
-function countSessions(db: IDBDatabase): Promise<number> {
+function indexedDbHasAnySessions(db: IDBDatabase): Promise<boolean> {
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE_NAME, 'readonly')
     const request = tx.objectStore(STORE_NAME).count()
 
     request.onerror = () => {
-      reject(request.error ?? new Error('Failed to count sessions'))
+      reject(request.error ?? new Error('Failed to read sessions from IndexedDB'))
     }
 
     request.onsuccess = () => {
-      resolve(request.result)
+      resolve(request.result > 0)
     }
   })
 }
@@ -71,15 +71,20 @@ function addSessions(db: IDBDatabase, sessions: Sessions[]): Promise<void> {
   })
 }
 
-/** Seeds IndexedDB with mock session records when the store is empty. */
+/**
+ * Opens IndexedDB and seeds mock session records only when the sessions store
+ * has no existing items.
+ */
 export async function loadMopData(): Promise<void> {
   const db = await openDatabase()
 
   try {
-    const existingCount = await countSessions(db)
-    if (existingCount === 0) {
-      await addSessions(db, MOCK_SESSIONS)
+    const hasAnySessions = await indexedDbHasAnySessions(db)
+    if (hasAnySessions) {
+      return
     }
+
+    await addSessions(db, MOCK_SESSIONS)
   } finally {
     db.close()
   }
