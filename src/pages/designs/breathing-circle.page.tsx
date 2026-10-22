@@ -6,8 +6,8 @@ export default function BreathingCirclePage() {
   const [fallDuration, setFallDuration] = useState(4)
 
   return (
-    <div className="flex min-h-[calc(100svh-4.5rem)] flex-col">
-      <div className="flex shrink-0 flex-wrap items-end gap-x-8 gap-y-3 border-b border-border bg-background px-5 py-4 text-sm">
+    <div className="flex h-[calc(100svh-4.5rem)] flex-col">
+      <div className="relative z-10 flex shrink-0 flex-wrap items-end gap-x-8 gap-y-3 border-b border-border bg-background px-5 py-4 text-sm">
         <label className="flex min-w-[12rem] flex-1 flex-col gap-1">
           Rise duration (s)
           <input

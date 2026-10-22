@@ -50,7 +50,7 @@ export default function ItemUpDownLeftRightPage() {
 
   return (
     <div className="flex min-h-[calc(100svh-4.5rem)] flex-col">
-      <div className="relative z-[2] flex flex-wrap items-end gap-x-8 gap-y-3 border-b border-border bg-background/90 px-5 py-4 text-sm backdrop-blur-sm">
+      <div className="flex shrink-0 flex-wrap items-end gap-x-8 gap-y-3 border-b border-border bg-background px-5 py-4 text-sm">
         <label className="flex min-w-[12rem] flex-1 flex-col gap-1">
           Duration per movement (s)
           <input

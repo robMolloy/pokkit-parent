@@ -79,7 +79,7 @@ export function BreathingCircle({
   ])
 
   return (
-    <div className={cn('relative min-h-0 flex-1', className)}>
+    <div className={cn('relative isolate min-h-0 flex-1 overflow-hidden', className)}>
       <p className="sr-only">
         A circle slowly rises over {riseDuration}{' '}
         {riseDuration === 1 ? 'second' : 'seconds'}, then falls over {fallDuration}{' '}
@@ -87,7 +87,7 @@ export function BreathingCircle({
       </p>
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 flex items-center justify-center"
+        className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden"
       >
         <motion.div
           ref={scope}
