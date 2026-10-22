@@ -19,7 +19,7 @@ export function CircleExpandContract({
   } satisfies CSSProperties
 
   return (
-    <div className={cn('relative min-h-0 flex-1', className)}>
+    <div className={cn('relative isolate min-h-0 flex-1 overflow-hidden', className)}>
       <p className="sr-only">
         The circle expands to the width of the screen, then contracts to a dot.
         Each movement takes {phase} {phase === 1 ? 'second' : 'seconds'} and repeats.
