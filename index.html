@@ -6,28 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>pokkit-parent</title>
     <script>
-      const colorSchemeStorageKey = 'pokkit-dev-color-scheme'
       const themeMedia = window.matchMedia('(prefers-color-scheme: dark)')
-      const readColorSchemePreference = () => {
-        const stored = localStorage.getItem(colorSchemeStorageKey)
-        return stored === 'light' || stored === 'dark' || stored === 'system'
-          ? stored
-          : 'system'
-      }
       const applyTheme = () => {
-        const preference = readColorSchemePreference()
-        const dark =
-          preference === 'dark'
-            ? true
-            : preference === 'light'
-              ? false
-              : themeMedia.matches
-        document.documentElement.classList.toggle('dark', dark)
+        document.documentElement.classList.toggle('dark', themeMedia.matches)
       }
       applyTheme()
-      themeMedia.addEventListener('change', () => {
-        if (readColorSchemePreference() === 'system') applyTheme()
-      })
+      themeMedia.addEventListener('change', applyTheme)
     </script>
   </head>
   <body>

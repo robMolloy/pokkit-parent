@@ -17,7 +17,7 @@ export default function HomePage() {
           <NavLink
             to="/dev-controls"
             label="Dev controls"
-            description="Theme overrides and links to internal developer pages"
+            description="Development toggles and debug settings"
           />
         </VerticalNavList>
       </Nav>
