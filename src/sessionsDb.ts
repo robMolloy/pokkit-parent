@@ -25,17 +25,21 @@ export function openSessionsDatabase(): Promise<IDBDatabase> {
   })
 }
 
-export async function addSession(session: Sessions): Promise<void> {
+export async function addSessions(sessions: Sessions[]): Promise<void> {
   const db = await openSessionsDatabase()
 
   try {
     await new Promise<void>((resolve, reject) => {
       const tx = db.transaction(SESSIONS_STORE_NAME, 'readwrite')
-      tx.objectStore(SESSIONS_STORE_NAME).add(session)
+      const store = tx.objectStore(SESSIONS_STORE_NAME)
+
+      for (const session of sessions) {
+        store.add(session)
+      }
 
       tx.oncomplete = () => resolve()
       tx.onerror = () => {
-        reject(tx.error ?? new Error('Failed to write session'))
+        reject(tx.error ?? new Error('Failed to write sessions'))
       }
     })
   } finally {

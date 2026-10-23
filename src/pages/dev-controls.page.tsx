@@ -1,43 +1,33 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { addSession } from '@/sessionsDb'
+import { addSessions } from '@/sessionsDb'
+import type { Sessions } from '@/types/sessions'
 
-function toDatetimeLocalValue(date: Date) {
-  const pad = (part: number) => String(part).padStart(2, '0')
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`
+const MS_IN_24_HOURS = 24 * 60 * 60 * 1000
+
+function randomMockSessions(count: number): Sessions[] {
+  const now = Date.now()
+
+  return Array.from({ length: count }, () => ({
+    duration: 60 + Math.floor(Math.random() * 541),
+    timefinished: now - Math.floor(Math.random() * MS_IN_24_HOURS),
+  }))
 }
 
 export default function DevControlsPage() {
-  const [durationSeconds, setDurationSeconds] = useState('180')
-  const [timeFinishedLocal, setTimeFinishedLocal] = useState(() =>
-    toDatetimeLocalValue(new Date()),
-  )
   const [status, setStatus] = useState<string | null>(null)
   const [isSaving, setIsSaving] = useState(false)
 
-  async function onAddMockSession() {
-    const duration = Number(durationSeconds)
-    const timefinished = new Date(timeFinishedLocal).getTime()
-
-    if (!Number.isFinite(duration) || duration <= 0) {
-      setStatus('Enter a duration greater than zero (seconds).')
-      return
-    }
-
-    if (Number.isNaN(timefinished)) {
-      setStatus('Enter a valid date and time finished.')
-      return
-    }
-
+  async function onAddRandomMockSessions() {
     setIsSaving(true)
     setStatus(null)
 
     try {
-      await addSession({ duration, timefinished })
-      setStatus('Mock squeeze session saved to IndexedDB.')
+      await addSessions(randomMockSessions(5))
+      setStatus('Added 5 random squeeze sessions to IndexedDB.')
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : 'Failed to save session.'
+        error instanceof Error ? error.message : 'Failed to save sessions.'
       setStatus(message)
     } finally {
       setIsSaving(false)
@@ -54,28 +44,16 @@ export default function DevControlsPage() {
         <h2 className="text-sm font-medium text-foreground">
           Squeeze exercises (IndexedDB)
         </h2>
-        <label className="flex flex-col gap-1">
-          Duration (seconds)
-          <input
-            type="number"
-            min={1}
-            step={1}
-            value={durationSeconds}
-            onChange={(event) => setDurationSeconds(event.target.value)}
-            className="rounded-md border border-input bg-background px-2 py-1.5"
-          />
-        </label>
-        <label className="flex flex-col gap-1">
-          Date and time finished
-          <input
-            type="datetime-local"
-            value={timeFinishedLocal}
-            onChange={(event) => setTimeFinishedLocal(event.target.value)}
-            className="rounded-md border border-input bg-background px-2 py-1.5"
-          />
-        </label>
-        <Button type="button" disabled={isSaving} onClick={onAddMockSession}>
-          {isSaving ? 'Saving…' : 'Add mock session'}
+        <p className="text-muted-foreground">
+          Adds five sessions with random duration (60–600s) and a finished time
+          within the last 24 hours.
+        </p>
+        <Button
+          type="button"
+          disabled={isSaving}
+          onClick={onAddRandomMockSessions}
+        >
+          {isSaving ? 'Saving…' : 'Add 5 random mock sessions'}
         </Button>
         {status ? (
           <p className="text-muted-foreground" role="status">
