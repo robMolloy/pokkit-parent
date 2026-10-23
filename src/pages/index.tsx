@@ -14,6 +14,11 @@ export default function HomePage() {
             label="Pelvic floor exercises"
             description="Pelvic-floor work to build strength and control"
           />
+          <NavLink
+            to="/dev-controls"
+            label="Dev controls"
+            description="Theme overrides and links to internal developer pages"
+          />
         </VerticalNavList>
       </Nav>
     </section>
