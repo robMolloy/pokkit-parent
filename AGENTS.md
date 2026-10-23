@@ -12,6 +12,10 @@
 - Prefer low-cost static checks when useful. Run tests only when requested or expected by the repository.
 - If unsure whether browser verification was requested, ask first.
 
+## Scope
+
+- Only follow the specific requests in the prompt; do not add extra features, wiring, or linking logic unless the user explicitly asks for them.
+
 ## Abstraction
 
 - Prefer simple, concrete code over unnecessary abstractions.
