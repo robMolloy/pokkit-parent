@@ -4,12 +4,17 @@ import { addSessions } from '@/sessionsDb'
 import type { Sessions } from '@/types/sessions'
 
 const MS_IN_24_HOURS = 24 * 60 * 60 * 1000
+const MIN_EXERCISE_TIME_SECONDS = 60
+const MAX_EXERCISE_TIME_SECONDS = 600
 
 function randomMockSessions(count: number): Sessions[] {
   const now = Date.now()
+  const durationSpan =
+    MAX_EXERCISE_TIME_SECONDS - MIN_EXERCISE_TIME_SECONDS + 1
 
   return Array.from({ length: count }, () => ({
-    duration: 60 + Math.floor(Math.random() * 541),
+    duration:
+      MIN_EXERCISE_TIME_SECONDS + Math.floor(Math.random() * durationSpan),
     timefinished: now - Math.floor(Math.random() * MS_IN_24_HOURS),
   }))
 }
@@ -45,8 +50,9 @@ export default function DevControlsPage() {
           Squeeze exercises (IndexedDB)
         </h2>
         <p className="text-muted-foreground">
-          Adds five sessions with random duration (60–600s) and a finished time
-          within the last 24 hours.
+          Adds five sessions with random duration (
+          {MIN_EXERCISE_TIME_SECONDS}–{MAX_EXERCISE_TIME_SECONDS}s) and a
+          finished time within the last 24 hours.
         </p>
         <Button
           type="button"
